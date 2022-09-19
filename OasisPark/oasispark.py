@@ -57,20 +57,20 @@ class Atendente(object):
         self.SalarioAtendente = SalarioAtendente
         self.TelefoneAtendente = TelefoneAtendente
         
-def cadastroatendente(self):
-  cpf = request.form[self.CpfAtendente]
-  nome = request.form[self.NomeAtendente]
-  sobrenome = request.form[self.SobrenomeAtendente]
-  rg = request.form[self.RgAtendente]
-  endereco = request.form[self.EnderecoAtendente]
-  salario = request.form[self.SalarioAtendente]
-  telefone = request.form[self.TelefoneAtendente]
-  if cpf and nome and sobrenome and rg and endereco and salario and telefone:
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute('insert into Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) VALUES (%s, %s, %s, %s, %s, %s, %s)', (cpf, nome, sobrenome, rg, endereco, salario, telefone))
-    conn.commit()
-  return render_template('index.html')
+    def cadastroatendente(self):
+        cpf = request.form[self.CpfAtendente]
+        nome = request.form[self.NomeAtendente]
+        sobrenome = request.form[self.SobrenomeAtendente]
+        rg = request.form[self.RgAtendente]
+        endereco = request.form[self.EnderecoAtendente]
+        salario = request.form[self.SalarioAtendente]
+        telefone = request.form[self.TelefoneAtendente]
+        if cpf and nome and sobrenome and rg and endereco and salario and telefone:
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.execute('insert into Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) VALUES (%s, %s, %s, %s, %s, %s, %s)', (cpf, nome, sobrenome, rg, endereco, salario, telefone))
+            conn.commit()
+        return render_template('index.html')
 
 @app.route('/cadastrocliente')
 def cliente():

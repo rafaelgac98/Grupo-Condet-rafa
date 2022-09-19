@@ -1,49 +1,10 @@
+from orientacao import Atendente, Cliente
 import os
 from flask import Flask, render_template, request
 from flaskext.mysql import MySQL
 
 mysql = MySQL()
 app = Flask(__name__)
-
-
-class Atendente(object):
-    def _init_(self, CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente):
-        self.CpfAtendente = CpfAtendente
-        self.NomeAtendente = NomeAtendente
-        self.SobrenomeAtendente = SobrenomeAtendente
-        self.RgAtendente = RgAtendente
-        self.EnderecoAtendente = EnderecoAtendente
-        self.SalarioAtendente = SalarioAtendente
-        self.TelefoneAtendente = TelefoneAtendente
-
-
-class Cliente(object):
-    def _init_(self, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, Cpfatendente, TelefoneCliente):
-        self.CpfCliente = CpfCliente
-        self.NomeCliente = NomeCliente
-        self.SobrenomeCliente = SobrenomeCliente
-        self.RgCliente = RgCliente
-        self.EnderecoCliente = EnderecoCliente
-        self.Cpfatendente = Cpfatendente
-        self.TelefoneCliente = TelefoneCliente
-
-
-class Manobrista(object):
-    def _init_(self, CnhManobrista, NomeManobrista, SobrenomeManobrista, RgManobrista, EnderecoManobrista, SalarioManobrista, TelefoneManobrista):
-        self.CnhManobrista = CnhManobrista
-        self.NomeManobrista = NomeManobrista
-        self.SobrenomeManobrista = SobrenomeManobrista
-        self.RgManobrista = RgManobrista
-        self.EnderecoManobrista = EnderecoManobrista
-        self.SalarioManobrista = SalarioManobrista
-        self.TelefoneManobrista = TelefoneManobrista
-
-
-class Vaga(object):
-    def _init_(self, NumeroVaga, Situacao):
-        self.NumeroVaga = NumeroVaga
-        self.Situacao = Situacao
-
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -61,22 +22,24 @@ def main():
 def atendente():
     return render_template('cadastroatendente.html')
 
-@app.route('/gravaratendente', methods=['POST', 'GET'])
+@app.route('/cadastroatendente', methods=['POST', 'GET'])
 def cadastroatendente():
-    cpf = request.form['CpfAtendente']
-    nome = request.form['NomeAtendente']
-    sobrenome = request.form['SobrenomeAtendente']
-    rg = request.form['RgAtendente']
-    endereco = request.form['EnderecoAtendente']
-    salario = request.form['SalarioAtendente']
-    telefone = request.form['TelefoneAtendente']
-    if cpf and nome and sobrenome and rg and endereco and salario and telefone:
+    Atendente = Atendente(request.form['CpfAtendente'],
+                         request.form['NomeAtendente'],
+                         request.form['SobrenomeAtendente'],
+                         request.form['RgAtendente'],
+                         request.form['EnderecoAtendente'],
+                         request.form['SalarioAtendente'],
+                         request.form['TelefoneAtendente'])
+
+    if Atendente.CpfAtendente and Atendente.NomeAtendente and Atendente.SobrenomeAtendente and Atendente.RgAtendente and Atendente.EnderecoAtendente and Atendente.SalarioAtendente and Atendente.TelefoneAtendente:
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.execute('insert into Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
-                           (cpf, nome, sobrenome, rg, endereco, salario, telefone))
+                           (Atendente.CpfAtendente, Atendente.NomeAtendente, Atendente.SobrenomeAtendente, Atendente.RgAtendente, Atendente.EnderecoAtendente, Atendente.SalarioAtendente, Atendente.TelefoneAtendente))
         conn.commit()
     return render_template('index.html')
+
 
 @app.route('/cadastrocliente')
 def cliente():
@@ -84,18 +47,19 @@ def cliente():
 
 @app.route('/cadastrocliente', methods=['POST', 'GET'])
 def cadastrocliente():
-    cpf = request.form[Cliente.CpfCliente]
-    nome = request.form[Cliente.NomeCliente]
-    sobrenome = request.form[Cliente.SobrenomeCliente]
-    rg = request.form[Cliente.RgCliente]
-    endereco = request.form[Cliente.EnderecoCliente]
-    cpfatendente = request.form[Cliente.Cpfatendente]
-    telefone = request.form[Cliente.TelefoneCliente]
-    if cpf and nome and sobrenome and rg and endereco and cpfatendente and telefone:
+    Cliente = Cliente(request.form['CpfCliente'],
+                         request.form['NomeCliente'],
+                         request.form['SobrenomeCliente'],
+                         request.form['RgCliente'],
+                         request.form['EnderecoCliente'],
+                         request.form['Cpfatendente'],
+                         request.form['TelefoneCliente'])
+    
+    if Cliente.CpfCliente and Cliente.NomeCliente and Cliente.SobrenomeCliente and Cliente.RgCliente and Cliente.EnderecoCliente and Cliente.Cpfatendente and Cliente.TelefoneCliente:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('insert into Cliente (CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, Cpfatendente, TelefoneCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
-                       (cpf, nome, sobrenome, rg, endereco, cpfatendente, telefone))
+        cursor.execute('insert into Atendente (CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, Cpfatendente, TelefoneCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                           (Cliente.CpfCliente, Cliente.NomeCliente, Cliente.SobrenomeCliente, Cliente.RgCliente, Cliente.EnderecoCliente, Cliente.Cpfatendente, Cliente.TelefoneCliente))
         conn.commit()
     return render_template('index.html')
 

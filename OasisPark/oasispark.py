@@ -57,10 +57,9 @@ mysql.init_app(app)
 def main():
     return render_template('index.html')
 
-# @app.route('/cadastroatendente')
-# def atendente():
-#     return render_template('cadastroatendente.html')
-
+@app.route('/cadastroatendente')
+def atendente():
+    return render_template('cadastroatendente.html')
 
 @app.route('/cadastroatendente', methods=['POST', 'GET'])
 def cadastroatendente():
@@ -77,12 +76,11 @@ def cadastroatendente():
         cursor.execute('insert into Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
                            (cpf, nome, sobrenome, rg, endereco, salario, telefone))
         conn.commit()
-        return render_template('cadastroatendente.html')
+        return render_template('index.html')
 
-# @app.route('/cadastrocliente')
-# def cliente():
-#     return render_template('cadastrocliente.html')
-
+@app.route('/cadastrocliente')
+def cliente():
+    return render_template('cadastrocliente.html')
 
 @app.route('/cadastrocliente', methods=['POST', 'GET'])
 def cadastrocliente():

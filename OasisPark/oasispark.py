@@ -22,7 +22,7 @@ def main():
 def atendente():
     return render_template('cadastroatendente.html')
 
-@app.route('/cadastroatendente', methods=['POST', 'GET'])
+@app.route('/gravaratendente', methods=['POST', 'GET'])
 def cadastroatendente():
     Atendente = Atendente(request.form['CpfAtendente'],
                          request.form['NomeAtendente'],
@@ -45,15 +45,15 @@ def cadastroatendente():
 def cliente():
     return render_template('cadastrocliente.html')
 
-@app.route('/cadastrocliente', methods=['POST', 'GET'])
+@app.route('/gravarcliente', methods=['POST', 'GET'])
 def cadastrocliente():
     Cliente = Cliente(request.form['CpfCliente'],
-                         request.form['NomeCliente'],
-                         request.form['SobrenomeCliente'],
-                         request.form['RgCliente'],
-                         request.form['EnderecoCliente'],
-                         request.form['Cpfatendente'],
-                         request.form['TelefoneCliente'])
+                     request.form['NomeCliente'],
+                     request.form['SobrenomeCliente'],
+                     request.form['RgCliente'],
+                     request.form['EnderecoCliente'],
+                     request.form['Cpfatendente'],
+                     request.form['TelefoneCliente'])
     
     if Cliente.CpfCliente and Cliente.NomeCliente and Cliente.SobrenomeCliente and Cliente.RgCliente and Cliente.EnderecoCliente and Cliente.Cpfatendente and Cliente.TelefoneCliente:
         conn = mysql.connect()

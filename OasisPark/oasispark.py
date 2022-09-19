@@ -9,13 +9,7 @@ cursor = conexao.cursor()
 
 #insert
 try:
-    cursor.execute("INSERT INTO Atendente (CpfAtendente) values ('12345678901')")
-    cursor.execute("INSERT INTO Atendente (NomeAtendente) values ('Danilo')")
-    cursor.execute("INSERT INTO Atendente (SobrenomeAtendente) values ('Balieiro')")
-    cursor.execute("INSERT INTO Atendente (RgAtendente) values ('123456789')")
-    cursor.execute("INSERT INTO Atendente (EnderecoAtendente) values ('Rua Qualquer, 127')")
-    cursor.execute("INSERT INTO Atendente (SalarioAtendente) values ('1500')")
-    cursor.execute("INSERT INTO Atendente (TelefoneAtendente) values ('55555555')")
+    cursor.execute("INSERT INTO Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) values ('12345678901', 'Danilo', 'Balieiro', '123456789', 'Rua Qualquer, 127', '1500', '1155555555')")
 except Exception as e:
     print(f"Erro: {e}")
     

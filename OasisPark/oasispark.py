@@ -5,16 +5,6 @@ from flaskext.mysql import MySQL
 mysql = MySQL()
 app = Flask(__name__)
 
-class Atendente:
-    def _init_(self, CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente):
-        self.CpfAtendente = CpfAtendente
-        self.NomeAtendente = NomeAtendente
-        self.SobrenomeAtendente = SobrenomeAtendente
-        self.RgAtendente = RgAtendente
-        self.EnderecoAtendente = EnderecoAtendente
-        self.SalarioAtendente = SalarioAtendente
-        self.TelefoneAtendente = TelefoneAtendente
-
 class Cliente:
     def _init_(self, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, Cpfatendente, TelefoneCliente):
         self.CpfCliente = CpfCliente
@@ -57,14 +47,24 @@ def atendente():
     return render_template('cadastroatendente.html')
 
 @app.route('/cadastroatendente', methods=['POST','GET'])
-def cadastroatendente():
-  cpf = request.form[Atendente.CpfAtendente]
-  nome = request.form[Atendente.NomeAtendente]
-  sobrenome = request.form[Atendente.SobrenomeAtendente]
-  rg = request.form[Atendente.RgAtendente]
-  endereco = request.form[Atendente.EnderecoAtendente]
-  salario = request.form[Atendente.SalarioAtendente]
-  telefone = request.form[Atendente.TelefoneAtendente]
+class Atendente(object):
+    def _init_(self, CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente):
+        self.CpfAtendente = CpfAtendente
+        self.NomeAtendente = NomeAtendente
+        self.SobrenomeAtendente = SobrenomeAtendente
+        self.RgAtendente = RgAtendente
+        self.EnderecoAtendente = EnderecoAtendente
+        self.SalarioAtendente = SalarioAtendente
+        self.TelefoneAtendente = TelefoneAtendente
+        
+def cadastroatendente(self):
+  cpf = request.form[self.CpfAtendente]
+  nome = request.form[self.NomeAtendente]
+  sobrenome = request.form[self.SobrenomeAtendente]
+  rg = request.form[self.RgAtendente]
+  endereco = request.form[self.EnderecoAtendente]
+  salario = request.form[self.SalarioAtendente]
+  telefone = request.form[self.TelefoneAtendente]
   if cpf and nome and sobrenome and rg and endereco and salario and telefone:
     conn = mysql.connect()
     cursor = conn.cursor()

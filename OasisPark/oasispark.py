@@ -52,7 +52,7 @@ mysql.init_app(app)
 def main():
     return render_template('index.html')
 
-@app.route('/cadastroatendente', methods=['POST','GET'])
+@app.route('/cadastroatendente')
 def atendente():
     return render_template('cadastroatendente.html')
 
@@ -71,7 +71,7 @@ def cadastroatendente():
     conn.commit()
   return render_template('index.html')
 
-@app.route('/cadastrocliente', methods=['POST','GET'])
+@app.route('/cadastrocliente')
 def cliente():
     return render_template('cadastrocliente.html')
 

@@ -56,6 +56,7 @@ def main():
 def atendente():
     return render_template('cadastroatendente.html')
 
+@app.route('/cadastroatendente', methods=['POST','GET'])
 def cadastroatendente():
   cpf = request.form[Atendente.CpfAtendente]
   nome = request.form[Atendente.NomeAtendente]

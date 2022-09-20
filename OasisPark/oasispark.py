@@ -29,7 +29,7 @@ def gravaratendente():
     if nome and cpf and endereco:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('INSERT INTO Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) VALUES (%s, %s, %s, %s, %s, %s, %s)', (cpf, nome, sobrenome, rg, endereco, salario, telefone))
+        cursor.execute('insert into Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) values (%s, %s, %s, %s, %s, %s, %s)', (cpf, nome, sobrenome, rg, endereco, salario, telefone))
         conn.commit()
     return render_template('index.html')
 

@@ -59,4 +59,4 @@ def gravaratendente():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 3306))
-    app.run(host='127.0.0.1', port=port)
+    app.run(host='0.0.0.0', port=port)

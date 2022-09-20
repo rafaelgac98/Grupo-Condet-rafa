@@ -1,4 +1,3 @@
-from orientacao import Atendente, Cliente
 import os
 from flask import Flask, render_template, request
 from flaskext.mysql import MySQL
@@ -18,50 +17,44 @@ mysql.init_app(app)
 def main():
     return render_template('index.html')
 
-@app.route('/cadastroatendente')
-def atendente():
-    return render_template('cadastroatendente.html')
-
 @app.route('/gravaratendente', methods=['POST', 'GET'])
-def cadastroatendente():
-    Atendente = Atendente(request.form['CpfAtendente'],
-                         request.form['NomeAtendente'],
-                         request.form['SobrenomeAtendente'],
-                         request.form['RgAtendente'],
-                         request.form['EnderecoAtendente'],
-                         request.form['SalarioAtendente'],
-                         request.form['TelefoneAtendente'])
-
-    if Atendente.CpfAtendente and Atendente.NomeAtendente and Atendente.SobrenomeAtendente and Atendente.RgAtendente and Atendente.EnderecoAtendente and Atendente.SalarioAtendente and Atendente.TelefoneAtendente:
+def gravaratendente():
+    cpf = request.form['cpf']
+    nome = request.form['nome']
+    sobrenome = request.form['sobrenome']
+    rg = request.form['rg']
+    endereco = request.form['endereco']
+    salario = request.form['salario']
+    telefone = request.form['telefone']
+    if nome and cpf and endereco:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('insert into Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
-                           (Atendente.CpfAtendente, Atendente.NomeAtendente, Atendente.SobrenomeAtendente, Atendente.RgAtendente, Atendente.EnderecoAtendente, Atendente.SalarioAtendente, Atendente.TelefoneAtendente))
+        cursor.execute('INSERT INTO Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) VALUES (%s, %s, %s, %s, %s, %s, %s)', (cpf, nome, sobrenome, rg, endereco, salario, telefone))
         conn.commit()
     return render_template('index.html')
 
 
-@app.route('/cadastrocliente')
-def cliente():
-    return render_template('cadastrocliente.html')
+# @app.route('/cadastrocliente')
+# def cliente():
+#     return render_template('cadastrocliente.html')
 
-@app.route('/gravarcliente', methods=['POST', 'GET'])
-def cadastrocliente():
-    Cliente = Cliente(request.form['CpfCliente'],
-                     request.form['NomeCliente'],
-                     request.form['SobrenomeCliente'],
-                     request.form['RgCliente'],
-                     request.form['EnderecoCliente'],
-                     request.form['Cpfatendente'],
-                     request.form['TelefoneCliente'])
+# @app.route('/gravarcliente', methods=['POST', 'GET'])
+# def cadastrocliente():
+#     Cliente = Cliente(request.form['CpfCliente'],
+#                      request.form['NomeCliente'],
+#                      request.form['SobrenomeCliente'],
+#                      request.form['RgCliente'],
+#                      request.form['EnderecoCliente'],
+#                      request.form['Cpfatendente'],
+#                      request.form['TelefoneCliente'])
     
-    if Cliente.CpfCliente and Cliente.NomeCliente and Cliente.SobrenomeCliente and Cliente.RgCliente and Cliente.EnderecoCliente and Cliente.Cpfatendente and Cliente.TelefoneCliente:
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        cursor.execute('insert into Atendente (CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, Cpfatendente, TelefoneCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
-                           (Cliente.CpfCliente, Cliente.NomeCliente, Cliente.SobrenomeCliente, Cliente.RgCliente, Cliente.EnderecoCliente, Cliente.Cpfatendente, Cliente.TelefoneCliente))
-        conn.commit()
-    return render_template('index.html')
+#     if Cliente.CpfCliente and Cliente.NomeCliente and Cliente.SobrenomeCliente and Cliente.RgCliente and Cliente.EnderecoCliente and Cliente.Cpfatendente and Cliente.TelefoneCliente:
+#         conn = mysql.connect()
+#         cursor = conn.cursor()
+#         cursor.execute('insert into Atendente (CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, Cpfatendente, TelefoneCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
+#                            (Cliente.CpfCliente, Cliente.NomeCliente, Cliente.SobrenomeCliente, Cliente.RgCliente, Cliente.EnderecoCliente, Cliente.Cpfatendente, Cliente.TelefoneCliente))
+#         conn.commit()
+#     return render_template('index.html')
 
 
 if __name__ == "__main__":

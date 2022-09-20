@@ -17,6 +17,14 @@ mysql.init_app(app)
 def main():
     return render_template('index.html')
 
+@app.route('/atendente')
+def atendente():
+    return render_template('cadastroatendente.html')
+
+# @app.route('/cliente')
+# def cliente():
+#     return render_template('cadastrocliente.html')
+
 @app.route('/gravaratendente', methods=['POST', 'GET'])
 def gravaratendente():
     cpf = request.form['cpf']
@@ -26,7 +34,7 @@ def gravaratendente():
     endereco = request.form['endereco']
     salario = request.form['salario']
     telefone = request.form['telefone']
-    if nome and cpf and endereco:
+    if cpf and nome and sobrenome and rg and endereco and salario and telefone:
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.execute('insert into Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) values (%s, %s, %s, %s, %s, %s, %s)', (cpf, nome, sobrenome, rg, endereco, salario, telefone))

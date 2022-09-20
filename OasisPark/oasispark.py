@@ -7,8 +7,8 @@ app = Flask(__name__)
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
-app.config['MYSQL_DATABASE_DB'] = 'oasis'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
+app.config['MYSQL_DATABASE_DB'] = 'teste'
 app.config['MYSQL_DATABASE_HOST'] = '127.0.0.1'
 mysql.init_app(app)
 
@@ -21,49 +21,105 @@ def main():
 def atendente():
     return render_template('cadastroatendente.html')
 
-# @app.route('/cliente')
-# def cliente():
-#     return render_template('cadastrocliente.html')
+@app.route('/cliente')
+def cliente():
+    return render_template('cadastrocliente.html')
+
+@app.route('/manobrista')
+def manobrista():
+    return render_template('cadastromanobrista.html')
+
+@app.route('/vaga')
+def vaga():
+    return render_template('cadastrovaga.html')
+
+@app.route('/veiculo')
+def veiculo():
+    return render_template('cadastroveiculo.html')
 
 @app.route('/gravaratendente', methods=['POST', 'GET'])
 def gravaratendente():
-    cpf = request.form['cpf']
-    nome = request.form['nome']
-    sobrenome = request.form['sobrenome']
-    rg = request.form['rg']
-    endereco = request.form['endereco']
-    salario = request.form['salario']
-    telefone = request.form['telefone']
-    if cpf and nome and sobrenome and rg and endereco and salario and telefone:
+    cpfatendente = request.form['cpfatendente']
+    nomeatendente = request.form['nomeatendente']
+    sobrenomeatendente = request.form['sobrenomeatendente']
+    rgatendente = request.form['rgatendente']
+    enderecoatendente = request.form['enderecoatendente']
+    salarioatendente = request.form['salarioatendente']
+    telefoneatendente = request.form['telefoneatendente']
+    if cpfatendente and nomeatendente and sobrenomeatendente and rgatendente and enderecoatendente and salarioatendente and telefoneatendente:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('insert into Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) values (%s, %s, %s, %s, %s, %s, %s)', (cpf, nome, sobrenome, rg, endereco, salario, telefone))
+        cursor.execute('insert into Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) values (%s, %s, %s, %s, %s, %s, %s)', 
+                       (cpfatendente, nomeatendente, sobrenomeatendente, rgatendente, enderecoatendente, salarioatendente, telefoneatendente))
         conn.commit()
     return render_template('index.html')
 
-
-# @app.route('/cadastrocliente')
-# def cliente():
-#     return render_template('cadastrocliente.html')
-
-# @app.route('/gravarcliente', methods=['POST', 'GET'])
-# def cadastrocliente():
-#     Cliente = Cliente(request.form['CpfCliente'],
-#                      request.form['NomeCliente'],
-#                      request.form['SobrenomeCliente'],
-#                      request.form['RgCliente'],
-#                      request.form['EnderecoCliente'],
-#                      request.form['Cpfatendente'],
-#                      request.form['TelefoneCliente'])
+@app.route('/gravarcliente', methods=['POST', 'GET'])
+def gravarcliente():
+    cpfcliente = request.form['cpfcliente']
+    nomecliente = request.form['nomecliente']
+    sobrenomecliente = request.form['sobrenomecliente']
+    rgcliente = request.form['rgcliente']
+    enderecocliente = request.form['enderecocliente']
+    cpfatendente = request.form['cpfatendente']
+    telefonecliente = request.form['telefonecliente']
     
-#     if Cliente.CpfCliente and Cliente.NomeCliente and Cliente.SobrenomeCliente and Cliente.RgCliente and Cliente.EnderecoCliente and Cliente.Cpfatendente and Cliente.TelefoneCliente:
-#         conn = mysql.connect()
-#         cursor = conn.cursor()
-#         cursor.execute('insert into Atendente (CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, Cpfatendente, TelefoneCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
-#                            (Cliente.CpfCliente, Cliente.NomeCliente, Cliente.SobrenomeCliente, Cliente.RgCliente, Cliente.EnderecoCliente, Cliente.Cpfatendente, Cliente.TelefoneCliente))
-#         conn.commit()
-#     return render_template('index.html')
+    if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and cpfatendente and telefonecliente:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('insert into Cliente (CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, Cpfatendente, TelefoneCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                           (cpfcliente, nomecliente, sobrenomecliente, rgcliente, enderecocliente, cpfatendente, telefonecliente))
+        conn.commit()
+    return render_template('index.html')
 
+@app.route('/gravarmanobrista', methods=['POST', 'GET'])
+def gravarmanobrista():
+    cnhmanobrista = request.form['cnhmanobrista']
+    nomemanobrista = request.form['nomemanobrista']
+    sobrenomemanobrista = request.form['sobrenomemanobrista']
+    rgmanobrista = request.form['rgmanobrista']
+    enderecomanobrista = request.form['enderecomanobrista']
+    salariomanobrista = request.form['salariomanobrista']
+    telefonemanobrista = request.form['telefonemanobrista']
+    if cnhmanobrista and nomemanobrista and sobrenomemanobrista and rgmanobrista and enderecomanobrista and salariomanobrista and telefonemanobrista:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('insert into Manobrista (CnhManobrista, NomeManobrista, SobrenomeManobrista, RgManobrista, EnderecoManobrista, SalarioManobrista, TelefoneManobrista) VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                           (cnhmanobrista, nomemanobrista, sobrenomemanobrista, rgmanobrista, enderecomanobrista, salariomanobrista, telefonemanobrista))
+        conn.commit()
+    return render_template('index.html')
+    
+@app.route('/gravarvaga', methods=['POST', 'GET'])
+def gravarvaga():
+    numerovaga = request.form['numerovaga']
+    situacaovaga = request.form['situacaovaga']
+    if numerovaga and situacaovaga:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('insert into Vaga (NumeroVaga, Situacao) VALUES (%s, %s)',
+                           (numerovaga, situacaovaga))
+        conn.commit()
+    return render_template('index.html')
+
+@app.route('/gravarveiculo', methods=['POST', 'GET'])
+def gravarveiculo():
+    placaveiculo = request.form['placaveiculo']
+    corveiculo = request.form['corveiculo']
+    modeloveiculo = request.form['modeloveiculo']
+    cpfcliente = request.form['cpfcliente']
+    numerovaga = request.form['numerovaga']
+    datahoraentrada = request.form['datahoraentrada']
+    datahorasaida = request.form['datahorasaida']
+    valor = request.form['valor']
+    cpfatendente = request.form['cpfatendente']
+    comprovante = request.form['comprovante']
+    if placaveiculo and corveiculo and modeloveiculo and cpfcliente and numerovaga and datahoraentrada and datahorasaida and valor and cpfatendente and comprovante:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('insert into Veiculo (Placa, Cor, Modelo, CpfCliente, NumeroVaga, DataHora_Entrada, DataHora_Saida, Valor, CpfAtendente, Comprovante) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
+                           (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga, datahoraentrada, datahorasaida, valor, cpfatendente, comprovante))
+        conn.commit()
+    return render_template('index.html')
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 3306))

@@ -7,9 +7,9 @@ app = Flask(__name__)
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
 app.config['MYSQL_DATABASE_DB'] = 'oasis'
-app.config['MYSQL_DATABASE_HOST'] = '127.0.0.1'
+app.config['MYSQL_DATABASE_HOST'] = '172.17.0.2'
 mysql.init_app(app)
 
 
@@ -122,5 +122,5 @@ def gravarveiculo():
     return render_template('index.html')
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 3306))
+    port = int(os.environ.get("PORT", 5008))
     app.run(host='0.0.0.0', port=port)

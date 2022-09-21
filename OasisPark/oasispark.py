@@ -58,7 +58,7 @@ def gravaratendente():
         cursor.execute('insert into Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) values (%s, %s, %s, %s, %s, %s, %s)',
                        (cpfatendente, nomeatendente, sobrenomeatendente, rgatendente, enderecoatendente, salarioatendente, telefoneatendente))
         conn.commit()
-    return render_template('index.html')
+    return render_template('cadastroatendente.html')
 
 
 @app.route('/gravarcliente', methods=['POST', 'GET'])
@@ -77,7 +77,7 @@ def gravarcliente():
         cursor.execute('insert into Cliente (CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, Cpfatendente, TelefoneCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
                        (cpfcliente, nomecliente, sobrenomecliente, rgcliente, enderecocliente, cpfatendente, telefonecliente))
         conn.commit()
-    return render_template('index.html')
+    return render_template('cadastrocliente.html')
 
 
 @app.route('/gravarmanobrista', methods=['POST', 'GET'])
@@ -95,7 +95,7 @@ def gravarmanobrista():
         cursor.execute('insert into Manobrista (CnhManobrista, NomeManobrista, SobrenomeManobrista, RgManobrista, EnderecoManobrista, SalarioManobrista, TelefoneManobrista) VALUES (%s, %s, %s, %s, %s, %s, %s)',
                        (cnhmanobrista, nomemanobrista, sobrenomemanobrista, rgmanobrista, enderecomanobrista, salariomanobrista, telefonemanobrista))
         conn.commit()
-    return render_template('index.html')
+    return render_template('cadastromanobrista.html')
 
 
 @app.route('/gravarvaga', methods=['POST', 'GET'])
@@ -108,7 +108,7 @@ def gravarvaga():
         cursor.execute('insert into Vaga (NumeroVaga, Situacao) VALUES (%s, %s)',
                        (numerovaga, situacaovaga))
         conn.commit()
-    return render_template('index.html')
+    return render_template('cadastrovaga.html')
 
 
 @app.route('/gravarveiculo', methods=['POST', 'GET'])
@@ -129,7 +129,7 @@ def gravarveiculo():
         cursor.execute('insert into Veiculo (Placa, Cor, Modelo, CpfCliente, NumeroVaga, DataHora_Entrada, DataHora_Saida, Valor, CpfAtendente, Comprovante) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
                        (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga, datahoraentrada, datahorasaida, valor, cpfatendente, comprovante))
         conn.commit()
-    return render_template('index.html')
+    return render_template('cadastroveiculo.html')
 
 
 if __name__ == "__main__":

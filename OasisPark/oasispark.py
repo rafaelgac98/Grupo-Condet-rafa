@@ -1,4 +1,4 @@
-import os
+import os, cgi, cgitb
 from flask import Flask, render_template, request
 from flaskext.mysql import MySQL
 
@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'mudar123'
 app.config['MYSQL_DATABASE_DB'] = 'teste'
 app.config['MYSQL_DATABASE_HOST'] = '172.17.0.2'
 mysql.init_app(app)
@@ -45,13 +45,13 @@ def veiculo():
 
 @app.route('/gravaratendente', methods=['POST', 'GET'])
 def gravaratendente():
-    cpfatendente = request.form['cpfatendente']
-    nomeatendente = request.form['nomeatendente']
-    sobrenomeatendente = request.form['sobrenomeatendente']
-    rgatendente = request.form['rgatendente']
-    enderecoatendente = request.form['enderecoatendente']
-    salarioatendente = request.form['salarioatendente']
-    telefoneatendente = request.form['telefoneatendente']
+    cpfatendente = request.form['cpfAtendente']
+    nomeatendente = request.form['nomeAtendente']
+    sobrenomeatendente = request.form['sobrenomeAtendente']
+    rgatendente = request.form['rgAtendente']
+    enderecoatendente = request.form['enderecoAtendente']
+    salarioatendente = request.form['salarioAtendente']
+    telefoneatendente = request.form['telefoneAtendente']
     if cpfatendente and nomeatendente and sobrenomeatendente and rgatendente and enderecoatendente and salarioatendente and telefoneatendente:
         conn = mysql.connect()
         cursor = conn.cursor()

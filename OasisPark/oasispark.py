@@ -135,7 +135,7 @@ def gravarveiculo():
     return render_template('cadastroveiculo.html')
 
 @app.route('/alterarocliente', methods=['POST', 'GET'])
-def gravarcliente():
+def upidatecliente():
     cpfcliente = request.form['cpfcliente']
     nomecliente = request.form['nomecliente']
     sobrenomecliente = request.form['sobrenomecliente']

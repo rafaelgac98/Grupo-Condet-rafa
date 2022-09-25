@@ -147,7 +147,7 @@ def upidatecliente():
     if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and cpfatendente and telefonecliente:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('UPIDATE Cliente SET NomeCliente=%s, SobrenomeCliente=%s, RgCliente=%s, EnderecoCliente=%s, Cpfatendente=%d, TelefoneCliente=%s WHERE CpfCliente=%s',
+        cursor.execute('UPIDATE Cliente SET NomeCliente=%s, SobrenomeCliente=%s, RgCliente=%s, EnderecoCliente=%s, Cpfatendente=%s, TelefoneCliente=%s WHERE CpfCliente=%s',
                        (nomecliente, sobrenomecliente, rgcliente, enderecocliente, cpfatendente, telefonecliente, cpfcliente))
         conn.commit()
     return render_template('alterarcliente.html')

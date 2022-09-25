@@ -135,7 +135,7 @@ def gravarveiculo():
     return render_template('cadastroveiculo.html')
 
 @app.route('/alterarocliente', methods=['POST', 'GET'])
-def upidatecliente():
+def updatecliente():
     cpfcliente = request.form['cpfcliente']
     nomecliente = request.form['nomecliente']
     sobrenomecliente = request.form['sobrenomecliente']
@@ -147,7 +147,7 @@ def upidatecliente():
     if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and cpfatendente and telefonecliente:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('UPIDATE Cliente SET NomeCliente=%s, SobrenomeCliente=%s, RgCliente=%s, EnderecoCliente=%s, Cpfatendente=%s, TelefoneCliente=%s WHERE CpfCliente=%s',
+        cursor.execute('UPDATE Cliente SET NomeCliente=%s, SobrenomeCliente=%s, RgCliente=%s, EnderecoCliente=%s, Cpfatendente=%s, TelefoneCliente=%s WHERE CpfCliente=%s',
                        (nomecliente, sobrenomecliente, rgcliente, enderecocliente, cpfatendente, telefonecliente, cpfcliente))
         conn.commit()
     return render_template('alterarcliente.html')

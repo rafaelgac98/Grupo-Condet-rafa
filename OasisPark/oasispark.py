@@ -134,6 +134,23 @@ def gravarveiculo():
         conn.commit()
     return render_template('cadastroveiculo.html')
 
+@app.route('/alterarocliente', methods=['POST', 'GET'])
+def gravarcliente():
+    cpfcliente = request.form['cpfcliente']
+    nomecliente = request.form['nomecliente']
+    sobrenomecliente = request.form['sobrenomecliente']
+    rgcliente = request.form['rgcliente']
+    enderecocliente = request.form['enderecocliente']
+    cpfatendente = request.form['cpfatendente']
+    telefonecliente = request.form['telefonecliente']
+
+    if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and cpfatendente and telefonecliente:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('UPIDATE Cliente SET NomeCliente=%s, SobrenomeCliente=%s, RgCliente=%s, EnderecoCliente=%s, Cpfatendente=%d, TelefoneCliente=%s WHERE CpfCliente=%s',
+                       (nomecliente, sobrenomecliente, rgcliente, enderecocliente, cpfatendente, telefonecliente, cpfcliente))
+        conn.commit()
+    return render_template('alterarcliente.html')
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5005))

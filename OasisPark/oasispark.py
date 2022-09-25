@@ -42,6 +42,9 @@ def vaga():
 def veiculo():
     return render_template('cadastroveiculo.html')
 
+@app.route('/alterarcliente')
+def upcliente():
+    return render_template('alterarcliente.html')
 
 @app.route('/gravaratendente', methods=['POST', 'GET'])
 def gravaratendente():

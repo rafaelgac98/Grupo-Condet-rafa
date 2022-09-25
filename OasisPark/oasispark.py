@@ -1,4 +1,4 @@
-import os
+import os, cgi, cgitb
 from flask import Flask, render_template, request
 from flaskext.mysql import MySQL
 
@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'mudar123'
 app.config['MYSQL_DATABASE_DB'] = 'teste'
 app.config['MYSQL_DATABASE_HOST'] = '172.17.0.2'
 mysql.init_app(app)
@@ -42,16 +42,19 @@ def vaga():
 def veiculo():
     return render_template('cadastroveiculo.html')
 
+@app.route('/alterarcliente')
+def upcliente():
+    return render_template('alterarcliente.html')
 
 @app.route('/gravaratendente', methods=['POST', 'GET'])
 def gravaratendente():
-    cpfatendente = request.form['cpfatendente']
-    nomeatendente = request.form['nomeatendente']
-    sobrenomeatendente = request.form['sobrenomeatendente']
-    rgatendente = request.form['rgatendente']
-    enderecoatendente = request.form['enderecoatendente']
-    salarioatendente = request.form['salarioatendente']
-    telefoneatendente = request.form['telefoneatendente']
+    cpfatendente = request.form['cpfAtendente']
+    nomeatendente = request.form['nomeAtendente']
+    sobrenomeatendente = request.form['sobrenomeAtendente']
+    rgatendente = request.form['rgAtendente']
+    enderecoatendente = request.form['enderecoAtendente']
+    salarioatendente = request.form['salarioAtendente']
+    telefoneatendente = request.form['telefoneAtendente']
     if cpfatendente and nomeatendente and sobrenomeatendente and rgatendente and enderecoatendente and salarioatendente and telefoneatendente:
         conn = mysql.connect()
         cursor = conn.cursor()
@@ -131,6 +134,24 @@ def gravarveiculo():
         conn.commit()
     return render_template('cadastroveiculo.html')
 
+@app.route('/alterarocliente', methods=['POST', 'GET'])
+def updatecliente():
+    cpfcliente = request.form['cpfcliente']
+    nomecliente = request.form['nomecliente']
+    sobrenomecliente = request.form['sobrenomecliente']
+    rgcliente = request.form['rgcliente']
+    enderecocliente = request.form['enderecocliente']
+    cpfatendente = request.form['cpfatendente']
+    telefonecliente = request.form['telefonecliente']
+
+    if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and cpfatendente and telefonecliente:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('UPDATE Cliente SET NomeCliente=%s, SobrenomeCliente=%s, RgCliente=%s, EnderecoCliente=%s, Cpfatendente=%s, TelefoneCliente=%s WHERE CpfCliente=%s',
+                       (nomecliente, sobrenomecliente, rgcliente, enderecocliente, cpfatendente, telefonecliente, cpfcliente))
+        conn.commit()
+    return render_template('alterarcliente.html')
+    
 @app.route('/selectatendente', methods=['POST', 'GET'])
 def selectatendente():
     conn = mysql.connect()
@@ -168,5 +189,5 @@ def selectveiculo():
     return render_template('listaveiculo.html',datas=data)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5008))
+    port = int(os.environ.get("PORT", 5005))
     app.run(host='0.0.0.0', port=port)

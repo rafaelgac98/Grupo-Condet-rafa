@@ -18,7 +18,7 @@ def main():
     return render_template('index.html')
 
 
-# @app.route('/atendente')
+# @app.route('/atendente') rafa
 # def atendente():
 #     return render_template('cadastroatendente.html')
 

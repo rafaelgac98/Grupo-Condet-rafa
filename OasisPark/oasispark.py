@@ -7,9 +7,9 @@ app = Flask(__name__)
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'mudar123'
+app.config['MYSQL_DATABASE_PASSWORD'] = '123456'
 app.config['MYSQL_DATABASE_DB'] = 'teste'
-app.config['MYSQL_DATABASE_HOST'] = '172.17.0.2'
+app.config['MYSQL_DATABASE_HOST'] = 'db'
 mysql.init_app(app)
 
 
@@ -18,9 +18,9 @@ def main():
     return render_template('index.html')
 
 
-@app.route('/atendente')
-def atendente():
-    return render_template('cadastroatendente.html')
+# @app.route('/atendente')
+# def atendente():
+#     return render_template('cadastroatendente.html')
 
 
 @app.route('/cliente')
@@ -42,9 +42,6 @@ def vaga():
 def veiculo():
     return render_template('cadastroveiculo.html')
 
-@app.route('/alterarcliente')
-def upcliente():
-    return render_template('alterarcliente.html')
 
 @app.route('/gravaratendente', methods=['POST', 'GET'])
 def gravaratendente():
@@ -71,14 +68,14 @@ def gravarcliente():
     sobrenomecliente = request.form['sobrenomecliente']
     rgcliente = request.form['rgcliente']
     enderecocliente = request.form['enderecocliente']
-    cpfatendente = request.form['cpfatendente']
+    idAtendente = request.form['cpfatendente']
     telefonecliente = request.form['telefonecliente']
 
-    if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and cpfatendente and telefonecliente:
+    if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and idAtendente and telefonecliente:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('insert into Cliente (CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, Cpfatendente, TelefoneCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
-                       (cpfcliente, nomecliente, sobrenomecliente, rgcliente, enderecocliente, cpfatendente, telefonecliente))
+        cursor.execute('insert into Cliente (CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, idAtendente, TelefoneCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                       (cpfcliente, nomecliente, sobrenomecliente, rgcliente, enderecocliente, idAtendente, telefonecliente))
         conn.commit()
     return render_template('cadastrocliente.html')
 
@@ -134,59 +131,16 @@ def gravarveiculo():
         conn.commit()
     return render_template('cadastroveiculo.html')
 
-@app.route('/alterarocliente', methods=['POST', 'GET'])
-def updatecliente():
-    cpfcliente = request.form['cpfcliente']
-    nomecliente = request.form['nomecliente']
-    sobrenomecliente = request.form['sobrenomecliente']
-    rgcliente = request.form['rgcliente']
-    enderecocliente = request.form['enderecocliente']
-    cpfatendente = request.form['cpfatendente']
-    telefonecliente = request.form['telefonecliente']
 
-    if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and cpfatendente and telefonecliente:
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        cursor.execute('UPDATE Cliente SET NomeCliente=%s, SobrenomeCliente=%s, RgCliente=%s, EnderecoCliente=%s, Cpfatendente=%s, TelefoneCliente=%s WHERE CpfCliente=%s',
-                       (nomecliente, sobrenomecliente, rgcliente, enderecocliente, cpfatendente, telefonecliente, cpfcliente))
-        conn.commit()
-    return render_template('alterarcliente.html')
-    
-@app.route('/selectatendente', methods=['POST', 'GET'])
+@app.route('/atendente', methods=['POST', 'GET'])
 def selectatendente():
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute('select CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente from Atendente')
     data = cursor.fetchall()
     conn.commit()
-    return render_template('listaatendente.html',datas=data)
+    return render_template('cadastroatendente.html',datas=data)
 
-@app.route('/selectcliente', methods=['POST', 'GET'])
-def selectcliente():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute('select CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, Cpfatendente, TelefoneCliente from Cliente')
-    data = cursor.fetchall()
-    conn.commit()
-    return render_template('listacliente.html',datas=data)
-
-@app.route('/selectmanobrista', methods=['POST', 'GET'])
-def selectmanobrista():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute('select CCnhManobrista, NomeManobrista, SobrenomeManobrista, RgManobrista, EnderecoManobrista, SalarioManobrista, TelefoneManobrista from Manobrista')
-    data = cursor.fetchall()
-    conn.commit()
-    return render_template('listamanobrista.html',datas=data)
-
-@app.route('/selectveiculo', methods=['POST', 'GET'])
-def selectveiculo():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute('select Placa, Cor, Modelo, CpfCliente, NumeroVaga, DataHora_Entrada, DataHora_Saida, Valor, CpfAtendente, Comprovante from Veiculo')
-    data = cursor.fetchall()
-    conn.commit()
-    return render_template('listaveiculo.html',datas=data)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5005))

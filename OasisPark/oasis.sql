@@ -1,82 +1,70 @@
-CRIANDO TABELA ATENDENTE------------------------
+CREATE DATABASE oasis;
+USE oasis;
+
+SELECT * FROM Atendente;
+SELECT * FROM Cliente;
+SELECT * FROM Manobrista;
+SELECT * FROM Vaga;
+SELECT * FROM Veiculo;
 
 CREATE TABLE Atendente (
-  	idAtendente int AUTO_INCREMENT Not NULL,
-    CpfAtendente char(11) NOT NULL,
+    CpfAtendente int NOT NULL,
     NomeAtendente varchar(30) NOT NULL,
   	SobrenomeAtendente varchar(50) NOT NULL,
-    RgAtendente char(9),
+    RgAtendente int,
   	EnderecoAtendente varchar(100),
-  	SalarioAtendente decimal(10,2) NOT NULL,
-  	TelefoneAtendente varchar(11) NOT NULL,
-    PRIMARY KEY (idAtendente),
-  	UNIQUE (idAtendente),
+  	SalarioAtendente int NOT NULL,
+  	TelefoneAtendente int NOT NULL,
+    PRIMARY KEY (CpfAtendente), 
     UNIQUE (CpfAtendente)
 );
 
-
-CRIANDO TABELA CLIENTE -------------------------------
-
 CREATE TABLE Cliente (
-  	idCliente int AUTO_INCREMENT NOT NULL,
-    CpfCliente char(11) NOT NULL,
+    CpfCliente int NOT NULL,
     NomeCliente varchar(30) NOT NULL,
   	SobrenomeCliente varchar(50) NOT NULL,
-    RgCliente char(9),
+    RgCliente int,
   	EnderecoCliente varchar(100),
-  	idAtendente int NOT NULL,
-  	TelefoneCliente varchar(11) NOT NULL,
-    PRIMARY KEY (idCliente),
-  	UNIQUE(idCliente)
+  	Cpfatendente int NOT NULL,
+  	TelefoneCliente int NOT NULL,
+    PRIMARY KEY (CpfCliente), 
     UNIQUE (CpfCliente),
-  	FOREIGN KEY (idAtendente) REFERENCES Atendente(idAtendente)  	
+  	FOREIGN KEY (Cpfatendente) REFERENCES Atendente(Cpfatendente)  	
 );
 
-CRIANDO TABELA MANOBRISTA------------------------------
-
 CREATE TABLE Manobrista (
-  	idManobrista int AUTO_INCREMENT NOT NULL,
-    CnhManobrista CHAR(11) NOT NULL,
+    CnhManobrista int NOT NULL,
     NomeManobrista varchar(30) NOT NULL,
   	SobrenomeManobrista varchar(50) NOT NULL,
-    RgManobrista CHAR(9),
+    RgManobrista int,
   	EnderecoManobrista varchar(100),
-  	SalarioManobrista decimal(10,2) NOT NULL,
-  	TelefoneManobrista VARCHAR(11) NOT NULL,
-    PRIMARY KEY (idManobrista),
-  	UNIQUE(idManobrista),
+  	SalarioManobrista int NOT NULL,
+  	TelefoneManobrista int NOT NULL,
+    PRIMARY KEY (CnhManobrista), 
     UNIQUE (CnhManobrista)
 );
 
-CRIANDO TABELA DE VAGA----------------------------------
-
 CREATE TABLE Vaga (
-  	idVaga int AUTO_INCREMENT NOT NULL,
-    NumeroVaga char(2) NOT NULL,    
+    NumeroVaga int NOT NULL,    
   	Situacao varchar(15) NOT NULL,
-    PRIMARY KEY (idVaga),
-  	UNIQUE(idVaga),
+    PRIMARY KEY (NumeroVaga), 
     UNIQUE (NumeroVaga)
 );
 
-CRIANDO TABELA VEICULO------------------------------------
-
 CREATE TABLE Veiculo (
-  	idVeiculo int AUTO_INCREMENT NOT NULL,
-    Placa CHAR(7) NOT NULL,
+    Placa int NOT NULL,
     Cor varchar(15) NOT NULL,
   	Modelo varchar(20) NOT NULL,
-    idCliente int,
-  	idVaga int,
+    CpfCliente int,
+  	NumeroVaga int,
   	DataHora_Entrada datetime,
   	DataHora_Saida datetime,
   	Valor decimal(10,2),
-  	idAtendente int NOT NULL,
+  	CpfAtendente int NOT NULL,
   	Comprovante varchar(100),
-    PRIMARY KEY (idVeiculo),
-  	UNIQUE(idVeiculo),
+    PRIMARY KEY (Placa), 
     UNIQUE (Placa),
-  	FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
-  	FOREIGN KEY (idVaga) REFERENCES Vaga(idVaga),
-  	FOREIGN KEY (idAtendente) REFERENCES Atendente(idAtendente)
+  	FOREIGN KEY (CpfCliente) REFERENCES Cliente(CpfCliente),
+  	FOREIGN KEY (NumeroVaga) REFERENCES Vaga(NumeroVaga),
+  	FOREIGN KEY (CpfAtendente) REFERENCES Atendente(CpfAtendente)
 );

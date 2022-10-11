@@ -240,6 +240,8 @@ def deletaratendente(pk):
 
 ############################ ------------- INICIO ROTAS MANOBRISTA ---------- ############################
 
+
+#### ------------- GRAVAR MANOBRISTA ---------- ####
 @app.route('/gravarmanobrista', methods=['POST', 'GET'])
 def gravarmanobrista():
     cnhmanobrista = request.form['cnhmanobrista']
@@ -259,13 +261,16 @@ def gravarmanobrista():
 
 
 
+
+
 ############################ ------------- FIM ROTAS MANOBRISTA ---------- ############################
 
 
 
 
-############################ ------------- FIM ROTAS VAGA ---------- ############################
+############################ ------------- INICIO ROTAS VAGA ---------- ############################
 
+#### ------------- GRAVAR VAGA ---------- ####
 @app.route('/gravarvaga', methods=['POST', 'GET'])
 def gravarvaga():
     numerovaga = request.form['numerovaga']
@@ -286,6 +291,7 @@ def gravarvaga():
 
 ############################ ------------- INICIO ROTAS VEICULO ---------- ############################
 
+#### ------------- GRAVAR VEICULO ---------- ####
 @app.route('/gravarveiculo', methods=['POST', 'GET'])
 def gravarveiculo():
     placaveiculo = request.form['placaveiculo']

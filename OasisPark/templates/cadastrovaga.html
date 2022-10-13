@@ -56,21 +56,16 @@
         <thead class="thead-dark">
           <tr align="center">
             <th scope="col">#</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Sobrenome</th>
-            <th scope="col">CPF</th>
-            <th scope="col">Telefone</th>
-            <th scope="col">Ações</th>
+            <th scope="col">Número</th>
+            <th scope="col">Situação</th>
           </tr>
         </thead>
         <tbody>
           {% for item in datas %}
           <tr>
             <th scope="row">{{item[0]}}</th>
-            <td>{{item[2]}}</td>
-            <td>{{item[3]}}</td>
             <td>{{item[1]}}</td>
-            <td>{{item[6]}}</td>
+            <td>{{item[2]}}</td>
             <td>
               <a href="/listarvaga/{{item[0]}}/" class="btn btn-dark">VIEW</a>
               <a href="" class="btn btn-primary">UPDATE</a>
@@ -97,29 +92,26 @@
               
                 <div class="row">
                     <div class="col-12 col-sm-12">
-                      <label for="numeroVaga" class="col-form-label">Número da vaga:</label>
-                      <input type="number" class="form-control col-md-4 .ml-auto" id="numeroVaga" name="numeroVaga">
+                      <label for="numerovaga" class="col-form-label">Número da vaga:</label>
+                      <input type="number" class="form-control col-md-4 .ml-auto" id="numerovaga" name="numerovaga">
                     </div>
+                    
                   </div>
-                  <div class="row">                  
-                  <div class="col-6 col-sm-6">
-                    <label for="sitVaga" class="col-form-label">Situação da vaga:</label>
-                    <div>
-                      <input type="radio" id="opOcupada" name="opOcupada" value="opOcupada">
-                      <label for="opOcupada">Ocupada</label>
-                    </div>
-                    <input type="radio" id="opOcupada" name="opOcupada" value="opOcupada">
-                    <label for="opOcupada">Ocupada</label><br>
-                    <input type="radio" id="opDesocupada" name="opDesocupada" value="opDesocupada">
-                    <label for="opDesocupada">Desocupada</label><br>  
+                  <br>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio1" name="situacaovaga" class="custom-control-input" value="0">
+                    <label class="custom-control-label" for="customRadio1">Ocupado</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio2" name="situacaovaga" class="custom-control-input" value="1">
+                    <label class="custom-control-label" for="customRadio2">Desocupado</label>
+                  </div>
+                  <br>
 
-                </div>
-                
-              
-            </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-              <input type="submit" class="btn btn-primary" value="Cadastrar">
+              <button type="submit" class="btn btn-primary">Cadastrar</button>
+              
             </div>
           </div>
         </div>

@@ -22,9 +22,7 @@ def main():
 
 
 
-@app.route('/manobrista')
-def manobrista():
-    return render_template('cadastromanobrista.html')
+
 
 
 @app.route('/vaga')
@@ -239,6 +237,18 @@ def deletaratendente(pk):
 
 
 ############################ ------------- INICIO ROTAS MANOBRISTA ---------- ############################
+
+
+
+#### ------------- ROTA PAGINA MANOBRISTA ---------- ####
+@app.route('/manobrista')
+def selectmanobrista():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idManobrista, CnhManobrista, NomeManobrista, SobrenomeManobrista, RgManobrista, EnderecoManobrista, SalarioManobrista, TelefoneManobrista from Manobrista')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastromanobrista.html',datas=data)
 
 
 #### ------------- GRAVAR MANOBRISTA ---------- ####

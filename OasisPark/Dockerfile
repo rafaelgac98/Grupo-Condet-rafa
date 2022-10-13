@@ -5,6 +5,7 @@ RUN mkdir templates
 RUN mkdir static
 COPY oasispark.py /app.py
 COPY templates/*  /templates/
+COPY static/*  /static/
 RUN chmod -R a+rwx static
 RUN chmod -R a+rwx templates
 CMD ["python","app.py"]

@@ -23,13 +23,6 @@ def main():
 
 
 
-
-
-@app.route('/vaga')
-def vaga():
-    return render_template('cadastrovaga.html')
-
-
 @app.route('/veiculo')
 def veiculo():
     return render_template('cadastroveiculo.html')
@@ -279,6 +272,22 @@ def gravarmanobrista():
 
 
 ############################ ------------- INICIO ROTAS VAGA ---------- ############################
+
+
+
+
+#### ------------- ROTA PAGINA VAGA ---------- ####
+@app.route('/vaga')
+def selectvaga():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idVaga, NumeroVaga, Situacao from Vaga')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastrovaga.html')
+
+
+
 
 #### ------------- GRAVAR VAGA ---------- ####
 @app.route('/gravarvaga', methods=['POST', 'GET'])

@@ -7,7 +7,7 @@ web:
   volumes:
     - .:/data
   ports:
-    - "5005:5005"
+    - "5008:5008"
 
 db:
   image: mysql:5.7

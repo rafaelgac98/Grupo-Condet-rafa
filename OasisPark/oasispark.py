@@ -262,9 +262,16 @@ def gravarmanobrista():
         conn.commit()
     return render_template('cadastromanobrista.html')
 
+#### ------------- DELETAR MANOBRISTA ---------- ####
 
-
-
+ @app.route('/deletarmanobrista/<int:pk>/', methods=['GET'])
+    def deletaratendente(pk):
+      conn = mysql.connect()
+      cursor = conn.cursor()
+      cursor.execute('DELETE from Manobrista where idManobrista = ' + str(pk))
+      data = cursor.fetchall()
+      conn.commit()
+      return render_template('cadastromanobrista.html', datas=data, pk = pk)
 
 ############################ ------------- FIM ROTAS MANOBRISTA ---------- ############################
 
@@ -302,6 +309,16 @@ def gravarvaga():
         conn.commit()
     return render_template('cadastrovaga.html')
 
+#### ------------- DELETAR VAGA ---------- ####
+
+@app.route('/deletarvaga/<int:pk>/', methods=['GET'])
+def deletaratendente(pk):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('DELETE from Vaga where idVaga = ' + str(pk))
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastrovaga.html', datas=data, pk = pk)
 
 ############################ ------------- FIM ROTAS VAGA ---------- ############################
 
@@ -331,7 +348,16 @@ def gravarveiculo():
         conn.commit()
     return render_template('cadastroveiculo.html')
 
+#### ------------- DELETAR VEICULO ---------- ####
 
+ @app.route('/deletarveiculo/<int:pk>/', methods=['GET'])
+ def deletaratendente(pk):
+     conn = mysql.connect()
+     cursor = conn.cursor()
+     cursor.execute('DELETE from Veiculo where idVeiculo = ' + str(pk))
+     data = cursor.fetchall()
+     conn.commit()
+     return render_template('cadastroveiculo.html', datas=data, pk = pk)
 
 ############################ ------------- FIM ROTAS VEICULO ---------- ############################
 

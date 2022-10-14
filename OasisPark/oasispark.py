@@ -293,7 +293,7 @@ def selectvaga():
 @app.route('/gravarvaga', methods=['POST', 'GET'])
 def gravarvaga():
     numerovaga = request.form['numerovaga']
-    situacaovaga = request.values.get['situacaovaga']
+    situacaovaga = request.form.get['situacaovaga']
     if numerovaga and situacaovaga:
         conn = mysql.connect()
         cursor = conn.cursor()

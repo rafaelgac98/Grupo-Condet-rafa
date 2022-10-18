@@ -7,7 +7,7 @@
 <HTML lang="pt-BR">
 <head>
     <meta charset="utf-8">
-    <title>Oasis Park - Atendente</title>
+    <title>Oasis Park - Vaga</title>
 </head>
     <body>
         <header>
@@ -47,18 +47,39 @@
             </nav>
         </header>
 
-        <div class="ateraatendente">
-            <form action="/alteraratendente" method="GET">
-                <th scope="row">{{item[0]}}</th>
-                <input type="text" value="{{item[1]}}" name="cpfAtendente">
-                <input type="text" value="{{item[2]}}" name="nomeAtendente">            
-                <input type="text" value="{{item[3]}}" name="sobrenomeAtendente">
-                <input type="text" value="{{item[4]}}" name="rgAtendente">
-                <input type="text" value="{{item[5]}}" name="enderecoAtendente">
-                <input type="text" value="{{item[6]}}" name="salarioAtendente">
-                <input type="text" value="{{item[7]}}" name="telefoneAtendente">
-                <input type="button" value="Alterar">
+
+        <div class="container pt-4">
+            {% for item in datas %}   
+            <form action="/alterarvaga/{{item[0]}}/" method="POST">
+                            
+                <div class="row">
+                    <!--OBS: Alterar ou não-->
+                    <div class="col-4 col-sm-4">
+                        <label for="numeroVaga">Número</label>
+                        <input type="text" class="form-control" id="numeroVaga" value="{{item[1]}}" name="numeroVaga" placeholder="CPF">
+                    </div>
+                </div>
+                <div class="form-row">                    
+                  <div class="form-group col-md-6">
+                    <label for="situacaoVaga">Situação</label>
+                    <input type="text" class="form-control" id="situacaoVaga" value="{{item[2]}}" name="situacaoVaga" placeholder="Nome">
+                  </div>
+                  
+                  <!-- <div class="form-group col-md-4">
+                    <label for="inputState">State</label>
+                    <select id="inputState" class="form-control">
+                      <option selected>Choose...</option>
+                      <option>...</option>
+                    </select>
+                  </div> -->
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Alterar</button>
+                
+                 
             </form>
+            {% endfor %}
         </div>
+
     </body>
 </html>

@@ -1,5 +1,4 @@
-from crypt import methods
-import os, cgi, cgitb
+import os
 from flask import Flask, render_template, request, redirect
 from flaskext.mysql import MySQL
 
@@ -86,17 +85,17 @@ def listaparaalteracliente(pk):
 
 @app.route('/alterarcliente/<int:pk>/', methods=['POST', 'GET'])
 def alterarcliente(pk):
-    cpfcliente = request.form['CpfCliente']
-    nomecliente = request.form['NomeCliente']
-    sobrenomecliente = request.form['SobrenomeCliente']
-    rgcliente = request.form['RgCliente']
-    enderecocliente = request.form['EnderecoCliente']
-    telefonecliente = request.form['TelefoneCliente']
+    cpfcliente = request.form['cpfClinte']
+    nomecliente = request.form['nomeCliente']
+    sobrenomecliente = request.form['sobrenomeCliente']
+    rgcliente = request.form['rgCliente']
+    enderecocliente = request.form['enderecoCliente']
+    telefonecliente = request.form['telefCliente']
 
     if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and telefonecliente:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('UPDATE Cliente SET CpfCliente=%s, NomeCliente="%s", SobrenomeCliente="%s", RgCliente="%s", EnderecoCliente="%s", TelefoneCliente="%s" WHERE idCliente=%s',
+        cursor.execute('UPDATE Cliente SET CpfCliente=%s, NomeCliente=%s, SobrenomeCliente=%s, RgCliente=%s, EnderecoCliente=%s, TelefoneCliente=%s WHERE idCliente=%s',
                        (cpfcliente, nomecliente, sobrenomecliente, rgcliente, enderecocliente, telefonecliente, str(pk)))
 
     return render_template('alteracliente.html', pk = pk)
@@ -262,6 +261,37 @@ def gravarmanobrista():
         conn.commit()
     return render_template('cadastromanobrista.html')
 
+
+#### ------------- LISTAR E ALTERAR MANOBRISTA ---------- ####
+@app.route('/listaparaalteracliente/<int:pk>/', methods=['POST', 'GET'])
+def listaparaalteramanobrista(pk):    
+    conn1 = mysql.connect()
+    cursor1 = conn1.cursor()
+    cursor1.execute('select idManobrista, CnhManobrista, NomeManobrista, SobrenomeManobrista, RgManobrista, EnderecoManobrista, SalarioManobrista, TelefoneManobrista from Manobrista where idManobrista = ' + str(pk))
+    data = cursor1.fetchall()
+    conn1.commit()
+    
+    return render_template('alteramanobrista.html', datas=data, pk = pk)
+
+
+@app.route('/alterarmanobrista/<int:pk>/', methods=['POST', 'GET'])
+def alterarmanobrista(pk):
+    cpfmanobrista = request.form['cnhManobrista']
+    nomemanobrista = request.form['nomeManobrista']
+    sobrenomecmanobrista = request.form['sobrenomeManobrista']
+    rgcmanobrista = request.form['rgManobrista']
+    enderecomanobrista = request.form['enderecoManobrista']
+    salrariomanobrista = request.form['salarioManobrista']
+    telefonemanobrista = request.form['telefManobrista']
+
+    if cpfmanobrista and nomemanobrista and sobrenomecmanobrista and rgcmanobrista and enderecomanobrista and salrariomanobrista and telefonemanobrista:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('UPDATE Manobrista SET CnhManobrista=%s, NomeManobrista=%s, SobrenomeManobrista=%s, RgManobrista=%s, EnderecoManobrista=%s, SalarioManobrista=%s, TelefoneManobrista=%s WHERE idManobrista=%s',
+                       (cpfmanobrista, nomemanobrista, sobrenomecmanobrista, rgcmanobrista, enderecomanobrista, salrariomanobrista, telefonemanobrista, str(pk)))
+
+    return render_template('alteramanobrista.html', pk = pk)
+
 #### ------------- DELETAR MANOBRISTA ---------- ####
 
 #@app.route('/deletarmanobrista/<int:pk>/', methods=['GET'])
@@ -309,6 +339,31 @@ def gravarvaga():
         conn.commit()
     return render_template('cadastrovaga.html')
 
+
+#### ------------- LISTAR E ALTERAR VAGA ---------- ####
+@app.route('/listaparaalteravaga/<int:pk>/', methods=['POST', 'GET'])
+def listaparaalteravaga(pk):    
+    conn1 = mysql.connect()
+    cursor1 = conn1.cursor()
+    cursor1.execute('select idVaga, NumeroVaga, Situacao from Vaga where idVaga = ' + str(pk))
+    data = cursor1.fetchall()
+    conn1.commit()
+    
+    return render_template('alteravaga.html', datas=data, pk = pk)
+
+
+@app.route('/alterarvaga/<int:pk>/', methods=['POST', 'GET'])
+def alterarvaga(pk):
+    numerovaga = request.form['numeroVaga']
+    situacaovaga = request.form['situacaoVaga']
+
+    if numerovaga and situacaovaga:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('UPDATE Vaga SET NumeroVaga=%s, Situacao=%s WHERE idVaga=%s',
+                       (numerovaga, situacaovaga, str(pk)))
+
+    return render_template('alteravaga.html', pk = pk)
 #### ------------- DELETAR VAGA ---------- ####
 
 #@app.route('/deletarvaga/<int:pk>/', methods=['GET'])

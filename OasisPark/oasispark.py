@@ -343,7 +343,7 @@ def gravarvaga():
 
 #### ------------- LISTAR E ALTERAR VAGA ---------- ####
 @app.route('/listaparaalteravaga/<int:pk>/', methods=['POST', 'GET'])
-def listaparaalteramanobrista(pk):    
+def listaparaalteravaga(pk):    
     conn1 = mysql.connect()
     cursor1 = conn1.cursor()
     cursor1.execute('select idVaga, NumeroVaga, Situacao from Vaga where idVaga = ' + str(pk))

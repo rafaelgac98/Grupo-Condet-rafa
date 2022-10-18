@@ -382,11 +382,15 @@ def main():
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute('select idCliente from Cliente')
-    teste1 = cursor.fetchall()
+    cursor.execute('select idVaga from Vaga')
+    cursor.execute('select idAtedente from Atendente')
+    cliente = cursor.fetchall()
+    vaga = cursor.fetchall()
+    atendente = cursor.fetchall()
     cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo')
     data = cursor.fetchall()
     conn.commit()
-    return render_template('index.html',datas=data, cliente=teste1)
+    return render_template('index.html',datas=data, cliente=cliente, vaga=vaga, atendente=atendente)
 
 #@app.route('/selectparaforcliente', methods=['POST', 'GET'])
 def selectparaforcliente():

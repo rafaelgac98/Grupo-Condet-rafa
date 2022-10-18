@@ -389,7 +389,8 @@ def main():
     atendente = cursor.fetchall()  
     
     
-    cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo')
+    cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo where DataHora_Saida is null')
+    cursor.execute()
     data = cursor.fetchall()
     conn.commit()
     return render_template('index.html',datas=data, cliente=cliente, vaga=vaga, atendente=atendente)
@@ -420,8 +421,22 @@ def gravarveiculo():
         cursor = conn.cursor()
         cursor.execute('insert into Veiculo (Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante) VALUES (%s, %s, %s, %s, %s, now(), null, null, %s, "teste")',
                        (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga,cpfatendente))
+        cursor.execute('UPDATE Vaga SET Situacao="Ocupado" WHERE idVaga=%s', (numerovaga))
         conn.commit()
+    
     return render_template('index.html')
+
+
+
+@app.route('/registrarsaida/<int:pk>/', methods=['POST', 'GET'])
+def registrarsaida(pk):
+    numerovaga = request.form['numerovaga']
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('UPDATE Veiculo SET DataHora_Saida = now() WHERE idVeiculo=%s', (str(pk)))
+    conn.commit('UPDATE Vaga SET Situacao="Desocupado" WHERE idVaga=%s', (numerovaga))
+
+    return render_template('index.html', pk = pk)
 
 #### ------------- DELETAR VEICULO ---------- ####
 

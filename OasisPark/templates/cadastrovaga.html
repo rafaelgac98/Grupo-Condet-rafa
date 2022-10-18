@@ -94,26 +94,28 @@
                 <div class="row">
                     <div class="col-12 col-sm-12">
                       <label for="numerovaga" class="col-form-label">Número da vaga:</label>
-                      <input type="number" class="form-control col-md-4 .ml-auto" id="numerovaga" name="numerovaga">
+                      <input type="text" class="form-control col-md-4 .ml-auto" id="numerovaga" name="numerovaga">
                     </div>
                     
                   </div>
                   <br>
-                  <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio1" name="situacaovaga" class="custom-control-input" value="Ocupado">
-                    <label class="custom-control-label" for="customRadio1">Ocupado</label>
-                  </div>
-                  <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio2" name="situacaovaga" class="custom-control-input" value="Desocupado">
-                    <label class="custom-control-label" for="customRadio2">Desocupado</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Situação</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01" name="situacaovaga">
+                      <option selected>Selecione</option>
+                      <option value="Ocupado">Ocupado</option>
+                      <option value="Desocupado">Desocupado</option>
+                    </select>
                   </div>
                   <br>
 
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-              <input type="submit" class="btn btn-primary" value="Cadastrar">
-              
-            </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="submit" class="btn btn-primary" > Cadastrar</button>
+                
+              </div>
           </div>
         </div>
       </div>

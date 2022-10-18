@@ -56,10 +56,12 @@
         <thead class="thead-dark">
           <tr align="center">
             <th scope="col">#</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Sobrenome</th>
-            <th scope="col">CPF</th>
-            <th scope="col">Telefone</th>
+            <th scope="col">Placa</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Cor</th>
+            <th scope="col">ID Prop</th>
+            <th scope="col">Vaga</th>
+            <th scope="col">Data/Hora Entrada</th>
             <th scope="col">Ações</th>
           </tr>
         </thead>
@@ -67,9 +69,11 @@
           {% for item in datas %}
           <tr>
             <th scope="row">{{item[0]}}</th>
-            <td>{{item[2]}}</td>
-            <td>{{item[3]}}</td>
             <td>{{item[1]}}</td>
+            <td>{{item[3]}}</td>
+            <td>{{item[2]}}</td>
+            <td>{{item[4]}}</td>
+            <td>{{item[5]}}</td>
             <td>{{item[6]}}</td>
             <td>
               <a href="/listarveiculo/{{item[0]}}/" class="btn btn-dark">VIEW</a>
@@ -98,38 +102,61 @@
                 <div class="row">
                     <div class="col-12 col-sm-12">
                       <label for="placaVeiculo" class="col-form-label">Placa:</label>
-                      <input type="number" class="form-control col-md-4 .ml-auto" id="placaVeiculo" name="placaVeiculo">
+                      <input type="number" class="form-control col-md-4 .ml-auto" id="placaVeiculo" name="placaveiculo">
                     </div>
                   </div>
                   <div class="row">                  
                   <div class="col-6 col-sm-6">
                     <label for="corVeiculo" class="col-form-label">Cor:</label>
-                    <input type="text" class="form-control" name="corVeiculo" id="corVeiculo">
+                    <input type="text" class="form-control" name="corVeiculo" id="corveiculo">
+                  </div>
+
+                  <div class="col-6 col-sm-6">
+                    <label for="modeloveiculo" class="col-form-label">Modelo:</label>
+                    <input type="text" class="form-control" name="modeloveiculo" id="modeloveiculo">
                   </div>
                 </div>
                 
-                <div class="row">                  
+                <div class="row">
+                                   
                   <div class="col-6 col-sm-6">
-                    <label for="dataEntrada">Data de Entrada:</label>
-                    <input type="date" id="dataEntrada" name="dataEntrada" value="0000-00-00" >
+                    <label for="Cliente" class="col-form-label">Proprietário:</label>
+                    
+                    <select class="custom-select" id="inputGroupSelect01">
+                      <option selected>Selecione</option>
+                      {% for item in cliente %}
+                      <option value="{{item[0]}}">{{item[0]}}</option>
+                      {% endfor %}   
+                    </select>
+                                    
                   </div>
 
-                  <div class="col-6 col-sm-6">
-                    <label for="horaEntrada">Hora de Entrada:</label>
-                    <input type="time" id="horaEntrada" name="horaEntrada"">
-                  </div>
+                  
 
-                  <div class="row">                  
-                    <div class="col-6 col-sm-6">
+                  {% for item in vagas %}
+
+                  <div class="col-6 col-sm-6">
+                    <label for="vaga" class="col-form-label">Vaga:</label>
+                    <select class="custom-select" id="inputGroupSelect01">
+                      <option selected>Selecione</option>
+                      <option value="{{item[0]}}"></option>
+                    </select>
+                  </div>
+                  {% endfor %}
+                </div>
+                <br>
+                <div class="row">
+                                 
+                    <div class="col-4 col-sm-4">
                       <label for="dataSaida">Data de Saída:</label>
                       <input type="date" id="dataSaida" name="dataSaida" value="0000-00-00" >
                     </div>
   
-                    <div class="col-6 col-sm-6">
+                    <div class="col-4 col-sm-4">
                       <label for="horaSaida">Hora de Saída:</label>
                       <input type="time" id="horaSaida" name="horaSaida">
                     </div>
-              
+                  
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

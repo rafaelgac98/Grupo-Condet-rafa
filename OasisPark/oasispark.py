@@ -263,7 +263,7 @@ def gravarmanobrista():
 
 
 #### ------------- LISTAR E ALTERAR MANOBRISTA ---------- ####
-@app.route('/listaparaalteracliente/<int:pk>/', methods=['POST', 'GET'])
+@app.route('/listaparaalteramanobrista/<int:pk>/', methods=['POST', 'GET'])
 def listaparaalteramanobrista(pk):    
     conn1 = mysql.connect()
     cursor1 = conn1.cursor()
@@ -331,6 +331,7 @@ def selectvaga():
 def gravarvaga():
     numerovaga = request.form['numerovaga']
     situacaovaga = request.form['situacaovaga']
+    
     if numerovaga and situacaovaga:
         conn = mysql.connect()
         cursor = conn.cursor()
@@ -342,7 +343,7 @@ def gravarvaga():
 
 #### ------------- LISTAR E ALTERAR VAGA ---------- ####
 @app.route('/listaparaalteravaga/<int:pk>/', methods=['POST', 'GET'])
-def listaparaalteravaga(pk):    
+def listaparaalteramanobrista(pk):    
     conn1 = mysql.connect()
     cursor1 = conn1.cursor()
     cursor1.execute('select idVaga, NumeroVaga, Situacao from Vaga where idVaga = ' + str(pk))

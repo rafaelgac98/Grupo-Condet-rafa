@@ -433,7 +433,8 @@ def registrarsaida(pk):
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute('UPDATE Veiculo SET DataHora_Saida = now() WHERE idVeiculo=%s', (str(pk)))
-    conn.commit('UPDATE Vaga SET Situacao="Desocupado" WHERE idVaga=%s', (numerovaga))
+    cursor.execute('UPDATE Vaga SET Situacao="Desocupado" WHERE idVaga=%s', (numerovaga))
+    conn.commit()
 
     return render_template('index.html', pk = pk)
 

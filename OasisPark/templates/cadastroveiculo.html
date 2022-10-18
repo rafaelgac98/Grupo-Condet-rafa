@@ -123,9 +123,9 @@
                     <label for="Cliente" class="col-form-label">Proprietário:</label>
                     
                     <select class="custom-select" id="inputGroupSelect01">
-                      <option selected>Selecione</option>
                       {% for item in cliente %}
-                      <option value="{{item[0]}}"></option>
+                      <option selected>Selecione</option>                      
+                      <option value="{{item[0]}}">{{item[0]}}</option>
                       {% endfor %}   
                     </select>
                                     

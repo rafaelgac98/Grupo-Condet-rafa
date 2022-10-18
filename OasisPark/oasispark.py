@@ -381,7 +381,7 @@ def main():
     conn.commit()
     return render_template('index.html',datas=data)
 
-@app.route('/selectparaforcliente', methods=['POST', 'GET'])
+#@app.route('/selectparaforcliente', methods=['POST', 'GET'])
 def selectparaforcliente():
     conn = mysql.connect()
     cursor = conn.cursor()

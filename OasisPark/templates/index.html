@@ -3,213 +3,145 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="static/style.css" />
 <HTML lang="pt-BR">
 <head>
     <meta charset="utf-8">
-    <title>Oasis Park - Veículo</title>
+    <title>Oasis Park</title>
 </head>
-  <body>
+<body>
     <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand" href="/">Oasis Park</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Cadastrar
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/atendente">Atendente</a>
-                  <a class="dropdown-item" href="/cliente">Cliente</a>
-                  <!-- <div class="dropdown-divider"></div> -->
-                  <a class="dropdown-item" href="/manobrista">Manobrista</a>
-                  <a class="dropdown-item" href="/vaga">Vaga</a>
-                  <a class="dropdown-item" href="/veiculo">Veículo</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-              </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-          </div>
-        </nav>
-  </header> 
-
-  <div class="col-8 m-auto pt-3 pb-2 text-center">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Cadastrar</button>
-  </div>
-
-    <div class="container">
-      <table class="table table-hover">
-        <thead class="thead-dark">
-          <tr align="center">
-            <th scope="col">#</th>
-            <th scope="col">Placa</th>
-            <th scope="col">Modelo</th>
-            <th scope="col">Cor</th>
-            <th scope="col">ID Prop</th>
-            <th scope="col">Vaga</th>
-            <th scope="col">Data/Hora Entrada</th>
-            <th scope="col">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in datas %}
-          <tr>
-            <th scope="row">{{item[0]}}</th>
-            <td>{{item[1]}}</td>
-            <td>{{item[3]}}</td>
-            <td>{{item[2]}}</td>
-            <td>{{item[4]}}</td>
-            <td>{{item[5]}}</td>
-            <td>{{item[6]}}</td>
-            <td>
-              <a href="/listarveiculo/{{item[0]}}/" class="btn btn-dark">VIEW</a>
-              <a href="/registrarsaida/{{item[0]}}/" class="btn btn-primary">UPDATE</a>
-              <a href="/deletarveiculo/{{item[0]}}/" class="btn btn-danger btnDel">DELETE</a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-
-    <form action="/gravarveiculo" method="POST" id="insert-veiculo">
-      
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog " role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="CadastroVeiculolbl">Cadastre um veiculo</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Oasis Park</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Cadastrar
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/atendente">Atendente</a>
+                    <a class="dropdown-item" href="/cliente">Cliente</a>
+                    <!-- <div class="dropdown-divider"></div> -->
+                    <a class="dropdown-item" href="/manobrista">Manobrista</a>
+                    <a class="dropdown-item" href="/vaga">Vaga</a>
+                    <a class="dropdown-item" href="/veiculo">Veículo</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
             </div>
-            <div class="modal-body">
-              
-                <div class="row">
-                    <div class="col-12 col-sm-12">
-                      <label for="placaVeiculo" class="col-form-label">Placa:</label>
-                      <input type="number" class="form-control col-md-4 .ml-auto" id="placaVeiculo" name="placaveiculo">
-                    </div>
-                  </div>
-                  <div class="row">                  
-                  <div class="col-6 col-sm-6">
-                    <label for="corVeiculo" class="col-form-label">Cor:</label>
-                    <input type="text" class="form-control" name="corVeiculo" id="corveiculo">
-                  </div>
+          </nav>
+    </header>
+<div class="container pt-3 pb-2">
 
-                  <div class="col-6 col-sm-6">
-                    <label for="modeloveiculo" class="col-form-label">Modelo:</label>
-                    <input type="text" class="form-control" name="modeloveiculo" id="modeloveiculo">
-                  </div>
-                </div>
-                
-                <div class="row">
-                                   
-                  <div class="col-6 col-sm-6">
-                    <label for="Cliente" class="col-form-label">Proprietário:</label>
-                    
-                    <select class="custom-select" id="inputGroupSelect01">
-                      <option selected>Selecione</option>
-                      {% for item in cliente %}
-                      <option value="{{item[0]}}">{{item[0]}}</option>
-                      {% endfor %}   
-                    </select>
-                                    
-                  </div>
-
-                  
-
-                  {% for item in vagas %}
-
-                  <div class="col-6 col-sm-6">
-                    <label for="vaga" class="col-form-label">Vaga:</label>
-                    <select class="custom-select" id="inputGroupSelect01">
-                      <option selected>Selecione</option>
-                      <option value="{{item[0]}}"></option>
-                    </select>
-                  </div>
-                  {% endfor %}
-                </div>
-                <br>
-                <div class="row">
-                                 
-                    <div class="col-4 col-sm-4">
-                      <label for="dataSaida">Data de Saída:</label>
-                      <input type="date" id="dataSaida" name="dataSaida" value="0000-00-00" >
-                    </div>
-  
-                    <div class="col-4 col-sm-4">
-                      <label for="horaSaida">Hora de Saída:</label>
-                      <input type="time" id="horaSaida" name="horaSaida">
-                    </div>
-                  
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-              <input type="submit" class="btn btn-primary" value="Cadastrar">
-            </div>
+  <form class="needs-validation" novalidate action="/gravarveiculo" method="POST" id="insert-veiculo">
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <label for="placaveiculo">Placa</label>
+        <input type="text" class="form-control" id="placaveiculo" placeholder="Placa do veículo" name="placaveiculo" required>
+        <div class="valid-tooltip">
+          Looks good!
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="corveiculo">Cor</label>
+        <input type="text" class="form-control" id="corveiculo" placeholder="Cor do veículo" name="corveiculo" required>
+        <div class="valid-tooltip">
+          Looks good!
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="modeloveiculo">Modelo</label>
+        <div class="input-group">         
+          <input type="text" class="form-control" id="modeloveiculo" placeholder="Modelo do veículo" name="modeloveiculo" aria-describedby="validationTooltipUsernamePrepend" required>
+          <div class="invalid-tooltip">
+            Please choose a unique and valid username.
           </div>
         </div>
       </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <label for="Cliente" class="col-form-label">Proprietário:</label>                    
+        <select class="custom-select" id="inputGroupSelect01" name="cpfcliente">
+          <option selected>Selecione</option>
+          {% for item in cliente %}
+          <option value="{{item[0]}}">{{item[0]}}</option>
+          {% endfor %}   
+        </select>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="Vaga" class="col-form-label">Vaga:</label>                    
+        <select class="custom-select" id="inputGroupSelect01" name="numerovaga">
+          <option selected>Selecione</option>
+          {% for item in vaga %}
+          <option value="{{item[0]}}">{{item[0]}}</option>
+          {% endfor %}   
+        </select>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="Atendente" class="col-form-label">Atendente:</label>                    
+        <select class="custom-select" id="inputGroupSelect01" name="cpfatendente">
+          <option selected>Selecione</option>
+          {% for item in atendente %}
+          <option value="{{item[0]}}">{{item[0]}}</option>
+          {% endfor %}   
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Cadastrar</button>
   </form>
 
+</div>
 
+<div class="container">
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr align="center">
+        <th scope="col">#</th>
+        <th scope="col">Placa</th>
+        <th scope="col">Modelo</th>
+        <th scope="col">Cor</th>
+        <th scope="col">ID Prop</th>
+        <th scope="col">Vaga</th>
+        <th scope="col">Data/Hora Entrada</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in datas %}
+      <tr>
+        <th scope="row">{{item[0]}}</th>
+        <td>{{item[1]}}</td>
+        <td>{{item[3]}}</td>
+        <td>{{item[2]}}</td>
+        <td>{{item[4]}}</td>
+        <td>{{item[5]}}</td>
+        <td>{{item[6]}}</td>
+        <td>
+          <a href="/listarveiculo/{{item[0]}}/" class="btn btn-dark">VIEW</a>
+          <a href="/registrarsaida/{{item[0]}}/" class="btn btn-primary">UPDATE</a>
+          <a href="/deletarveiculo/{{item[0]}}/" class="btn btn-danger btnDel">DELETE</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
-    <script src="/static/javascript.js"></script>
-  </body>
+</body>
+
 </HTML>
-
-
-
-<!-- Scrip para chamar o modal -->
-<script>
-  $('#exampleModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var recipient = button.data('whatever') // Extract info from data-* attributes
-    var modal = $(this)
-    modal.find('.modal-title').text('Cadastrar Veiculo')
-    modal.find('.modal-body input').val(recipient)
-  });
-</script>
-
-<!-- <HTML>
-<form action="/gravarveiculo" method="POST">
-  <label for="placa">Placa:</label><br>
-  <input type="text" name="placa" /><br>
-  <label for="cor">Cor:</label><br>
-  <input type="text" name="cor" /><br>
-  <label for="modelo">Modelo:</label><br>
-  <input type="text" name="modelo" /><br>
-  <label for="cpfcliente">CPF Cliente</label><br>
-  <input type="number" name="cpfcliente" /><br>
-  <label for="numerovaga">Número vaga:</label><br>
-  <input type="number" name="numerovaga" /><br>
-  <label for="entrada">Entrada:</label><br>
-  <input type="number" name="entrada" /><br>
-  <label for="saida">Saída:</label><br>
-  <input type="number" name="saida" /><br>
-  <label for="valor">Valor:</label><br>
-  <input type="text" name="valor" /><br>
-  <label for="cpfatendente">CPF Atendente:</label><br>
-  <input type="number" name="cpfatendente" /><br>
-  <label for="comprovante">Comprovante:</label><br>
-  <input type="text" name="comprovante" /><br>
-  <br><br>
-  <input type="submit" value="enviar" />
-</form>
-
-</HTML> -->

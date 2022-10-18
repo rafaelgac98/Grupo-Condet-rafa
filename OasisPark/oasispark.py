@@ -429,11 +429,12 @@ def gravarveiculo():
 
 @app.route('/registrarsaida/<int:pk>/', methods=['POST', 'GET'])
 def registrarsaida(pk):
-    numerovaga = request.form['numerovaga']
+    #numerovaga = request.form['numerovaga']
     conn = mysql.connect()
     cursor = conn.cursor()
+    id = cursor.execute('select idVaga from Veiculo where idVeiculo=%s', (str(pk)))
     cursor.execute('UPDATE Veiculo SET DataHora_Saida = now() WHERE idVeiculo=%s', (str(pk)))
-    cursor.execute('UPDATE Vaga SET Situacao="Desocupado" WHERE idVaga=%s', (numerovaga))
+    cursor.execute('UPDATE Vaga SET Situacao="Desocupado" WHERE idVaga=%s', (id))
     conn.commit()
 
     return render_template('index.html', pk = pk)

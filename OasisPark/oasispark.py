@@ -382,6 +382,25 @@ def alterarvaga(pk):
 
 
 ############################ ------------- INICIO ROTAS VEICULO ---------- ############################
+@app.route('/')
+def selectveiculo():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('index.html',datas=data)
+
+def selectparaforcliente():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idCliente from Cliente')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('index.html',cliente=data)
+
+
+
 
 #### ------------- GRAVAR VEICULO ---------- ####
 @app.route('/gravarveiculo', methods=['POST', 'GET'])
@@ -391,18 +410,14 @@ def gravarveiculo():
     modeloveiculo = request.form['modeloveiculo']
     cpfcliente = request.form['cpfcliente']
     numerovaga = request.form['numerovaga']
-    datahoraentrada = request.form['datahoraentrada']
-    datahorasaida = request.form['datahorasaida']
-    valor = request.form['valor']
     cpfatendente = request.form['cpfatendente']
-    comprovante = request.form['comprovante']
-    if placaveiculo and corveiculo and modeloveiculo and cpfcliente and numerovaga and datahoraentrada and datahorasaida and valor and cpfatendente and comprovante:
+    if placaveiculo and corveiculo and modeloveiculo and cpfcliente and numerovaga and cpfatendente:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('insert into Veiculo (Placa, Cor, Modelo, CpfCliente, NumeroVaga, DataHora_Entrada, DataHora_Saida, Valor, CpfAtendente, Comprovante) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
-                       (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga, datahoraentrada, datahorasaida, valor, cpfatendente, comprovante))
+        cursor.execute('insert into Veiculo (Placa, Cor, Modelo, CpfCliente, NumeroVaga, DataHora_Entrada, DataHora_Saida, Valor, CpfAtendente, Comprovante) VALUES (%s, %s, %s, %s, %s, now(), null, null, %s, "teste")',
+                       (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga,cpfatendente))
         conn.commit()
-    return render_template('cadastroveiculo.html')
+    return render_template('index.html')
 
 #### ------------- DELETAR VEICULO ---------- ####
 

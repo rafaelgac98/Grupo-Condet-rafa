@@ -383,7 +383,7 @@ def main():
     cursor = conn.cursor()
     cursor.execute('select idCliente from Cliente')
     cliente = cursor.fetchall()
-    cursor.execute('select idVaga from Vaga')
+    cursor.execute('select idVaga from Vaga where Situacao = "Desocupado"')
     vaga = cursor.fetchall()
     cursor.execute('select idAtendente from Atendente')
     atendente = cursor.fetchall()  
@@ -418,7 +418,7 @@ def gravarveiculo():
     if placaveiculo and corveiculo and modeloveiculo and cpfcliente and numerovaga and cpfatendente:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('insert into Veiculo (Placa, Cor, Modelo, CpfCliente, NumeroVaga, DataHora_Entrada, DataHora_Saida, Valor, CpfAtendente, Comprovante) VALUES (%s, %s, %s, %s, %s, now(), null, null, %s, "teste")',
+        cursor.execute('insert into Veiculo (Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante) VALUES (%s, %s, %s, %s, %s, now(), null, null, %s, "teste")',
                        (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga,cpfatendente))
         conn.commit()
     return render_template('index.html')

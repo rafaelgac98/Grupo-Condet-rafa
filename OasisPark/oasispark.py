@@ -385,7 +385,7 @@ def main():
     cliente = cursor.fetchall()
     cursor.execute('select idVaga from Vaga')
     vaga = cursor.fetchall()
-    cursor.execute('select idAtedente from Atendente')
+    cursor.execute('select idAtendente from Atendente')
     atendente = cursor.fetchall()  
     
     

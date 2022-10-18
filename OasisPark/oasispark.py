@@ -362,7 +362,7 @@ def gravarveiculo():
     return render_template('cadastroveiculo.html')
 
 
-@app.route('/selectparaforcliente', methods=['POST', 'GET'])
+#@app.route('/selectparaforcliente', methods=['POST', 'GET'])
 def selectparaforcliente():
     conn = mysql.connect()
     cursor = conn.cursor()

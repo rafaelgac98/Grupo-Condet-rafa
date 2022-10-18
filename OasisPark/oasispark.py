@@ -383,7 +383,7 @@ def alterarvaga(pk):
 
 ############################ ------------- INICIO ROTAS VEICULO ---------- ############################
 @app.route('/')
-def selectveiculo():
+def main():
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo')
@@ -391,6 +391,7 @@ def selectveiculo():
     conn.commit()
     return render_template('index.html',datas=data)
 
+@app.route('/selectparaforcliente', methods=['POST', 'GET'])
 def selectparaforcliente():
     conn = mysql.connect()
     cursor = conn.cursor()

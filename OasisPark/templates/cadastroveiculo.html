@@ -1,215 +1,444 @@
-<!DOCTYPE html>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="static/style.css" />
-<HTML lang="pt-BR">
-<head>
-    <meta charset="utf-8">
-    <title>Oasis Park - Veículo</title>
-</head>
-  <body>
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand" href="/">Oasis Park</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Cadastrar
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/atendente">Atendente</a>
-                  <a class="dropdown-item" href="/cliente">Cliente</a>
-                  <!-- <div class="dropdown-divider"></div> -->
-                  <a class="dropdown-item" href="/manobrista">Manobrista</a>
-                  <a class="dropdown-item" href="/vaga">Vaga</a>
-                  <a class="dropdown-item" href="/veiculo">Veículo</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-              </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-          </div>
-        </nav>
-  </header> 
+from crypt import methods
+import os, cgi, cgitb
+from flask import Flask, render_template, request, redirect
+from flaskext.mysql import MySQL
 
-  <div class="col-8 m-auto pt-3 pb-2 text-center">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Cadastrar</button>
-  </div>
+mysql = MySQL()
+app = Flask(__name__)
 
-    <div class="container">
-      <table class="table table-hover">
-        <thead class="thead-dark">
-          <tr align="center">
-            <th scope="col">#</th>
-            <th scope="col">Placa</th>
-            <th scope="col">Modelo</th>
-            <th scope="col">Cor</th>
-            <th scope="col">ID Prop</th>
-            <th scope="col">Vaga</th>
-            <th scope="col">Data/Hora Entrada</th>
-            <th scope="col">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in datas %}
-          <tr>
-            <th scope="row">{{item[0]}}</th>
-            <td>{{item[1]}}</td>
-            <td>{{item[3]}}</td>
-            <td>{{item[2]}}</td>
-            <td>{{item[4]}}</td>
-            <td>{{item[5]}}</td>
-            <td>{{item[6]}}</td>
-            <td>
-              <a href="/listarveiculo/{{item[0]}}/" class="btn btn-dark">VIEW</a>
-              <a href="" class="btn btn-primary">UPDATE</a>
-              <a href="/deletarveiculo/{{item[0]}}/" class="btn btn-danger btnDel">DELETE</a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+# MySQL configurations
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = '123456'
+app.config['MYSQL_DATABASE_DB'] = 'teste'
+app.config['MYSQL_DATABASE_HOST'] = 'db'
+mysql.init_app(app)
 
-    <form action="/gravarveiculo" method="POST" id="insert-veiculo">
-      
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog " role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="CadastroVeiculolbl">Cadastre um veiculo</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              
-                <div class="row">
-                    <div class="col-12 col-sm-12">
-                      <label for="placaVeiculo" class="col-form-label">Placa:</label>
-                      <input type="number" class="form-control col-md-4 .ml-auto" id="placaVeiculo" name="placaveiculo">
-                    </div>
-                  </div>
-                  <div class="row">                  
-                  <div class="col-6 col-sm-6">
-                    <label for="corVeiculo" class="col-form-label">Cor:</label>
-                    <input type="text" class="form-control" name="corVeiculo" id="corveiculo">
-                  </div>
 
-                  <div class="col-6 col-sm-6">
-                    <label for="modeloveiculo" class="col-form-label">Modelo:</label>
-                    <input type="text" class="form-control" name="modeloveiculo" id="modeloveiculo">
-                  </div>
-                </div>
-                
-                <div class="row">
-                                   
-                  <div class="col-6 col-sm-6">
-                    <label for="Cliente" class="col-form-label">Proprietário:</label>
-                    
-                    <select class="custom-select" id="inputGroupSelect01">
-                      <option selected>Selecione</option>
-                      {% for item in cliente %}
-                      <option value="{{item[0]}}"></option>
-                      {% endfor %}   
-                    </select>
-                                    
-                  </div>
+############################ ------------- INÍCIO ROTAS PRINCIPAIS ---------- ############################
 
-                  
-
-                  {% for item in vagas %}
-
-                  <div class="col-6 col-sm-6">
-                    <label for="vaga" class="col-form-label">Vaga:</label>
-                    <select class="custom-select" id="inputGroupSelect01">
-                      <option selected>Selecione</option>
-                      <option value="{{item[0]}}"></option>
-                    </select>
-                  </div>
-                  {% endfor %}
-                </div>
-                <br>
-                <div class="row">
-                                 
-                    <div class="col-4 col-sm-4">
-                      <label for="dataSaida">Data de Saída:</label>
-                      <input type="date" id="dataSaida" name="dataSaida" value="0000-00-00" >
-                    </div>
-  
-                    <div class="col-4 col-sm-4">
-                      <label for="horaSaida">Hora de Saída:</label>
-                      <input type="time" id="horaSaida" name="horaSaida">
-                    </div>
-                  
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-              <input type="submit" class="btn btn-primary" value="Cadastrar">
-            </div>
-          </div>
-        </div>
-      </div>
-  </form>
+@app.route('/')
+def main():
+    return render_template('index.html')
 
 
 
-    <script src="/static/javascript.js"></script>
-  </body>
-</HTML>
+
+@app.route('/veiculo')
+def veiculo():
+    return render_template('cadastroveiculo.html')
+
+
+############################ ------------- FIM ROTAS PRINCIPAIS ---------- ############################
 
 
 
-<!-- Scrip para chamar o modal -->
-<script>
-  $('#exampleModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var recipient = button.data('whatever') // Extract info from data-* attributes
-    var modal = $(this)
-    modal.find('.modal-title').text('Cadastrar Veiculo')
-    modal.find('.modal-body input').val(recipient)
-  });
-</script>
 
-<!-- <HTML>
-<form action="/gravarveiculo" method="POST">
-  <label for="placa">Placa:</label><br>
-  <input type="text" name="placa" /><br>
-  <label for="cor">Cor:</label><br>
-  <input type="text" name="cor" /><br>
-  <label for="modelo">Modelo:</label><br>
-  <input type="text" name="modelo" /><br>
-  <label for="cpfcliente">CPF Cliente</label><br>
-  <input type="number" name="cpfcliente" /><br>
-  <label for="numerovaga">Número vaga:</label><br>
-  <input type="number" name="numerovaga" /><br>
-  <label for="entrada">Entrada:</label><br>
-  <input type="number" name="entrada" /><br>
-  <label for="saida">Saída:</label><br>
-  <input type="number" name="saida" /><br>
-  <label for="valor">Valor:</label><br>
-  <input type="text" name="valor" /><br>
-  <label for="cpfatendente">CPF Atendente:</label><br>
-  <input type="number" name="cpfatendente" /><br>
-  <label for="comprovante">Comprovante:</label><br>
-  <input type="text" name="comprovante" /><br>
-  <br><br>
-  <input type="submit" value="enviar" />
-</form>
 
-</HTML> -->
+########################### ------------- INICIO ROTAS CLIENTE ---------- ############################
+
+
+#### ---------------- ROTA PAGINA CLIENTE ------------ #######
+
+@app.route('/cliente', methods=['POST', 'GET'])
+def selectcliente():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, idAtendente, TelefoneCliente from Cliente')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastrocliente.html',datas=data)
+
+
+####  ---------------  GRAVAR CLIENTE ------------- #####
+
+@app.route('/gravarcliente', methods=['POST', 'GET'])
+def gravarcliente():
+    cpfcliente = request.form['cpfCliente']
+    nomecliente = request.form['nomeCliente']
+    sobrenomecliente = request.form['sobrenomeCliente']
+    rgcliente = request.form['rgCliente']
+    enderecocliente = request.form['enderecoCliente']
+    idAtendente = request.form['idAtendente']
+    telefonecliente = request.form['telefoneCliente']
+
+    if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and idAtendente and telefonecliente:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('insert into Cliente (CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, idAtendente, TelefoneCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                       (cpfcliente, nomecliente, sobrenomecliente, rgcliente, enderecocliente, idAtendente, telefonecliente))
+        conn.commit()
+    return render_template('cadastrocliente.html')
+
+
+####  ---------------  UPDATE CLIENTE ------------- #####
+
+
+@app.route('/listaparaalteracliente/<int:pk>/', methods=['POST', 'GET'])
+def listaparaalteracliente(pk):    
+    conn1 = mysql.connect()
+    cursor1 = conn1.cursor()
+    cursor1.execute('select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, idAtendente, TelefoneCliente from Cliente where idCliente = ' + str(pk))
+    data = cursor1.fetchall()
+    conn1.commit()
+    
+    return render_template('alteracliente.html', datas=data, pk = pk)
+
+
+@app.route('/alterarcliente/<int:pk>/', methods=['POST', 'GET'])
+def alterarcliente(pk):
+    cpfcliente = request.form['CpfCliente']
+    nomecliente = request.form['NomeCliente']
+    sobrenomecliente = request.form['SobrenomeCliente']
+    rgcliente = request.form['RgCliente']
+    enderecocliente = request.form['EnderecoCliente']
+    telefonecliente = request.form['TelefoneCliente']
+
+    if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and telefonecliente:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('UPDATE Cliente SET CpfCliente=%s, NomeCliente="%s", SobrenomeCliente="%s", RgCliente="%s", EnderecoCliente="%s", TelefoneCliente="%s" WHERE idCliente=%s',
+                       (cpfcliente, nomecliente, sobrenomecliente, rgcliente, enderecocliente, telefonecliente, str(pk)))
+
+    return render_template('alteracliente.html', pk = pk)
+
+
+
+####  ---------------  LISTAR CLIENTE ------------- #####
+
+@app.route('/listarcliente/<int:pk>/', methods=['GET'])
+def listarcliente(pk):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, idAtendente, TelefoneCliente from Cliente where idCliente = ' + str(pk))
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('listacliente.html', datas=data, pk = pk)
+
+
+####  ---------------  DELETAR CLIENTE ------------- #####
+
+@app.route('/deletecliente/<int:pk>/', methods=['GET'])
+def deletecliente(pk):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('DELETE from Cliente where idCliente = ' + str(pk))
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastrocliente.html', datas=data, pk = pk)
+
+
+
+############################ ------------- FIM ROTAS CLIENTE ---------- ############################
+
+
+
+
+############################ ------------- INICIO ROTAS ATENDENTE ---------- ############################
+
+
+####  ---------------  ROTA PAGINA ATENDENTE ------------- #####
+@app.route('/atendente', methods=['POST', 'GET'])
+def selectatendente():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idAtendente, CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente from Atendente')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastroatendente.html',datas=data)
+
+
+
+
+#### ------------- GRAVAR ATENDENTE ---------- ####
+@app.route('/gravaratendente', methods=['POST', 'GET'])
+def gravaratendente():
+    cpfatendente = request.form['cpfAtendente']
+    nomeatendente = request.form['nomeAtendente']
+    sobrenomeatendente = request.form['sobrenomeAtendente']
+    rgatendente = request.form['rgAtendente']
+    enderecoatendente = request.form['enderecoAtendente']
+    salarioatendente = request.form['salarioAtendente']
+    telefoneatendente = request.form['telefoneAtendente']
+    if cpfatendente and nomeatendente and sobrenomeatendente and rgatendente and enderecoatendente and salarioatendente and telefoneatendente:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('insert into Atendente (CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente) values (%s, %s, %s, %s, %s, %s, %s)',
+                       (cpfatendente, nomeatendente, sobrenomeatendente, rgatendente, enderecoatendente, salarioatendente, telefoneatendente))
+        conn.commit()
+    return render_template('cadastroatendente.html')
+
+
+#### ------------- LISTAR E ALTERAR ATENDENTE ---------- ####
+@app.route('/listaparaalteraatendente/<int:pk>/', methods=['POST', 'GET'])
+def listaparaalteraatendente(pk):    
+    conn1 = mysql.connect()
+    cursor1 = conn1.cursor()
+    cursor1.execute('select idAtendente, CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente from Atendente where idAtendente = ' + str(pk))
+    data = cursor1.fetchall()
+    conn1.commit()
+    
+    return render_template('alteraatendente.html', datas=data, pk = pk)
+
+
+@app.route('/alteraratendente/<int:pk>/', methods=['POST', 'GET'])
+def alteraratendente(pk):
+    cpfAtendente = request.form['cpfAtendente']
+    nomeAtendente = request.form['nomeAtendente']
+    sobrenomeAtendente = request.form['sobrenomeAtendente']
+    rgAtendente = request.form['rgAtendente']
+    enderecoAtendente = request.form['enderecoAtendente']
+    salarioAtendente = request.form['salarioAtendente']
+    telefoneAtendente = request.form['telefoneAtendente']
+
+    if cpfAtendente and nomeAtendente and sobrenomeAtendente and rgAtendente and enderecoAtendente and salarioAtendente and telefoneAtendente:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('UPDATE Atendente SET CpfAtendente=%s, NomeAtendente=%s, SobrenomeAtendente=%s, RgAtendente=%s, EnderecoAtendente=%s, SalarioAtendente=%s, TelefoneAtendente=%s WHERE idAtendente=%s',
+                       (cpfAtendente, nomeAtendente, sobrenomeAtendente, rgAtendente, enderecoAtendente, salarioAtendente,telefoneAtendente, str(pk)))
+        conn.commit()
+
+    return render_template('alteraatendente.html', pk = pk)
+
+
+
+#### ------------- LISTAR ATENDENTE ---------- ####
+@app.route('/listaratendente/<int:pk>/', methods=['GET'])
+def listaratendente(pk):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idAtendente, CpfAtendente, NomeAtendente, SobrenomeAtendente, RgAtendente, EnderecoAtendente, SalarioAtendente, TelefoneAtendente from Atendente where idAtendente = ' + str(pk))
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('listaatendente.html', datas=data, pk = pk)
+
+
+
+#### ------------- DELETAR ATENDENTE ---------- ####
+@app.route('/deletaratendente/<int:pk>/', methods=['GET'])
+def deletaratendente(pk):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('DELETE from Atendente where idAtendente = ' + str(pk))
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastroatendente.html', datas=data, pk = pk)
+
+
+
+############################ ------------- FIM ROTAS ATENDENTE ---------- ############################
+
+
+
+############################ ------------- INICIO ROTAS MANOBRISTA ---------- ############################
+
+
+
+#### ------------- ROTA PAGINA MANOBRISTA ---------- ####
+@app.route('/manobrista')
+def selectmanobrista():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idManobrista, CnhManobrista, NomeManobrista, SobrenomeManobrista, RgManobrista, EnderecoManobrista, SalarioManobrista, TelefoneManobrista from Manobrista')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastromanobrista.html',datas=data)
+
+
+#### ------------- GRAVAR MANOBRISTA ---------- ####
+@app.route('/gravarmanobrista', methods=['POST', 'GET'])
+def gravarmanobrista():
+    cnhmanobrista = request.form['cnhmanobrista']
+    nomemanobrista = request.form['nomemanobrista']
+    sobrenomemanobrista = request.form['sobrenomemanobrista']
+    rgmanobrista = request.form['rgmanobrista']
+    enderecomanobrista = request.form['enderecomanobrista']
+    salariomanobrista = request.form['salariomanobrista']
+    telefonemanobrista = request.form['telefonemanobrista']
+    if cnhmanobrista and nomemanobrista and sobrenomemanobrista and rgmanobrista and enderecomanobrista and salariomanobrista and telefonemanobrista:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('insert into Manobrista (CnhManobrista, NomeManobrista, SobrenomeManobrista, RgManobrista, EnderecoManobrista, SalarioManobrista, TelefoneManobrista) VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                       (cnhmanobrista, nomemanobrista, sobrenomemanobrista, rgmanobrista, enderecomanobrista, salariomanobrista, telefonemanobrista))
+        conn.commit()
+    return render_template('cadastromanobrista.html')
+
+
+#### ------------- LISTAR MANOBRISTA ---------- ####
+@app.route('/listarmanobrista/<int:pk>/', methods=['GET'])
+def listarmanobrista(pk):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idManobrista, CnhManobrista, NomeManobrista, SobrenomeManobrista, RgManobrista, EnderecoManobrista, SalarioManobrista, TelefoneManobrista from Manobrista where idManobrista = ' + str(pk)) 
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('listamanobrista.html', datas=data, pk = pk)
+
+
+
+#### ------------- DELETAR MANOBRISTA ---------- ####
+
+#@app.route('/deletarmanobrista/<int:pk>/', methods=['GET'])
+#def deletaratendente(pk):
+#      conn = mysql.connect()
+#      cursor = conn.cursor()
+#      cursor.execute('DELETE from Manobrista where idManobrista = ' + str(pk))
+#      data = cursor.fetchall()
+#      conn.commit()
+#      return render_template('cadastromanobrista.html', datas=data, pk = pk)
+
+############################ ------------- FIM ROTAS MANOBRISTA ---------- ############################
+
+
+
+
+############################ ------------- INICIO ROTAS VAGA ---------- ############################
+
+
+
+
+#### ------------- ROTA PAGINA VAGA ---------- ####
+@app.route('/vaga')
+def selectvaga():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idVaga, NumeroVaga, Situacao from Vaga')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastrovaga.html', datas=data)
+
+
+
+
+#### ------------- GRAVAR VAGA ---------- ####
+@app.route('/gravarvaga', methods=['POST', 'GET'])
+def gravarvaga():
+    numerovaga = request.form['numerovaga']
+    situacaovaga = request.form['situacaovaga']
+    if numerovaga and situacaovaga:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('insert into Vaga (NumeroVaga, Situacao) VALUES (%s, %s)',
+                       (numerovaga, situacaovaga))
+        conn.commit()
+    return render_template('cadastrovaga.html')
+
+#### ------------- DELETAR VAGA ---------- ####
+
+#@app.route('/deletarvaga/<int:pk>/', methods=['GET'])
+#def deletaratendente(pk):
+#    conn = mysql.connect()
+#    cursor = conn.cursor()
+#    cursor.execute('DELETE from Vaga where idVaga = ' + str(pk))
+#    data = cursor.fetchall()
+#    conn.commit()
+#    return render_template('cadastrovaga.html', datas=data, pk = pk)
+
+############################ ------------- FIM ROTAS VAGA ---------- ############################
+
+
+
+
+############################ ------------- INICIO ROTAS VEICULO ---------- ############################
+
+#### ------------- GRAVAR VEICULO ---------- ####
+@app.route('/gravarveiculo', methods=['POST', 'GET'])
+def gravarveiculo():
+    placaveiculo = request.form['placaveiculo']
+    corveiculo = request.form['corveiculo']
+    modeloveiculo = request.form['modeloveiculo']
+    cpfcliente = request.form['cpfcliente']
+    numerovaga = request.form['numerovaga']
+    datahoraentrada = request.form['datahoraentrada']
+    datahorasaida = request.form['datahorasaida']
+    valor = request.form['valor']
+    cpfatendente = request.form['cpfatendente']
+    comprovante = request.form['comprovante']
+    if placaveiculo and corveiculo and modeloveiculo and cpfcliente and numerovaga and datahoraentrada and datahorasaida and valor and cpfatendente and comprovante:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('insert into Veiculo (Placa, Cor, Modelo, CpfCliente, NumeroVaga, DataHora_Entrada, DataHora_Saida, Valor, CpfAtendente, Comprovante) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
+                       (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga, datahoraentrada, datahorasaida, valor, cpfatendente, comprovante))
+        conn.commit()
+    return render_template('cadastroveiculo.html')
+
+
+@app.route('/selectparaforcliente', methods=['POST', 'GET'])
+def selectparaforcliente():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idCliente from Cliente')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastroveiculo.html',cliente=data)
+
+
+#### ------------- DELETAR VEICULO ---------- ####
+
+#@app.route('/deletarveiculo/<int:pk>/', methods=['GET'])
+#def deletaratendente(pk):
+#     conn = mysql.connect()
+#     cursor = conn.cursor()
+#     cursor.execute('DELETE from Veiculo where idVeiculo = ' + str(pk))
+#     data = cursor.fetchall()
+#     conn.commit()
+#     return render_template('cadastroveiculo.html', datas=data, pk = pk)
+
+############################ ------------- FIM ROTAS VEICULO ---------- ############################
+
+
+
+#DELETE
+
+#DELETAR ATENDENTE
+# @app.route('/deletaratendente/<int:pk>/', methods=['GET'])
+# def deletaratendente(pk):
+#     conn = mysql.connect()
+#     cursor = conn.cursor()
+#     cursor.execute('DELETE from Atendente where idAtendente = ' + str(pk))
+#     data = cursor.fetchall()
+#     conn.commit()
+#     return render_template('cadastroatendente.html', datas=data, pk = pk)
+
+# #DELETAR MANOBRISTA
+# @app.route('/deletarmanobrista/<int:pk>/', methods=['GET'])
+# def deletaratendente(pk):
+#     conn = mysql.connect()
+#     cursor = conn.cursor()
+#     cursor.execute('DELETE from Manobrista where idManobrista = ' + str(pk))
+#     data = cursor.fetchall()
+#     conn.commit()
+#     return render_template('cadastromanobrista.html', datas=data, pk = pk)
+
+# #DELETAR CLIENTE
+# @app.route('/deletarcliente/<int:pk>/', methods=['GET'])
+# def deletaratendente(pk):
+#     conn = mysql.connect()
+#     cursor = conn.cursor()
+#     cursor.execute('DELETE from Cliente where idCliente = ' + str(pk))
+#     data = cursor.fetchall()
+#     conn.commit()
+#     return render_template('cadastrocliente.html', datas=data, pk = pk)
+
+# #DELETAR VAGA
+# @app.route('/deletarvaga/<int:pk>/', methods=['GET'])
+# def deletaratendente(pk):
+#     conn = mysql.connect()
+#     cursor = conn.cursor()
+#     cursor.execute('DELETE from Vaga where idVaga = ' + str(pk))
+#     data = cursor.fetchall()
+#     conn.commit()
+#     return render_template('cadastrovaga.html', datas=data, pk = pk)
+
+# #DELETAR VEICULO
+# @app.route('/deletarveiculo/<int:pk>/', methods=['GET'])
+# def deletaratendente(pk):
+#     conn = mysql.connect()
+#     cursor = conn.cursor()
+#     cursor.execute('DELETE from Veiculo where idVeiculo = ' + str(pk))
+#     data = cursor.fetchall()
+#     conn.commit()
+#     return render_template('cadastroveiculo.html', datas=data, pk = pk)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5008))
+    app.run(host='0.0.0.0', port=port)

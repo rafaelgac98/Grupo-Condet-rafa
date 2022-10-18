@@ -382,11 +382,13 @@ def main():
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute('select idCliente from Cliente')
-    cursor.execute('select idVaga from Vaga')
-    cursor.execute('select idAtedente from Atendente')
     cliente = cursor.fetchall()
+    cursor.execute('select idVaga from Vaga')
     vaga = cursor.fetchall()
-    atendente = cursor.fetchall()
+    cursor.execute('select idAtedente from Atendente')
+    atendente = cursor.fetchall()  
+    
+    
     cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo')
     data = cursor.fetchall()
     conn.commit()

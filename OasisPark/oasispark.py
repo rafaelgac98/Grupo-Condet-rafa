@@ -390,7 +390,6 @@ def main():
     
     
     cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo where DataHora_Saida is null')
-    cursor.execute()
     data = cursor.fetchall()
     conn.commit()
     return render_template('index.html',datas=data, cliente=cliente, vaga=vaga, atendente=atendente)

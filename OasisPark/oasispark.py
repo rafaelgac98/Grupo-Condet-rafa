@@ -361,6 +361,17 @@ def gravarveiculo():
         conn.commit()
     return render_template('cadastroveiculo.html')
 
+
+#@app.route('/selectparaforcliente', methods=['GET'])
+def selectparaforcliente():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idCliente from Cliente')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastroveiculo.html',cliente=data)
+
+
 #### ------------- DELETAR VEICULO ---------- ####
 
 #@app.route('/deletarveiculo/<int:pk>/', methods=['GET'])

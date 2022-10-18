@@ -118,16 +118,18 @@
                 </div>
                 
                 <div class="row">
-                  {% for item in cliente %}                 
+                                   
                   <div class="col-6 col-sm-6">
                     <label for="Cliente" class="col-form-label">Proprietário:</label>
+                    {% for item in cliente %}
                     <select class="custom-select" id="inputGroupSelect01">
                       <option selected>Selecione</option>
                       <option value="{{item[0]}}"></option>
-                    </select>                    
+                    </select>
+                    {% endfor %}                   
                   </div>
 
-                  {% endfor %}
+                  
 
                   {% for item in vagas %}
 

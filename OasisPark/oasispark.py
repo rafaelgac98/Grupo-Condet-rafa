@@ -23,9 +23,6 @@ def main():
 
 
 
-@app.route('/veiculo')
-def veiculo():
-    return render_template('cadastroveiculo.html')
 
 
 ############################ ------------- FIM ROTAS PRINCIPAIS ---------- ############################
@@ -296,6 +293,9 @@ def listarmanobrista(pk):
 
 
 
+
+
+
 #### ------------- ROTA PAGINA VAGA ---------- ####
 @app.route('/vaga')
 def selectvaga():
@@ -340,6 +340,29 @@ def gravarvaga():
 
 ############################ ------------- INICIO ROTAS VEICULO ---------- ############################
 
+
+
+
+@app.route('/veiculo')
+def selectveiculo():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastroveiculo.html',datas=data)
+
+def selectparaforcliente():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idCliente from Cliente')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastroveiculo.html',cliente=data)
+
+
+
+
 #### ------------- GRAVAR VEICULO ---------- ####
 @app.route('/gravarveiculo', methods=['POST', 'GET'])
 def gravarveiculo():
@@ -363,13 +386,7 @@ def gravarveiculo():
 
 
 #@app.route('/selectparaforcliente', methods=['POST', 'GET'])
-def selectparaforcliente():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute('select idCliente from Cliente')
-    data = cursor.fetchall()
-    conn.commit()
-    return render_template('cadastroveiculo.html',cliente=data)
+
 
 
 #### ------------- DELETAR VEICULO ---------- ####

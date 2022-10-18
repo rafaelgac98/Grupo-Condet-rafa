@@ -15,16 +15,6 @@ mysql.init_app(app)
 
 ############################ ------------- INÍCIO ROTAS PRINCIPAIS ---------- ############################
 
-@app.route('/')
-def main():
-    return render_template('index.html')
-
-
-
-
-@app.route('/veiculo')
-def veiculo():
-    return render_template('cadastroveiculo.html')
 
 
 ############################ ------------- FIM ROTAS PRINCIPAIS ---------- ############################
@@ -382,6 +372,28 @@ def alterarvaga(pk):
 
 
 ############################ ------------- INICIO ROTAS VEICULO ---------- ############################
+@app.route('/')
+def main():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('index.html',datas=data)
+
+@app.route('/selectparaforcliente', methods=['POST', 'GET'])
+def selectparaforcliente():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idCliente from Cliente')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('index.html',cliente=data)
+
+
+
+
+#### ------------- GRAVAR VEICULO ---------- ####
 @app.route('/')
 def main():
     conn = mysql.connect()

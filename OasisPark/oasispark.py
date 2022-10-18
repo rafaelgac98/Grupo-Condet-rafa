@@ -394,7 +394,7 @@ def selectparaforcliente():
 
 
 #### ------------- GRAVAR VEICULO ---------- ####
-@app.route('/')
+@app.route('/',  methods=['POST', 'GET'])
 def main():
     conn = mysql.connect()
     cursor = conn.cursor()

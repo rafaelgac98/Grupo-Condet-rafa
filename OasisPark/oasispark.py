@@ -262,6 +262,19 @@ def gravarmanobrista():
         conn.commit()
     return render_template('cadastromanobrista.html')
 
+
+#### ------------- LISTAR MANOBRISTA ---------- ####
+@app.route('/listarmanobrista/<int:pk>/', methods=['GET'])
+def listarmanobrista(pk):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idManobrista, CnhManobrista, NomeManobrista, SobrenomeManobrista, RgManobrista, EnderecoManobrista, SalarioManobrista, TelefoneManobrista from Manobrista where idManobrista = ' + str(pk)) 
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('listamanobrista.html', datas=data, pk = pk)
+
+
+
 #### ------------- DELETAR MANOBRISTA ---------- ####
 
 #@app.route('/deletarmanobrista/<int:pk>/', methods=['GET'])

@@ -38,6 +38,9 @@ def header():
 def footer():
     return render_template('footer.html')
 
+@app.route('/style')
+def style():
+    return render_template('/static/style.css')
 
 ########################### ------------- INICIO ROTAS CLIENTE ---------- ############################
 

@@ -34,6 +34,10 @@ def historico():
 def header():
     return render_template('header.html')
 
+@app.route('/footer')
+def footer():
+    return render_template('footer.html')
+
 
 ########################### ------------- INICIO ROTAS CLIENTE ---------- ############################
 

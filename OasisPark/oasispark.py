@@ -32,7 +32,7 @@ def historico():
 
 @app.route('/header')
 def header():
-    render_template('header.html')
+    return render_template('header.html')
 
 
 ########################### ------------- INICIO ROTAS CLIENTE ---------- ############################

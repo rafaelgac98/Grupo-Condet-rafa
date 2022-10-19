@@ -404,6 +404,38 @@ def gravarveiculo():
         conn.commit()
     return render_template('cadastroveiculo.html')
 
+
+@app.route('/listaparaalteraveiculo/<int:pk>/', methods=['POST', 'GET'])
+def listaparaalteraveiculo(pk):    
+    conn1 = mysql.connect()
+    cursor1 = conn1.cursor()
+    cursor1.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo where idVeiculo = ' + str(pk))
+    data = cursor1.fetchall()
+    conn1.commit()
+    
+    return render_template('alteraveiculo.html', datas=data, pk = pk)
+
+
+@app.route('/alteraveiculo/<int:pk>/', methods=['POST', 'GET'])
+def alteraveiculo(pk):
+    veiculoplaca = request.form['veiculoPlaca']
+    veiculocor = request.form['veiculoCor']
+    veiculomodelo = request.form['veiculoModelo']
+    idclinte = request.form['idClinte']
+    idvaga = request.form['idVaga']
+    datehorentrada = request.form['datEhorEntrada']
+    datehorsaida = request.form['datEhorSaida']
+    clientevalor = request.form['clientevalor']
+    idatendente = request.form['idAtendente']
+    obsveiculo = request.form['obsVeiculo']
+
+    if veiculoplaca and veiculocor and veiculomodelo and idclinte and idvaga and datehorentrada and datehorsaida and clientevalor and idatendente and obsveiculo:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('UPDATE Veiculo SET Placa=%s, Cor=%s, Modelo=%s, idCliente=%s, idVaga=%s, DataHora_Entrada=%s, DataHora_Saida=%s, Valor =%s, idAtendente=%s, Comprovante=%s WHERE idVeiculo=%s',
+                       (veiculoplaca, veiculocor, veiculomodelo, idclinte, idvaga, datehorentrada, datehorsaida, clientevalor, idatendente, obsveiculo, str(pk)))
+
+    return render_template('alteraveiculo.html', pk = pk)
 #### ------------- DELETAR VEICULO ---------- ####
 
 #@app.route('/deletarveiculo/<int:pk>/', methods=['GET'])

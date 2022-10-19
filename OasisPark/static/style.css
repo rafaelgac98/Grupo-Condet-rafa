@@ -8,3 +8,10 @@
     }
 
  .cabecalho {text-align: center;}
+
+ .table-historico {
+    background-size: 100% auto;
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+  

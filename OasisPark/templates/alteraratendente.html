@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<link rel="stylesheet" href="static/style.css" />
+<HTML lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Oasis Park - Atendente</title>
+</head>
+    <body>
+        <header>
+            <div id="header"></div><br />
+        </header>
+
+        <div class="ateraatendente">
+            <form action="/alteraratendente" method="GET">
+                <th scope="row">{{item[0]}}</th>
+                <input type="text" value="{{item[1]}}" name="cpfAtendente">
+                <input type="text" value="{{item[2]}}" name="nomeAtendente">            
+                <input type="text" value="{{item[3]}}" name="sobrenomeAtendente">
+                <input type="text" value="{{item[4]}}" name="rgAtendente">
+                <input type="text" value="{{item[5]}}" name="enderecoAtendente">
+                <input type="text" value="{{item[6]}}" name="salarioAtendente">
+                <input type="text" value="{{item[7]}}" name="telefoneAtendente">
+                <input type="button" value="Alterar">
+            </form>
+        </div>
+    </body>
+    <footer>
+        <div id="footer"></div>
+      </footer>
+      <script>
+        $("#header").load("/header");
+        $("#footer").load("/footer");
+      </script>
+</html>

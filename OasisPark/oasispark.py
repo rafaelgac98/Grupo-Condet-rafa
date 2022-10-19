@@ -13,25 +13,34 @@ app.config['MYSQL_DATABASE_HOST'] = 'db'
 mysql.init_app(app)
 
 
-############################ ------------- INÍCIO ROTAS PRINCIPAIS ---------- ############################
+############################ ------------- HISTORICO ---------- ############################
 
-@app.route('/')
-def main():
-    return render_template('index.html')
-
-
-
-
-@app.route('/veiculo')
-def veiculo():
-    return render_template('cadastroveiculo.html')
-
-
-############################ ------------- FIM ROTAS PRINCIPAIS ---------- ############################
+@app.route('/historico',  methods=['POST', 'GET'])
+def historico():
+    conn = mysql.connect()
+    cursor = conn.cursor()  
+    
+    cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo where DataHora_Saida is not null')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('historico.html',datas=data)
 
 
 
+############################ ------------- FIM HISTORICO ---------- ############################
 
+
+@app.route('/header')
+def header():
+    return render_template('header.html')
+
+@app.route('/footer')
+def footer():
+    return render_template('footer.html')
+
+@app.route('/style')
+def style():
+    return render_template('/static/style.css')
 
 ########################### ------------- INICIO ROTAS CLIENTE ---------- ############################
 
@@ -343,7 +352,7 @@ def gravarvaga():
 
 #### ------------- LISTAR E ALTERAR VAGA ---------- ####
 @app.route('/listaparaalteravaga/<int:pk>/', methods=['POST', 'GET'])
-def listaparaalteramanobrista(pk):    
+def listaparaalteravaga(pk):    
     conn1 = mysql.connect()
     cursor1 = conn1.cursor()
     cursor1.execute('select idVaga, NumeroVaga, Situacao from Vaga where idVaga = ' + str(pk))
@@ -383,6 +392,39 @@ def alterarvaga(pk):
 
 ############################ ------------- INICIO ROTAS VEICULO ---------- ############################
 
+
+
+
+#### ------------- GRAVAR VEICULO ---------- ####
+@app.route('/',  methods=['POST', 'GET'])
+def main():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idCliente from Cliente')
+    cliente = cursor.fetchall()
+    cursor.execute('select idVaga from Vaga where Situacao = "Desocupado"')
+    vaga = cursor.fetchall()
+    cursor.execute('select idAtendente from Atendente')
+    atendente = cursor.fetchall()  
+    
+    
+    cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo where DataHora_Saida is null')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('index.html',datas=data, cliente=cliente, vaga=vaga, atendente=atendente)
+
+#@app.route('/selectparaforcliente', methods=['POST', 'GET'])
+def selectparaforcliente():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idCliente from Cliente')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('index.html',cliente=data)
+
+
+
+
 #### ------------- GRAVAR VEICULO ---------- ####
 @app.route('/gravarveiculo', methods=['POST', 'GET'])
 def gravarveiculo():
@@ -391,18 +433,30 @@ def gravarveiculo():
     modeloveiculo = request.form['modeloveiculo']
     cpfcliente = request.form['cpfcliente']
     numerovaga = request.form['numerovaga']
-    datahoraentrada = request.form['datahoraentrada']
-    datahorasaida = request.form['datahorasaida']
-    valor = request.form['valor']
     cpfatendente = request.form['cpfatendente']
-    comprovante = request.form['comprovante']
-    if placaveiculo and corveiculo and modeloveiculo and cpfcliente and numerovaga and datahoraentrada and datahorasaida and valor and cpfatendente and comprovante:
+    if placaveiculo and corveiculo and modeloveiculo and cpfcliente and numerovaga and cpfatendente:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('insert into Veiculo (Placa, Cor, Modelo, CpfCliente, NumeroVaga, DataHora_Entrada, DataHora_Saida, Valor, CpfAtendente, Comprovante) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
-                       (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga, datahoraentrada, datahorasaida, valor, cpfatendente, comprovante))
+        cursor.execute('insert into Veiculo (Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante) VALUES (%s, %s, %s, %s, %s, now(), null, null, %s, "teste")',
+                       (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga,cpfatendente))
+        cursor.execute('UPDATE Vaga SET Situacao="Ocupado" WHERE idVaga=%s', (numerovaga))
         conn.commit()
-    return render_template('cadastroveiculo.html')
+    
+    return render_template('index.html')
+
+
+
+@app.route('/registrarsaida/<int:pk>/', methods=['POST', 'GET'])
+def registrarsaida(pk):
+    #numerovaga = request.form['numerovaga']
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    id = cursor.execute('select idVaga from Veiculo where idVeiculo=%s', (str(pk)))
+    cursor.execute('UPDATE Veiculo SET DataHora_Saida = now() WHERE idVeiculo=%s', (str(pk)))
+    cursor.execute('UPDATE Vaga SET Situacao="Desocupado" WHERE idVaga=%s', (id))
+    conn.commit()
+
+    return render_template('index.html', pk = pk)
 
 
 @app.route('/listaparaalteraveiculo/<int:pk>/', methods=['POST', 'GET'])

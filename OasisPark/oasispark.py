@@ -30,7 +30,9 @@ def historico():
 ############################ ------------- FIM HISTORICO ---------- ############################
 
 
-
+@app.route('/header')
+def header():
+    render_template('header.html')
 
 
 ########################### ------------- INICIO ROTAS CLIENTE ---------- ############################

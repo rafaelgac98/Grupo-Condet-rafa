@@ -13,11 +13,21 @@ app.config['MYSQL_DATABASE_HOST'] = 'db'
 mysql.init_app(app)
 
 
-############################ ------------- INÍCIO ROTAS PRINCIPAIS ---------- ############################
+############################ ------------- HISTORICO ---------- ############################
+
+@app.route('/historico',  methods=['POST', 'GET'])
+def historico():
+    conn = mysql.connect()
+    cursor = conn.cursor()  
+    
+    cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo where DataHora_Saida is not null')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('historico.html',datas=data)
 
 
 
-############################ ------------- FIM ROTAS PRINCIPAIS ---------- ############################
+############################ ------------- FIM HISTORICO ---------- ############################
 
 
 

@@ -362,7 +362,7 @@ def listaparaalteravaga(pk):
 @app.route('/alterarvaga/<int:pk>/', methods=['POST', 'GET'])
 def alterarvaga(pk):
     numerovaga = request.form['numeroVaga']
-    situacaovaga = request.form.get['situacaoVaga']
+    situacaovaga = request.form['situacaoVaga']
 
     if numerovaga and situacaovaga:
         conn = mysql.connect()

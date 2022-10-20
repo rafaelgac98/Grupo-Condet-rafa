@@ -330,7 +330,7 @@ def selectvaga():
     cursor.execute('select idVaga, NumeroVaga, Situacao from Vaga')
     data = cursor.fetchall()
     conn.commit()
-    return render_template('cadastrovaga.html')
+    return render_template('cadastrovaga.html', datas=data)
 
 
 

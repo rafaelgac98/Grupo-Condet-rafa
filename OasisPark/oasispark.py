@@ -91,7 +91,7 @@ def listaparaalteracliente(pk):
 
 @app.route('/alterarcliente/<int:pk>/', methods=['POST', 'GET'])
 def alterarcliente(pk):
-    cpfcliente = request.form['cpfClinte']
+    cpfcliente = request.form['cpfCliente']
     nomecliente = request.form['nomeCliente']
     sobrenomecliente = request.form['sobrenomeCliente']
     rgcliente = request.form['rgCliente']
@@ -122,14 +122,14 @@ def listarcliente(pk):
 
 ####  ---------------  DELETAR CLIENTE ------------- #####
 
-@app.route('/deletecliente/<int:pk>/', methods=['GET'])
-def deletecliente(pk):
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute('DELETE from Cliente where idCliente = ' + str(pk))
-    data = cursor.fetchall()
-    conn.commit()
-    return render_template('cadastrocliente.html', datas=data, pk = pk)
+# @app.route('/deletecliente/<int:pk>/', methods=['GET'])
+# def deletecliente(pk):
+#     conn = mysql.connect()
+#     cursor = conn.cursor()
+#     cursor.execute('DELETE from Cliente where idCliente = ' + str(pk))
+#     data = cursor.fetchall()
+#     conn.commit()
+#     return render_template('cadastrocliente.html', datas=data, pk = pk)
 
 
 

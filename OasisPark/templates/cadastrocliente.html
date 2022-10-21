@@ -14,10 +14,67 @@
     <header>
       <div id="header"></div><br />
     </header>
+    
+    <div class="container pt-3 pb-2">
 
-  <div class="col-8 m-auto pt-3 pb-2 text-center">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Cadastrar</button>
-  </div>
+      <form class="needs-validation" novalidate action="/gravarcliente" method="POST" id="insert-cliente">
+        
+        <div class="form-row">
+          <div class="col-12 col-sm-12">
+            <label for="cpfCliente" class="col-form-label">CPF:</label>
+            <input type="number" class="form-control col-md-4 .ml-auto" id="cpfCliente" name="cpfCliente" placeholder="CPF do cliente" required>
+          </div>
+
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-4 mb-3">
+            <label for="nomeCliente">Nome:</label>
+            <input type="text" class="form-control" id="nomeCliente" placeholder="Nome do cliente" name="nomeCliente" required>
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="sobrenomeCliente">Sobrenome:</label>
+            <input type="text" class="form-control" id="sobrenomeCliente" placeholder="Sobrenome do cliente" name="sobrenomeCliente" required>
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="rgCliente">RG:</label>
+            <div class="input-group">         
+              <input type="text" class="form-control" id="rgCliente" placeholder="RG do cliente" name="rgCliente" aria-describedby="validationTooltipUsernamePrepend" required>
+              <div class="invalid-tooltip">
+                Please choose a unique and valid username.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-4 mb-3">
+            <label for="idAtendente" class="col-form-label">CPF Atendente:</label><br>              
+            <select class="form-control" name="idAtendente" data-live-search="true" id="idAtendente">
+              <option selected>Selecione</option>
+              {% for item in atendente %}
+              <option value="{{item[0]}}">{{item[1]}}</option>
+              {% endfor %}   
+            </select>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="enderecoCliente">Endereço:</label>
+            <input type="text" class="form-control" id="enderecoCliente" placeholder="Endereço do cliente" name="enderecoCliente" aria-describedby="validationTooltipUsernamePrepend" required>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="telefoneCliente">Telefone:</label>
+            <input type="text" class="form-control" id="telefoneCliente" placeholder="Telefone do cliente" name="telefoneCliente" aria-describedby="validationTooltipUsernamePrepend" required>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Cadastrar</button>
+      </form>
+    
+    </div>
 
     <div class="container">
       <table class="table table-hover">
@@ -54,70 +111,7 @@
 
 
 
-    <form action="/gravarcliente" method="POST" id="insert-cliente">
-      
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog " role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="CadastroClientelbl">Cadastre um cliente</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              
-                <div class="row">
-                    <div class="col-12 col-sm-12">
-                      <label for="cpfCliente" class="col-form-label">CPF:</label>
-                      <input type="number" class="form-control col-md-4 .ml-auto" id="cpfCliente" name="cpfCliente">
-                    </div>
-                  </div>
-                  <div class="row">                  
-                  <div class="col-6 col-sm-6">
-                    <label for="nomeCliente" class="col-form-label">Nome:</label>
-                    <input type="text" class="form-control" name="nomeCliente" id="nomeCliente">
-                  </div>
-
-                  <div class="col-6 col-sm-6">
-                    <label for="sobrenomeCliente" class="col-form-label">Sobrenome:</label>
-                    <input type="text" class="form-control" name="sobrenomeCliente" id="sobrenomeCliente">
-                  </div>
-                  
-                </div>
-                <div class="row">                  
-                  <div class="col-6 col-sm-6">
-                    <label for="rgCliente" class="col-form-label">RG:</label>
-                    <input type="number" class="form-control" name="rgCliente" id="rgCliente">
-                  </div>
-
-                  <div class="col-6 col-sm-6">
-                    <label for="enderecoCliente" class="col-form-label">Endereço:</label>
-                    <input type="text" class="form-control" name="enderecoCliente" id="enderecoCliente">
-                  </div>
-                  
-                </div>
-                <div class="row">                  
-                  <div class="col-6 col-sm-6">
-                    <label for="idAtendente" class="col-form-label">ID Atendente:</label>
-                    <input type="number" class="form-control" name="idAtendente" id="idAtendente">
-                  </div>
-
-                  <div class="col-6 col-sm-6">
-                    <label for="telefoneCliente" class="col-form-label">Telefone:</label>
-                    <input type="number" class="form-control" name="telefoneCliente" id="telefoneCliente">
-                  </div>                
-                </div>
-              
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-              <input type="submit" class="btn btn-primary" value="Cadastrar">
-            </div>
-          </div>
-        </div>
-      </div>
-  </form>
+    
 
     <script src="/static/javascript.js"></script>
   </body>
@@ -130,13 +124,6 @@
 
 <!-- Scrip para chamar o modal -->
 <script>
-  $('#exampleModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var recipient = button.data('whatever') // Extract info from data-* attributes
-    var modal = $(this)
-    modal.find('.modal-title').text('Cadastrar Cliente')
-    modal.find('.modal-body input').val(recipient)
-  });
 
   $("#header").load("/header");
   $("#footer").load("/footer");

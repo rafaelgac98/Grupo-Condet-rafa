@@ -55,7 +55,7 @@
         <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" id="selectbox" name="cpfcliente" data-show-subtext="true" >
           <option selected>Selecione</option>
           {% for item in cliente %}
-          <option value="{{item[0]}}" data-subtext="{{item[1]}}">{{item[1]}}</option>
+          <option value="{{item[0]}}" data-subtext="{{item[1]}}">{{item[0]}}</option>
           {% endfor %}   
         </select>
       </div>

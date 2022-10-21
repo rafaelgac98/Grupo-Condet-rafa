@@ -397,7 +397,7 @@ def alterarvaga(pk):
 def main():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute('select idCliente from Cliente')
+    cursor.execute('select idCliente, CpfCliente from Cliente')
     cliente = cursor.fetchall()
     cursor.execute('select idVaga from Vaga where Situacao = "Desocupado"')
     vaga = cursor.fetchall()

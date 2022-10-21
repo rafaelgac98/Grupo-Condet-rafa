@@ -126,11 +126,10 @@
 </footer>
 
 <script>
-  
+  $("#header").load("/header");
+  $("#footer").load("/footer");
 // In your Javascript (external .js resource or <script> tag)
   $(document).ready(function() {
-    $("#header").load("/header");
-    $("#footer").load("/footer");
     $('#selectcliente').select2();
   });
 

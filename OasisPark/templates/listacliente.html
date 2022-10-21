@@ -28,25 +28,26 @@
             <th scope="col">Sobrenome</th>
             <th scope="col">CPF</th>
             <th scope="col">RG</th>
-            <th scope="col">ID ATENDENTE</th>
+            <th scope="col">CPF Atendente</th>
+            <th scope="col">Endereço</th>
             <th scope="col">Telefone</th>
             <th scope="col">Ações</th>
           </tr>
         </thead>
         <tbody>
           {% for item in datas %}
-          <tr>
+          <tr align="center">
             <th scope="row">{{item[0]}}</th>
-            <input type="text" value="{{item[2]}}">
             <td>{{item[2]}}</td>  
             <td>{{item[3]}}</td>            
             <td>{{item[1]}}</td>
             <td>{{item[4]}}</td>
+            <td>{{item[8]}}</td>
             <td>{{item[5]}}</td>
-            <td>{{item[6]}}</td>
+            <td>{{item[7]}}</td>
             <td>
-              <a href="" class="btn btn-primary">UPDATE</a>
-              <a href="" class="btn btn-danger">DELETE</a>
+              <a href="/listaparaalteracliente/{{item[0]}}/" class="btn btn-primary">UPDATE</a>
+              <a href="/deletecliente/{{item[0]}}/" class="btn btn-danger btnDel">DELETE</a>
             </td>
           </tr>
           {% endfor %}

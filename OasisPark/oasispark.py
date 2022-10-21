@@ -116,7 +116,7 @@ def alterarcliente(pk):
 def listarcliente(pk):
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute('select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, idAtendente, TelefoneCliente from Cliente where idCliente = ' + str(pk))
+    cursor.execute('select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, Cliente.idAtendente, TelefoneCliente, CpfAtendente from Cliente inner join Atendente on Cliente.idAtendente = Atendente.idAtendente where idCliente = ' + str(pk))
     data = cursor.fetchall()
     conn.commit()
     return render_template('listacliente.html', datas=data, pk = pk)

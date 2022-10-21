@@ -7,6 +7,9 @@
 <HTML lang="pt-BR">
 <head>
     <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js" integrity="sha512-eSeh0V+8U3qoxFnK3KgBsM69hrMOGMBy3CNxq/T4BArsSQJfKVsKb5joMqIPrNMjRQSTl4xG8oJRpgU2o9I7HQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css" integrity="sha512-0nkKORjFgcyxv3HbE4rzFUlENUMNqic/EzDIeYCgsKa/nwqr2B91Vu/tNAu4Q0cBuG4Xe/D1f/freEci/7GDRA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Oasis Park</title>
 </head>
 
@@ -51,7 +54,7 @@
     <div class="form-row">
       <div class="col-md-4 mb-3">
         <label for="Cliente" class="col-form-label">Proprietário:</label><br>              
-        <select class="js-example-basic-single js-states form-control" name="cpfcliente" data-live-search="true" id="selectcliente">
+        <select class="ch form-control" name="cpfcliente" data-live-search="true" id="selectcliente">
           <option selected>Selecione</option>
           {% for item in cliente %}
           <option value="{{item[0]}}">{{item[0]}}</option>
@@ -125,7 +128,9 @@
 <script>
   $("#header").load("/header");
   $("#footer").load("/footer");
-
+  $(document).ready(function(){
+      $(".ch").chosen();
+  });
  
 </script>
 

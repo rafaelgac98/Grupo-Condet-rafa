@@ -48,10 +48,12 @@ def footer():
 def selectcliente():
     conn = mysql.connect()
     cursor = conn.cursor()
+    cursor.execute('select idAtendente, CpfAtendente from Atendente')
+    atendente = cursor.fetchall()
     cursor.execute('select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, idAtendente, TelefoneCliente from Cliente')
     data = cursor.fetchall()
     conn.commit()
-    return render_template('cadastrocliente.html',datas=data)
+    return render_template('cadastrocliente.html',datas=data, atendente=atendente)
 
 
 ####  ---------------  GRAVAR CLIENTE ------------- #####

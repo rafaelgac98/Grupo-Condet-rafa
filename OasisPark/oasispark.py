@@ -346,7 +346,7 @@ def gravarvaga():
         cursor.execute('insert into Vaga (NumeroVaga, Situacao) VALUES (%s, %s)',
                        (numerovaga, situacaovaga))
         conn.commit()
-    return render_template('/vaga')
+    return redirect('/vaga')
 
 
 #### ------------- LISTAR E ALTERAR VAGA ---------- ####

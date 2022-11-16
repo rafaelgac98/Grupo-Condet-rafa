@@ -52,7 +52,7 @@ def selectcliente():
     atendente = cursor.fetchall()
     cursor.execute('select idPlano, nomePlano from Plano')
     planos = cursor.fetchall()
-    cursor.execute('select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, idAtendente, TelefoneCliente from Cliente')
+    cursor.execute('select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, Cliente.idPlano, EnderecoCliente, idAtendente, TelefoneCliente, nomePlano from Cliente inner join Plano on Cliente.idPlano = Plano.idPlano')
     data = cursor.fetchall()
     conn.commit()
     return render_template('cadastrocliente.html',datas=data, atendente=atendente, planos=planos)

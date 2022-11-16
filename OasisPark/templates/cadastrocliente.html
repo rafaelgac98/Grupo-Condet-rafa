@@ -53,6 +53,17 @@
         </div>
         <div class="form-row">
           <div class="col-md-4 mb-3">
+            <label for="idPlano" class="col-form-label">Plano:</label><br>              
+            <select class="form-control" name="idPlano" data-live-search="true" id="idPlano">
+              <option selected>Selecione</option>
+              {% for item in planos %}
+              <option value="{{item[0]}}">{{item[1]}}</option>
+              {% endfor %}   
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-4 mb-3">
             <label for="idAtendente" class="col-form-label">CPF Atendente:</label><br>              
             <select class="form-control" name="idAtendente" data-live-search="true" id="idAtendente">
               <option selected>Selecione</option>

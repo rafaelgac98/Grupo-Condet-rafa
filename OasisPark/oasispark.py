@@ -66,15 +66,16 @@ def gravarcliente():
     nomecliente = request.form['nomeCliente']
     sobrenomecliente = request.form['sobrenomeCliente']
     rgcliente = request.form['rgCliente']
+    idplano = request.form['idPlano']
     enderecocliente = request.form['enderecoCliente']
     idAtendente = request.form['idAtendente']
     telefonecliente = request.form['telefoneCliente']
 
-    if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and idAtendente and telefonecliente:
+    if cpfcliente and nomecliente and sobrenomecliente and rgcliente and idplano and enderecocliente and idAtendente and telefonecliente:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('insert into Cliente (CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, idAtendente, TelefoneCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)',
-                       (cpfcliente, nomecliente, sobrenomecliente, rgcliente, enderecocliente, idAtendente, telefonecliente))
+        cursor.execute('insert into Cliente (CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, idPlano, EnderecoCliente, idAtendente, TelefoneCliente) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
+                       (cpfcliente, nomecliente, sobrenomecliente, rgcliente, idplano, enderecocliente, idAtendente, telefonecliente))
         conn.commit()
     return render_template('cadastrocliente.html')
 

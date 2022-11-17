@@ -87,7 +87,7 @@ def gravarcliente():
 def listaparaalteracliente(pk):    
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute('select idAtendente, CpfAtendente from Atendente inner join Cliente on Atendente.idAtendente = Cliente.idAtendente where Cliente.idCliente = '+ str(pk))
+    cursor.execute('select Atendente.idAtendente, CpfAtendente from Atendente inner join Cliente on Atendente.idAtendente = Cliente.idAtendente where Cliente.idCliente = '+ str(pk))
     atendente = cursor.fetchall()
     cursor.execute('select idPlano, nomePlano from Plano')
     planos = cursor.fetchall()

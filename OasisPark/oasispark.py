@@ -91,7 +91,7 @@ def listaparaalteracliente(pk):
     atendente = cursor.fetchall()
     cursor.execute('select idPlano, nomePlano from Plano')
     planos = cursor.fetchall()
-    cursor.execute('select select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, TelefoneCliente, CpfAtendente, nomePlano from Cliente inner join Atendente on Cliente.idAtendente = Atendente.idAtendente inner join Plano on Cliente.idPlano = Plano.idPlano where idCliente = ' + str(pk))
+    cursor.execute('select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, TelefoneCliente, CpfAtendente, nomePlano from Cliente inner join Atendente on Cliente.idAtendente = Atendente.idAtendente inner join Plano on Cliente.idPlano = Plano.idPlano where idCliente = ' + str(pk))
     data = cursor.fetchall()
     conn.commit()
     
@@ -124,7 +124,7 @@ def alterarcliente(pk):
 def listarcliente(pk):
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute('select select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, TelefoneCliente, CpfAtendente, nomePlano from Cliente inner join Atendente on Cliente.idAtendente = Atendente.idAtendente inner join Plano on Cliente.idPlano = Plano.idPlano where idCliente = ' + str(pk))
+    cursor.execute('select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, TelefoneCliente, CpfAtendente, nomePlano from Cliente inner join Atendente on Cliente.idAtendente = Atendente.idAtendente inner join Plano on Cliente.idPlano = Plano.idPlano where idCliente = ' + str(pk))
     data = cursor.fetchall()
     conn.commit()
     return render_template('listacliente.html', datas=data, pk = pk)

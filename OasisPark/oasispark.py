@@ -306,6 +306,7 @@ def alterarmanobrista(pk):
         cursor = conn.cursor()
         cursor.execute('UPDATE Manobrista SET CnhManobrista=%s, NomeManobrista=%s, SobrenomeManobrista=%s, RgManobrista=%s, EnderecoManobrista=%s, SalarioManobrista=%s, TelefoneManobrista=%s WHERE idManobrista=%s',
                        (cpfmanobrista, nomemanobrista, sobrenomecmanobrista, rgcmanobrista, enderecomanobrista, salrariomanobrista, telefonemanobrista, str(pk)))
+        conn.commit()
 
     return render_template('alteramanobrista.html', pk = pk)
 
@@ -380,6 +381,7 @@ def alterarvaga(pk):
         cursor = conn.cursor()
         cursor.execute('UPDATE Vaga SET NumeroVaga=%s, Situacao=%s WHERE idVaga=%s',
                        (numerovaga, situacaovaga, str(pk)))
+        conn.commit()
 
     return render_template('alteravaga.html', pk = pk)
 #### ------------- DELETAR VAGA ---------- ####
@@ -420,16 +422,6 @@ def main():
     data = cursor.fetchall()
     conn.commit()
     return render_template('index.html',datas=data, cliente=cliente, vaga=vaga, atendente=atendente)
-
-#@app.route('/selectparaforcliente', methods=['POST', 'GET'])
-def selectparaforcliente():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute('select idCliente from Cliente')
-    data = cursor.fetchall()
-    conn.commit()
-    return render_template('index.html',cliente=data)
-
 
 
 

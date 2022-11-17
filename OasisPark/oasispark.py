@@ -104,15 +104,15 @@ def alterarcliente(pk):
     nomecliente = request.form['nomeCliente']
     sobrenomecliente = request.form['sobrenomeCliente']
     rgcliente = request.form['rgCliente']
-    idplano = request.form['idPlano']
+    #idplano = request.form['idPlano']
     enderecocliente = request.form['enderecoCliente']
     telefonecliente = request.form['telefCliente']
 
-    if cpfcliente and nomecliente and sobrenomecliente and rgcliente and idplano and enderecocliente and telefonecliente:
+    if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and telefonecliente:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('UPDATE Cliente SET CpfCliente=%s, NomeCliente=%s, SobrenomeCliente=%s, RgCliente=%s, idPlano=%s, EnderecoCliente=%s, TelefoneCliente=%s WHERE idCliente=%s',
-                       (cpfcliente, nomecliente, sobrenomecliente, rgcliente, idplano, enderecocliente, telefonecliente, str(pk)))
+        cursor.execute('UPDATE Cliente SET CpfCliente=%s, NomeCliente=%s, SobrenomeCliente=%s, RgCliente=%s, EnderecoCliente=%s, TelefoneCliente=%s WHERE idCliente=%s',
+                       (cpfcliente, nomecliente, sobrenomecliente, rgcliente, enderecocliente, telefonecliente, str(pk)))
 
     return render_template('alteracliente.html', pk = pk)
 

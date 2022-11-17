@@ -132,14 +132,14 @@ def listarcliente(pk):
 
 ####  ---------------  DELETAR CLIENTE ------------- #####
 
-# @app.route('/deletecliente/<int:pk>/', methods=['GET'])
-# def deletecliente(pk):
-#     conn = mysql.connect()
-#     cursor = conn.cursor()
-#     cursor.execute('DELETE from Cliente where idCliente = ' + str(pk))
-#     data = cursor.fetchall()
-#     conn.commit()
-#     return render_template('cadastrocliente.html', datas=data, pk = pk)
+@app.route('/deletecliente/<int:pk>/', methods=['GET'])
+def deletecliente(pk):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('DELETE from Cliente where idCliente = ' + str(pk))
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('cadastrocliente.html', datas=data, pk = pk)
 
 
 

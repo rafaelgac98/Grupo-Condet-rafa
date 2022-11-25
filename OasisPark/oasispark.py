@@ -418,7 +418,7 @@ def main():
     atendente = cursor.fetchall()  
     
     
-    cursor.execute('select idVeiculo, Placa, Cor, Modelo, Veiculo.idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, Veiculo.idAtendente, idPlano, CpfCliente, Plano.nomePlano from Veiculo inner join Plano on Veiculo.idPlano = Plano.idPlano inner join Cliente on Veiculo.idCliente = Cliente.idCliente where DataHora_Saida is null')
+    cursor.execute('select idVeiculo, Placa, Cor, Modelo, Veiculo.idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, Veiculo.idAtendente, Veiculo.idPlano, CpfCliente, Plano.nomePlano from Veiculo inner join Plano on Veiculo.idPlano = Plano.idPlano inner join Cliente on Veiculo.idCliente = Cliente.idCliente where DataHora_Saida is null')
     data = cursor.fetchall()
     conn.commit()
     return render_template('index.html',datas=data, cliente=cliente, vaga=vaga, atendente=atendente)

@@ -20,7 +20,7 @@ def historico():
     conn = mysql.connect()
     cursor = conn.cursor()  
     
-    cursor.execute('select idVeiculo, Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante from Veiculo where DataHora_Saida is not null')
+    cursor.execute('select idVeiculo, Placa, Cor, Modelo, Veiculo.idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, Veiculo.idAtendente, Veiculo.idPlano, CpfCliente, Plano.nomePlano from Veiculo inner join Plano on Veiculo.idPlano = Plano.idPlano inner join Cliente on Veiculo.idCliente = Cliente.idCliente where DataHora_Saida is not null')
     data = cursor.fetchall()
     conn.commit()
     return render_template('historico.html',datas=data)
@@ -438,7 +438,7 @@ def gravarveiculo():
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.execute('insert into Veiculo (Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, idPlano) VALUES (%s, %s, %s, %s, %s, now(), null, null, %s, (select idPlano from Cliente where idCliente = %s))',
-                       (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga,cpfatendente, cpfcliente))
+                       (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga,cpfatendente, cpfcliente              ))
         cursor.execute('UPDATE Vaga SET Situacao="Ocupado" WHERE idVaga=%s', (numerovaga))
         conn.commit()
     

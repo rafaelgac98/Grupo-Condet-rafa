@@ -437,8 +437,8 @@ def gravarveiculo():
     if placaveiculo and corveiculo and modeloveiculo and cpfcliente and numerovaga and cpfatendente:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('insert into Veiculo (Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, Comprovante) VALUES (%s, %s, %s, %s, %s, now(), null, null, %s, "teste")',
-                       (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga,cpfatendente))
+        cursor.execute('insert into Veiculo (Placa, Cor, Modelo, idCliente, idVaga, DataHora_Entrada, DataHora_Saida, Valor, idAtendente, idPlano) VALUES (%s, %s, %s, %s, %s, now(), null, null, %s, (select idPlano from Cliente where idCliente = %s))',
+                       (placaveiculo, corveiculo, modeloveiculo, cpfcliente, numerovaga,cpfatendente, cpfcliente))
         cursor.execute('UPDATE Vaga SET Situacao="Ocupado" WHERE idVaga=%s', (numerovaga))
         conn.commit()
     

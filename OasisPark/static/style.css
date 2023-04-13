@@ -7,6 +7,9 @@
     align-items: center;
     }
 
+
+
+    
  .cabecalho {text-align: center;}
 
  .table-historico {
@@ -15,50 +18,118 @@
     margin-right: 2%;
   }
   
-/* --------------------- TICKET CSS ----------------------- */
+  /* Dropdown Button */
+.dropbtn {
+   background-color: #04AA6D;
+   color: white;
+   padding: 16px;
+   font-size: 16px;
+   border: none;
+   cursor: pointer;
+ }
+ 
+ /* Dropdown button on hover & focus */
+ .dropbtn:hover, .dropbtn:focus {
+   background-color: #3e8e41;
+ }
+ 
+ /* The search field */
+ #myInput {
+   box-sizing: border-box;
+   background-image: url('searchicon.png');
+   background-position: 14px 12px;
+   background-repeat: no-repeat;
+   font-size: 16px;
+   padding: 14px 20px 12px 45px;
+   border: none;
+   border-bottom: 1px solid #ddd;
+ }
+ 
+ /* The search field when it gets focus/clicked on */
+ #myInput:focus {outline: 3px solid #ddd;}
+ 
+ /* The container <div> - needed to position the dropdown content */
+ .dropdown {
+   position: relative;
+   display: inline-block;
+ }
+ 
+ /* Dropdown Content (Hidden by Default) */
+ .dropdown-content {
+   display: none;
+   position: absolute;
+   background-color: #f6f6f6;
+   min-width: 230px;
+   border: 1px solid #ddd;
+   z-index: 1;
+ }
+ 
+ /* Links inside the dropdown */
+ .dropdown-content a {
+   color: black;
+   padding: 12px 16px;
+   text-decoration: none;
+   display: block;
+ }
+ 
+ /* Change color of dropdown links on hover */
+ .dropdown-content a:hover {background-color: #f1f1f1}
+ 
+ /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+ .show {display:block;}
 
-.ttu { text-transform: uppercase; }
 
-.printer-ticket {
-	display: table !important;
-	width: 100%;
-	max-width: 400px;
-	font-weight: light;
-	line-height: 1.3em;
-	
+
+ /* ----------------------     Login aqui -------------------------*/
+
+ .login-container{
+  margin-bottom: 5%;
 }
-
-
-
-	th:nth-child(2),
-	td:nth-child(2) {
-		width: 50px;
-	}
-	
-	th:nth-child(3) ,
-	td:nth-child(3) { 
-		width: 90px; text-align: right; 
-	}
-	
-	/* th { 
-		font-weight: inherit;
-		padding: @printer-padding-base 0;
-		text-align: center;
-		border-bottom: 1px dashed @color-gray;
-	}
-	tbody {
-		tr:last-child td { padding-bottom: @printer-padding-base; }
-	}
-	tfoot {
-		.sup td {
-			padding: @printer-padding-base 0;
-			border-top: 1px dashed @color-gray;
-		}
-		.sup.p--0 td { padding-bottom: 0; }
-	}
-	
-	.title { font-size: 1.5em; padding: @printer-padding-base*1.5 0; }
-	.top {
-		td { padding-top: @printer-padding-base; }
-	}
-	.last td { padding-bottom: @printer-padding-base; } */
+.login-form-1{
+  padding: 5%;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-1 h3{
+  text-align: center;
+  color: #333;
+}
+.register{
+  padding: 5%;
+  background: #0062cc;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.register h3{
+  text-align: center;
+  color: #fff;
+}
+.login-container form{
+  padding: 10%;
+}
+.btnSubmit
+{
+  width: 50%;
+  border-radius: 1rem;
+  padding: 1.5%;
+  border: none;
+  cursor: pointer;
+}
+.login-form-1 .btnSubmit{
+  font-weight: 600;
+  color: #fff;
+  background-color: #0062cc;
+}
+.register .btnSubmit{
+  font-weight: 600;
+  color: #0062cc;
+  background-color: #fff;
+}
+.register .ForgetPwd{
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+.login-form-1 .ForgetPwd{
+  color: #0062cc;
+  font-weight: 600;
+  text-decoration: none;
+}

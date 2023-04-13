@@ -16,7 +16,7 @@
   </header>
 
   <div class="col-8 m-auto pt-3 pb-2 text-center">
-    <a href="/cliente" class="btn btn-primary"> Voltar</a>
+    <a href="/atendente" class="btn btn-primary"> Voltar</a>
   </div>
 
     <div class="container">
@@ -28,7 +28,6 @@
             <th scope="col">Sobrenome</th>
             <th scope="col">CPF</th>
             <th scope="col">RG</th>
-            <th scope="col">Plano</th>
             <th scope="col">CPF Atendente</th>
             <th scope="col">Endereço</th>
             <th scope="col">Telefone</th>
@@ -44,9 +43,8 @@
             <td>{{item[1]}}</td>
             <td>{{item[4]}}</td>
             <td>{{item[8]}}</td>
-            <td>{{item[7]}}</td>
             <td>{{item[5]}}</td>
-            <td>{{item[6]}}</td>
+            <td>{{item[7]}}</td>
             <td>
               <a href="/listaparaalteracliente/{{item[0]}}/" class="btn btn-primary">UPDATE</a>
               <a href="/deletecliente/{{item[0]}}/" class="btn btn-danger btnDel">DELETE</a>

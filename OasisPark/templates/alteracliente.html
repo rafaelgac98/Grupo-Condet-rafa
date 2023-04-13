@@ -8,7 +8,7 @@
 <HTML lang="pt-BR">
 <head>
     <meta charset="utf-8">
-    <title>Oasis Park - Alterar cliente</title>
+    <title>Oasis Park - Atendente</title>
 </head>
     <body>
       <header>
@@ -46,37 +46,14 @@
                       <input type="text" class="form-control" id="enderecoCliente" value="{{item[5]}}" name="enderecoCliente" >
                     </div>
                   </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="idPlano" class="col-form-label">Plano:</label><br>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="idPlano" id="idPlano" value="1" checked>
-                        <label class="form-check-label" for="idPlano">
-                          Mensal
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="idPlano" id="idPlano" value="2">
-                        <label class="form-check-label" for="idPlano">
-                          Diário
-                        </label>
-                      </div>        
-                      <!-- <select class="form-control" name="idPlano" data-live-search="true" id="idPlano">
-                        <option selected>Selecione</option>
-                        {% for item in planos %}
-                        <option value="{{item[0]}}">{{item[1]}}</option>
-                        {% endfor %}   
-                      </select> -->
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="idAtendente" class="col-form-label">CPF Atendente:</label><br>              
-                      <input type="text" class="form-control" value="{{item[7]}}" id="idAtendente" name="idAtendente" disabled>
-                    </div>
-                  </div>
+                <div class="form-group">
+                  <label for="idatendente">Atendente</label>
+                  <input type="text" class="form-control" id="idatendente" value="{{item[6]}}">
+                </div>
                 <div class="form-row">
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-4">
                     <label for="telefCliente">Telefone</label>
-                    <input type="text" class="form-control" value="{{item[6]}}" id="telefCliente" name="telefCliente">
+                    <input type="text" class="form-control" value="{{item[7]}}" id="telefCliente" name="telefCliente">
                   </div>
                   <!-- <div class="form-group col-md-4">
                     <label for="inputState">State</label>

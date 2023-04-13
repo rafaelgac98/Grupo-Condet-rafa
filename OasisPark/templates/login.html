@@ -1,0 +1,84 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- <link href="../static/style.css" rel="stylesheet"> -->
+    <!-- <script src="funcoes.js"></script> -->
+    <!-- <body onload="shUser()"></body> -->
+    <!--<link rel="icon" href="Favicon.png">-->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <title>Sistema Oasis Park</title>
+</head>
+
+<body>
+    
+
+<html>
+    <div class="titulo">
+       
+        <center>
+            <h5>Oasis Park</h5>
+            <H3 style="margin-top: 3%;">Bem-vindo ao OasisPark System</H3>
+        </center>
+    </div>
+    <div class="container login-container">
+        <div class="row">
+            <div class="col-md-6 login-form-1">
+                <h3>Entrar</h3>
+                <form action="{{ url_for('entrar') }}" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="userLogin" name="userLogin" placeholder="Seu usuário *" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="passwordLogin" name="passwordLogin" placeholder="Sua senha *" value="" />
+                    </div>
+                    <center>
+                        <div class="form-group">
+                            <center><div class="msg">{{ msgLogin }}</div></center>
+                            <button type="submit" class="btnSubmit" value="Entrar">Entrar</button>
+                        </div>
+                    </center>
+                    <!--<div class="form-group">
+                        <a href="#" class="ForgetPwd">Forget Password?</a>
+                    </div>-->
+                </form>
+            </div>
+            <div class="col-md-6 register">
+                <h3>Registre-se</h3>
+                <form action="{{ url_for('register') }}" method="post" autocomplete="off">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="userRegister" name="userRegister" placeholder="Seu usuário *" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome *" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Seu e-mail *" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="passwordRegister" name="passwordRegister" placeholder="Sua senha *" />
+                    </div>
+                    <center>
+                        <div class="form-group">
+                            <center><div class="msg">{{ msgRegister }}</div></center>
+                            <button type="submit" class="btnSubmit" value="Registrar">Registrar</button>
+                        </div>
+                    </center>
+                </form>
+            </div>
+        </div>
+    </div>
+</html>
+</body>

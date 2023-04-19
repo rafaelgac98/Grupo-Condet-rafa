@@ -1,5 +1,6 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, session
+from datetime import datetime, timedelta
 from flaskext.mysql import MySQL
 import tkinter
 from tkinter import messagebox
@@ -234,21 +235,74 @@ def registrarentrada():
     return render_template('index.html', classe=classe, msg=msg, test=test)
 
 
+
+
 @app.route('/registrarsaida/<int:pk>/', methods=['POST', 'GET'])
 def registrarsaida(pk):
     #numerovaga = request.form['numerovaga']
     conn = mysql.connect()
-    print(pk)
+    conn2 = mysql.connect()
+    #print(pk)
     cursor = conn.cursor()
-    id = cursor.execute('select idVaga from Historico where idHist=%s', (pk))
-    print(id)
-    cursor.execute('UPDATE Historico SET DataHora_Saida = now() WHERE idHist=%s', (pk))
+    cursor.execute('select idVaga from Historico where idHist=%s', (pk))
+    id = cursor.fetchall()
+    #print(id) 
+    cursor2 = conn2.cursor()
+    cursor2.execute('select DataHora_Entrada from Historico WHERE idHist=%s', (pk))
+    teste = cursor2.fetchone()
+    #print(teste[0])
+    data1 = str(teste[0])
+    data2 = "2023-04-18 01:01:00" #datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(data2)
+
+    # Converte as strings de data e hora para o formato datetime
+    dt1 = datetime.strptime(data1, "%Y-%m-%d %H:%M:%S")
+    dt2 = datetime.strptime(data2, "%Y-%m-%d %H:%M:%S")
+
+    # Calcula a diferença entre as datas
+    diferenca = dt2 - dt1
+
+    # Calcula o valor correspondente às horas trabalhadas
+    horas_trabalhadas = diferenca.seconds / 3600
+    print(horas_trabalhadas)
+    if horas_trabalhadas > 0.15:
+        
+        # if horas_trabalhadas < 1 and horas_trabalhadas > 0:
+        #     horas_trabalhadas = 1
+        # else:
+        #     horas_trabalhadas = int(horas_trabalhadas) + 1
+
+        if horas_trabalhadas > 0 and horas_trabalhadas < 1:
+            horas_trabalhadas = 0
+        else:
+            horas_trabalhadas = horas_trabalhadas - 1
+            if horas_trabalhadas > 0 and horas_trabalhadas < 1:
+                horas_trabalhadas = 1
+            else:
+                horas_trabalhadas = int(horas_trabalhadas) + 1
+
+        valor_horas = 10 + horas_trabalhadas * 3
+    else:
+        valor_horas = 0
+
+    cursor.execute('UPDATE Historico SET DataHora_Saida = %s, Valor=%s WHERE idHist=%s', (dt2, valor_horas, pk))
     cursor.execute('UPDATE Vaga SET Situacao="Desocupado" WHERE idVaga=%s', (id))
     conn.commit()
+    
 
     return redirect(url_for('main', pk=pk))
 
+
+
+
+
+
+
+
+
 ########################### ------------- INICIO ROTAS CLIENTE ---------- ############################
+
+
 #### ---------------- ROTA PAGINA CLIENTE ------------ #######
 
 @app.route('/cliente', methods=['POST', 'GET'])

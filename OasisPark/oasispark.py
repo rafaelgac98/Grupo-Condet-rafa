@@ -248,11 +248,11 @@ def registrarsaida(pk):
     id = cursor.fetchall()
     #print(id) 
     cursor2 = conn2.cursor()
-    cursor2.execute('select DataHora_Entrada from Historico WHERE idHist=%s', (pk))
+    cursor2.execute('select DataHora_Entrada, nomePlano from Historico WHERE idHist=%s', (pk))
     teste = cursor2.fetchone()
     #print(teste[0])
     data1 = str(teste[0])
-    data2 = "2023-04-18 01:01:00" #datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    data2 = "2023-04-25 20:50:00" #datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(data2)
 
     # Converte as strings de data e hora para o formato datetime
@@ -265,25 +265,23 @@ def registrarsaida(pk):
     # Calcula o valor correspondente às horas trabalhadas
     horas_trabalhadas = diferenca.seconds / 3600
     print(horas_trabalhadas)
-    if horas_trabalhadas > 0.15:
-        
-        # if horas_trabalhadas < 1 and horas_trabalhadas > 0:
-        #     horas_trabalhadas = 1
-        # else:
-        #     horas_trabalhadas = int(horas_trabalhadas) + 1
 
-        if horas_trabalhadas > 0 and horas_trabalhadas < 1:
-            horas_trabalhadas = 0
-        else:
-            horas_trabalhadas = horas_trabalhadas - 1
+    if teste[1] == "DIARIA":
+        if horas_trabalhadas > 0.15:
             if horas_trabalhadas > 0 and horas_trabalhadas < 1:
-                horas_trabalhadas = 1
+                horas_trabalhadas = 0
             else:
-                horas_trabalhadas = int(horas_trabalhadas) + 1
+                horas_trabalhadas = horas_trabalhadas - 1
+                if horas_trabalhadas > 0 and horas_trabalhadas < 1:
+                    horas_trabalhadas = 1
+                else:
+                    horas_trabalhadas = int(horas_trabalhadas) + 1
 
-        valor_horas = 10 + horas_trabalhadas * 3
+            valor_horas = 10 + horas_trabalhadas * 3
+        else:
+            valor_horas = 0
     else:
-        valor_horas = 0
+        valor_horas = diferenca.days * 5
 
     cursor.execute('UPDATE Historico SET DataHora_Saida = %s, Valor=%s WHERE idHist=%s', (dt2, valor_horas, pk))
     cursor.execute('UPDATE Vaga SET Situacao="Desocupado" WHERE idVaga=%s', (id))

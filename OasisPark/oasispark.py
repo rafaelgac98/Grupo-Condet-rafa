@@ -182,6 +182,7 @@ def filtrarplaca():
     placaveiculo = request.form['placaveiculo']
     classe = ''
     msg=''
+    test = '''  2;/ '''
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute('select idCliente, CpfCliente from Cliente')
@@ -189,8 +190,19 @@ def filtrarplaca():
     cursor.execute('select idAtendente from Atendente')
     atendente = cursor.fetchall()  
     cursor.execute('select idVaga from Vaga where Situacao = "Desocupado"')
-    vagas = cursor.fetchall()    
-    
+    vagas = cursor.fetchall()
+    cursor.execute("select v.Placa from historico h inner join Veiculo v on h.idVeiculo = v.idVeiculo where DataHora_Saida is null")
+    veiculosIn = cursor.fetchall()
+    #print(veiculosIn)
+    i = 0
+
+    while i < len(veiculosIn):
+        if placaveiculo == veiculosIn[i][0]:
+            classe = "alert alert-danger"
+            msg = "Veículo já se encontra no estacionamento!"
+            return render_template('index.html', classe=classe, msg=msg, test=test)   
+        i += 1
+
     cursor.execute("select idVeiculo,Placa,Modelo,Cor, Veiculo.idCliente, CpfCliente, Veiculo.idAtendente, CpfAtendente,Cliente.nomePlano from Veiculo inner join Cliente on Veiculo.idCliente = Cliente.idCliente inner join Atendente on Veiculo.idAtendente = Atendente.idAtendente where Veiculo.Placa = '" + str(placaveiculo)+"'")
     data = cursor.fetchall()
     conn.commit()
@@ -216,7 +228,7 @@ def filtrarplaca():
 def registrarentrada():
     classe = ''
     msg=''
-    test = '''  3;/ '''
+    test = '''  2;/ '''
     idcliente = request.form["cpfcliente"]
     idveiculo = request.form["idveiculo"] 
     numerovaga = request.form["numerovaga"]
@@ -252,8 +264,8 @@ def registrarsaida(pk):
     teste = cursor2.fetchone()
     #print(teste[0])
     data1 = str(teste[0])
-    data2 = "2023-04-25 20:50:00" #datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(data2)
+    data2 = "2023-04-28 14:50:00" #datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    #print(data2)
 
     # Converte as strings de data e hora para o formato datetime
     dt1 = datetime.strptime(data1, "%Y-%m-%d %H:%M:%S")
@@ -261,7 +273,7 @@ def registrarsaida(pk):
 
     # Calcula a diferença entre as datas
     diferenca = dt2 - dt1
-
+    print(diferenca.days)
     # Calcula o valor correspondente às horas trabalhadas
     horas_trabalhadas = diferenca.seconds / 3600
     print(horas_trabalhadas)
@@ -676,7 +688,7 @@ def gravarvaga():
         cursor.execute('insert into Vaga (NumeroVaga, Situacao) VALUES (%s, %s)',
                        (numerovaga, situacaovaga))
         conn.commit()
-    return redirect('/gravarvaga')
+    return render_template('cadastrovaga.html')
 
 
 #### ------------- LISTAR E ALTERAR VAGA ---------- ####

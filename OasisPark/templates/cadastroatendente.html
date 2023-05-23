@@ -16,7 +16,13 @@
     </header>
 
   <div class="col-8 m-auto pt-3 pb-2 text-center">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Cadastrar</button>
+    {% for posi in resplibe %}
+      {% if posi[1] == 'L'%}
+      <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Cadastrar</button>
+      {% else %}
+      <button disabled type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Cadastrar</button>
+      {% endif %}
+    {% endfor %}  
   </div>
 
     <div class="container">
@@ -40,9 +46,18 @@
             <td>{{item[1]}}</td>
             <td>{{item[7]}}</td>
             <td>
-              <a href="/listaratendente/{{item[0]}}/" class="btn btn-dark">VIEW</a>
-              <a href="/listaparaalteraatendente/{{item[0]}}/" class="btn btn-primary">UPDATE</a>
-              <a href="/deletaratendente/{{item[0]}}/" class="btn btn-danger btnDel">DELETE</a>
+              {% for posi in resplibe %}
+                {% if posi[1] == 'L'%}
+                <!--<p>O valor é Verdadeiro {{posi[1]}}</p>-->
+                <a href="/listaratendente/{{item[0]}}/" class="btn btn-dark btnDel">VIEW</a>
+                <a href="/listaparaalteraatendente/{{item[0]}}/" class="btn btn-primary btnDel">UPDATE</a>
+                <a href="/deletaratendente/{{item[0]}}/" class="btn btn-danger btnDel">DELETE</a>
+                {% else %}
+                <a href="/listaratendente/{{item[0]}}/" class="btn btn-dark btn-lg disabled">VIEW</a>
+                <a href="/listaparaalteraatendente/{{item[0]}}/" class="btn btn-primary btn-lg disabled">UPDATE</a>
+                <a href="/deletaratendente/{{item[0]}}/" class="btn btn-danger btn-lg disabled">DELETE</a>
+                {% endif %}
+              {% endfor %}
             </td>
           </tr>
           {% endfor %}
@@ -50,6 +65,11 @@
       </table>
     </div>
 
+<!--{% for posi in resplibe %}
+    {% if posi[1] == 'L'%}
+    <p>O valor é Verdadeiro {{posi[1]}}</p>
+    {% endif %}
+{% endfor %}-->
 
 
 

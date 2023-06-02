@@ -264,8 +264,10 @@ def registrarsaida(pk):
     teste = cursor2.fetchone()
     #print(teste[0])
     data1 = str(teste[0])
-    data2 = "2023-04-28 14:50:00" #datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    data2 = "2023-04-30 21:10:00" #datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     #print(data2)
+
+
 
     # Converte as strings de data e hora para o formato datetime
     dt1 = datetime.strptime(data1, "%Y-%m-%d %H:%M:%S")

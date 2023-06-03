@@ -127,14 +127,122 @@
         <td>{{item[5]}}</td>
         <td>{{item[6]}}</td>
         <td>
-          <a href="/listarveiculo/{{item[0]}}/" class="btn btn-dark">VIEW</a>
+          <a href="/ticket/{{item[0]}}/" target="_blank" class="btn btn-dark">VIEW</a>
           <a href="/registrarsaida/{{item[0]}}/" class="btn btn-primary">DONE</a>
-          <a href="/deletarveiculo/{{item[0]}}/" class="btn btn-danger btnDel">DELETE</a>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        {% for item in datas %}
+        <h5 class="modal-title" id="CadastroVagalbl">Ticket {{item[0]}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <table class="printer-ticket" align="center">
+          <thead>
+              <tr align="center">
+                  <th class="title" colspan="3" ><h4>Oasis Park Estacionamento</h4></th>
+              </tr>
+             <tr>
+                  <th colspan="3">-----------------------------------------------------------------------</th>
+             </tr>
+             <tr align="center">
+                 <th colspan="3">{{item[6]}}</th>
+             </tr>
+             <tr>
+              <th colspan="3">-----------------------------------------------------------------------</th>
+         </tr>
+             <tr>
+              <tr class="top">
+                <td colspan="1"><b>Dados Cliente</b></td>
+            </tr>
+            <tr>
+                <td>{{item[7]}} {{item[8]}}</td>
+                <td>{{item[4]}}</td>
+            </tr>
+             </tr>
+             <tr>
+              <th colspan="3">-----------------------------------------------------------------------</th>
+         </tr>
+             <tr align="center">
+                 <th class="ttu" colspan="3">
+                     <b>TICKET DE REGISTRO DE VEÍCULO</b>
+                 </th>
+             </tr>
+             <tr>
+              <th colspan="3">-----------------------------------------------------------------------</th>
+         </tr>
+         </thead>
+         <tbody>
+             <tr class="top" align="center">
+                 <td colspan="0"><b>Placa</b></td>
+                 <td colspan="0"><b>Modelo</b></td>
+                 <td colspan="0"><b>Cor</b></td>
+             </tr>
+             <tr align="center">
+                 <td>{{item[1]}}</td>
+                 <td>{{item[2]}}</td>
+                 <td>{{item[3]}}</td>
+             </tr>
+             <tr>
+              <th colspan="3">-----------------------------------------------------------------------</th>
+              </tr>
+         </tbody>
+         <tfoot>
+             <tr class="sup ttu p--0">
+                 <td colspan="3">
+                     <b>Valores do Estacionamento</b>
+                 </td>
+             </tr>
+             <tr class="ttu">
+                 <td colspan="2">Primeira hora</td>
+                 <td align="right">R$10,00</td>
+             </tr>
+             <tr class="ttu">
+                 <td colspan="2">Demais</td>
+                 <td align="right">R$5,00</td>
+             </tr>
+             <tr class="ttu">
+                 <td colspan="2">Valor mensalista</td>
+                 <td align="right">R$150,00</td>
+             </tr>
+             <tr>
+              <th colspan="3">-----------------------------------------------------------------------</th>
+         </tr>
+             
+             <tr class="sup">
+                 <td colspan="3" align="center">
+                     <b>Código: {{item[0]}}</b>
+                 </td>
+             </tr>
+             <tr>
+              <th colspan="3">-----------------------------------------------------------------------</th>
+         </tr>
+             <tr class="sup">
+                 <td colspan="3" align="center">
+                     www.oasispark.com.br
+                 </td>
+             </tr>
+         </tfoot>
+     </table>
+     {% endfor %}
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary" > Cadastrar</button>
+          
+        </div>
+    </div>
+  </div>
 </div>
 
 </body>
@@ -145,9 +253,18 @@
 <script>
   $("#header").load("/header");
   $("#footer").load("/footer");
+
   $(document).ready(function(){
       $(".ch").chosen();
   });
+  $('#exampleModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var recipient = button.data('whatever') // Extract info from data-* attributes
+    var modal = $(this)
+    modal.find('.modal-title').text('Cadastrar Vaga')
+    modal.find('.modal-body input').val(recipient)
+  });
+</script>
  
 </script>
 

@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from flaskext.mysql import MySQL
 import tkinter
 from tkinter import messagebox
-
+from datetime import datetime
 
 root = tkinter.Tk()
 root.withdraw()
@@ -46,6 +46,7 @@ def entrar():
     if request.method == 'POST' and 'userLogin' in request.form and 'passwordLogin' in request.form:
         # Create variables for easy access
         userLogin = request.form['userLogin']
+        #global userLogin
         passwordLogin = request.form['passwordLogin']
         conn = mysql.connect()
         cursor = conn.cursor()  
@@ -93,7 +94,7 @@ def register():
         conn = mysql.connect()
         cursor = conn.cursor()
         
-        cursor.execute('INSERT INTO Usuarios (Usuario, Senha, Nome, Email, Telefone) VALUES (%s, %s, %s,%s,Null)', (userRegister, passwordRegister,nome, email))
+        cursor.execute('INSERT INTO Usuarios (Usuario, Senha, Nome, Email, Telefone, Liberacao) VALUES (%s, %s, %s,%s,Null,"N")', (userRegister, passwordRegister,nome, email))
         conn.commit()
         msg = 'You have successfully registered!'
     return redirect('/login')
@@ -132,7 +133,7 @@ def historico():
     # Check if user is loggedin
     if 'loggedin' in session:
         # User is loggedin show them the home page
-        return render_template('historico.html',datas=data)
+        return render_template('historico.html',datas=data)#, valor=session['username']
     # User is not loggedin redirect to login page
     else:
         return redirect('/login/entrar')
@@ -166,7 +167,7 @@ def main():
     vaga = cursor.fetchall()
     
     
-    cursor.execute('select idHist,Placa,Modelo,Cor, CpfCliente,idVaga, DataHora_Entrada  from Historico inner join Cliente on Historico.idCliente  = Cliente.idCliente inner join Veiculo on Historico.idVeiculo = Veiculo.idVeiculo where DataHora_Saida is null')
+    cursor.execute('select idHist,Placa,Modelo,Cor, CpfCliente,idVaga, DataHora_Entrada, NomeCliente, SobrenomeCliente  from Historico inner join Cliente on Historico.idCliente  = Cliente.idCliente inner join Veiculo on Historico.idVeiculo = Veiculo.idVeiculo where DataHora_Saida is null')
     data = cursor.fetchall()
     conn.commit()
     # Check if user is loggedin
@@ -176,6 +177,28 @@ def main():
     # User is not loggedin redirect to login page
     else:
         return redirect('/login/entrar')
+    
+##################################### ------------- TICKET ---------- ######################################
+
+@app.route('/ticket/<int:pk>/', methods=['POST', 'GET'])
+def ticket(pk):    
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idHist,Placa,Modelo,Cor, CpfCliente,idVaga, DataHora_Entrada, NomeCliente, SobrenomeCliente  from Historico inner join Cliente on Historico.idCliente  = Cliente.idCliente inner join Veiculo on Historico.idVeiculo = Veiculo.idVeiculo where DataHora_Saida is null and idHist = %s', (pk))
+    data = cursor.fetchall()
+    conn.commit()
+    
+    # Check if user is loggedin
+    if 'loggedin' in session:
+    # User is loggedin show them the home page
+        return render_template('ticket.html', datas=data, pk = pk)
+    # User is not loggedin redirect to login page
+    else:
+        return redirect('/login/entrar')
+
+
+
+
 ########################### ------------- FILTRAR VEICULOS POR PLACA ---------- ############################    
 @app.route('/filtrarplaca',  methods=['POST', 'GET'])
 def filtrarplaca():
@@ -264,10 +287,8 @@ def registrarsaida(pk):
     teste = cursor2.fetchone()
     #print(teste[0])
     data1 = str(teste[0])
-    data2 = "2023-04-30 21:10:00" #datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    data2 =  datetime.now().strftime("%Y-%m-%d %H:%M:%S") #"2023-04-30 21:10:00"
     #print(data2)
-
-
 
     # Converte as strings de data e hora para o formato datetime
     dt1 = datetime.strptime(data1, "%Y-%m-%d %H:%M:%S")
@@ -295,10 +316,26 @@ def registrarsaida(pk):
         else:
             valor_horas = 0
     else:
-        valor_horas = diferenca.days * 5
+        if horas_trabalhadas > 12.00:
+            if horas_trabalhadas > 0 and horas_trabalhadas < 1:
+                horas_trabalhadas = 0
+            else:
+                horas_trabalhadas = horas_trabalhadas - 1
+                if horas_trabalhadas > 0 and horas_trabalhadas < 1:
+                    horas_trabalhadas = 1
+                else:
+                    horas_trabalhadas = int(horas_trabalhadas) + 1
+
+            valor_horas = 200 + horas_trabalhadas * 3
+        else:
+            valor_horas = 200
+        #print(valor_horas)
+
+
 
     cursor.execute('UPDATE Historico SET DataHora_Saida = %s, Valor=%s WHERE idHist=%s', (dt2, valor_horas, pk))
     cursor.execute('UPDATE Vaga SET Situacao="Desocupado" WHERE idVaga=%s', (id))
+    # cursor.execute('')
     conn.commit()
     
 
@@ -317,6 +354,29 @@ def registrarsaida(pk):
 
 #### ---------------- ROTA PAGINA CLIENTE ------------ #######
 
+@app.route('/stusuario', methods=['POST', 'GET'])
+def selectusuario():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    #cursor.execute('select idAtendente, CpfAtendente from Atendente')
+    #atendente = cursor.fetchall()
+    if session['id'] == 1:
+        cursor.execute('select idUser, Usuario, Senha, Nome, email, Liberacao from Usuarios')
+        data = cursor.fetchall()
+    else:
+        if session['id'] > 1:
+            cursor.execute('select idUser, Usuario, Senha, Nome, email, Liberacao from Usuarios where  idUser =%s', (session['id']))
+            data = cursor.fetchall()
+    valtotal = len(data)
+    conn.commit()        
+    # Check if user is loggedin
+    if 'loggedin' in session:
+    # User is loggedin show them the home page
+        return render_template('stusuario.html',datas=data, idp=session['id'], totall=valtotal)#totall=valtotal,datas=data, atendente=atendente
+    # User is not loggedin redirect to login page
+    else:
+        return redirect('/login/entrar')
+
 @app.route('/cliente', methods=['POST', 'GET'])
 def selectcliente():
     conn = mysql.connect()
@@ -333,8 +393,30 @@ def selectcliente():
     # User is not loggedin redirect to login page
     else:
         return redirect('/login/entrar')
-    
 
+#/altiusuario/{{item[0]}}/
+# '/altiusuario/<int:pk>/'
+@app.route('/altiusuario', methods=['POST', 'GET'])
+def alterarusuario():
+    idUsuario = request.form['idUsuario']   
+    nomeUsuario = request.form['nomeUsuario']
+    senhaUsuario = request.form['senhaUsuario']
+    sobrenomeUsuario = request.form['sobrenomeUsuario']
+    emailUsuario = request.form['emailUsuario']
+    liberacaoSitu = request.form['liberacaoSitu']
+
+    if idUsuario and nomeUsuario and senhaUsuario and sobrenomeUsuario and emailUsuario and liberacaoSitu:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        #cursor.execute(f"select * from Usuarios where Usuario = '{nomeUsuario}' and Senha = '{senhaUsuario}'")
+        #account = cursor.fetchone()
+        #pk = account[0]
+        cursor.execute('UPDATE Usuarios SET Usuario=%s, Senha=%s, Nome=%s, Email=%s, Liberacao=%s WHERE idUser=%s',
+                       (nomeUsuario, senhaUsuario, sobrenomeUsuario, emailUsuario, liberacaoSitu, idUsuario))
+        conn.commit()
+
+    return redirect('/stusuario')
+    
 
 ####  ---------------  GRAVAR CLIENTE ------------- #####
 
@@ -348,6 +430,7 @@ def gravarcliente():
     idAtendente = request.form['idAtendente']
     telefonecliente = request.form['telefoneCliente']
     nomePlano = request.form['nomePlano']
+    #valor_acr = 0
 
     if cpfcliente and nomecliente and sobrenomecliente and rgcliente and enderecocliente and idAtendente and telefonecliente and nomePlano:
         conn = mysql.connect()
@@ -450,8 +533,13 @@ def selectatendente():
 
     # Check if user is loggedin
     if 'loggedin' in session:
+        cursor.execute('select idUser, Liberacao from Usuarios where  idUser =%s', (session['id']))
+        resp = cursor.fetchall()
+        #if resp[0] == 1 or resp[1] == 'L':
+        #    libe = 'Verdadeiro'
+            #return render_template('alteracliente.html', datas=data, pk = pk, resplibe=libe)
     # User is loggedin show them the home page
-        return render_template('cadastroatendente.html',datas=data)
+        return render_template('cadastroatendente.html',datas=data, resplibe=resp)
     # User is not loggedin redirect to login page
     else:
         return redirect('/login/entrar')

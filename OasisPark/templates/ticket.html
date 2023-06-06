@@ -1,114 +1,120 @@
 <!DOCTYPE html>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/style.css">
-    <title>Ticket tal a mudar</title>
+    {% for item in datas %}
+    <title>Ticket {{item[0]}}</title>
 </head>
+
+<style>
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #divTicket, #divTicket * {
+    visibility: visible;
+  }
+  #divTicket {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+</style>
 <body>
+    <div class="col-8 m-auto pt-3 pb-2 text-center">
+        <button class="btn btn-primary" type="submit" value="Print this page" id="btn">Imprimir</button>
+    </div>
+    <div class="container" id="divTicket" type="submit">
+        
+        
     <table class="printer-ticket" align="center">
         <thead>
+            <tr align="center">
+                <th class="title" colspan="3" ><h4>Oasis Park Estacionamento</h4></th>
+            </tr>
            <tr>
-               <th class="title" colspan="3">Oasis Park Estacionamento</th>
+                <th colspan="3">-----------------------------------------------------------------------</th>
+           </tr>
+           <tr align="center">
+               <th colspan="3">{{item[6]}}</th>
            </tr>
            <tr>
-                <th colspan="3">-------------------------------------------------------------------------</th>
-           </tr>
-           <tr>
-               <th colspan="3">17/11/2015 - 11:57:52</th>
-           </tr>
-           <tr>
-            <th colspan="3">-------------------------------------------------------------------------</th>
+            <th colspan="3">-----------------------------------------------------------------------</th>
        </tr>
            <tr>
-               <th colspan="3">
-                   Nome do cliente <br />
-                   000.000.000-00
-               </th>
+            <tr class="top">
+              <td colspan="1"><b>Dados Cliente</b></td>
+          </tr>
+          <tr>
+              <td>{{item[7]}} {{item[8]}}</td>
+              <td>{{item[4]}}</td>
+          </tr>
            </tr>
            <tr>
-            <th colspan="3">-------------------------------------------------------------------------</th>
+            <th colspan="3">-----------------------------------------------------------------------</th>
        </tr>
-           <tr>
+           <tr align="center">
                <th class="ttu" colspan="3">
                    <b>TICKET DE REGISTRO DE VEÍCULO</b>
                </th>
            </tr>
            <tr>
-            <th colspan="3">-------------------------------------------------------------------------</th>
+            <th colspan="3">-----------------------------------------------------------------------</th>
        </tr>
        </thead>
        <tbody>
-           <tr class="top">
-               <td colspan="3">Doce de brigadeiro</td>
+           <tr class="top" align="center">
+               <td colspan="0"><b>Placa</b></td>
+               <td colspan="0"><b>Modelo</b></td>
+               <td colspan="0"><b>Cor</b></td>
+           </tr>
+           <tr align="center">
+               <td>{{item[1]}}</td>
+               <td>{{item[2]}}</td>
+               <td>{{item[3]}}</td>
            </tr>
            <tr>
-               <td>R$7,99</td>
-               <td>1.0</td>
-               <td>R$15,98</td>
-           </tr>
-           <tr>
-            <th colspan="3">-------------------------------------------------------------------------</th>
+            <th colspan="3">-----------------------------------------------------------------------</th>
             </tr>
        </tbody>
        <tfoot>
            <tr class="sup ttu p--0">
                <td colspan="3">
-                   <b>Totais</b>
+                   <b>Valores do Estacionamento</b>
                </td>
            </tr>
            <tr class="ttu">
-               <td colspan="2">Sub-total</td>
-               <td align="right">R$43,60</td>
+               <td colspan="2">Primeira hora</td>
+               <td align="right">R$10,00</td>
            </tr>
            <tr class="ttu">
-               <td colspan="2">Taxa de serviço</td>
-               <td align="right">R$4,60</td>
+               <td colspan="2">Demais</td>
+               <td align="right">R$5,00</td>
            </tr>
            <tr class="ttu">
-               <td colspan="2">Desconto</td>
-               <td align="right">5,00%</td>
-           </tr>
-           <tr class="ttu">
-               <td colspan="2">Total</td>
-               <td align="right">R$45,56</td>
+               <td colspan="2">Valor mensalista</td>
+               <td align="right">R$150,00</td>
            </tr>
            <tr>
-            <th colspan="3">-------------------------------------------------------------------------</th>
+            <th colspan="3">-----------------------------------------------------------------------</th>
        </tr>
-           <tr class="sup ttu p--0">
-               <td colspan="3">
-                   <b>Pagamentos</b>
-               </td>
-           </tr>
-           <tr class="ttu">
-               <td colspan="2">Voucher</td>
-               <td align="right">R$10,00</td>
-           </tr>
-           <tr class="ttu">
-               <td colspan="2">Dinheiro</td>
-               <td align="right">R$10,00</td>
-           </tr>
-           <tr class="ttu">
-               <td colspan="2">Total pago</td>
-               <td align="right">R$10,00</td>
-           </tr>
-           <tr class="ttu">
-               <td colspan="2">Troco</td>
-               <td align="right">R$0,44</td>
-           </tr>
-           <tr>
-            <th colspan="3">-------------------------------------------------------------------------</th>
-       </tr>
+           
            <tr class="sup">
                <td colspan="3" align="center">
-                   <b>Pedido:</b>
+                   <b>Código: {{item[0]}}</b>
                </td>
            </tr>
            <tr>
-            <th colspan="3">-------------------------------------------------------------------------</th>
+            <th colspan="3">-----------------------------------------------------------------------</th>
        </tr>
            <tr class="sup">
                <td colspan="3" align="center">
@@ -117,5 +123,19 @@
            </tr>
        </tfoot>
    </table>
+   
+</div>
+   {% endfor %}
 </body>
+
+<script>
+    document.getElementById('btn').onclick = function() {
+       var conteudo = document.getElementById('divTicket').innerHTML,
+       tela_impressao = window.open('about:blank');
+    
+       tela_impressao.document.write(conteudo);
+       tela_impressao.window.print();
+       tela_impressao.window.close();
+    };
+    </script>
 </html>

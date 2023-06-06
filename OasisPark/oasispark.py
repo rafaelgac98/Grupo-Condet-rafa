@@ -26,7 +26,7 @@ app.secret_key = 'HashTestByOasisPark1234567'
 
 #conexão com banco mysql local
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = '123456'
 app.config['MYSQL_DATABASE_DB'] = 'oasisparkdb'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
  
@@ -99,7 +99,7 @@ def register():
         conn = mysql.connect()
         cursor = conn.cursor()
         
-        cursor.execute('INSERT INTO Usuarios (Usuario, Senha, Nome, Email, Telefone, Liberacao) VALUES (%s, %s, %s,%s,Null,"L")', (userRegister, passwordRegister,nome, email))
+        cursor.execute('INSERT INTO Usuarios (Usuario, Senha, Nome, Email, Telefone, Liberacao) VALUES (%s, %s, %s,%s,Null,"N")', (userRegister, passwordRegister,nome, email))
         conn.commit()
         msg = 'You have successfully registered!'
     return redirect('/login')
@@ -172,7 +172,7 @@ def main():
     vaga = cursor.fetchall()
     
     
-    cursor.execute('select idHist,Placa,Modelo,Cor, CpfCliente,idVaga, DataHora_Entrada  from Historico inner join Cliente on Historico.idCliente  = Cliente.idCliente inner join Veiculo on Historico.idVeiculo = Veiculo.idVeiculo where DataHora_Saida is null')
+    cursor.execute('select idHist,Placa,Modelo,Cor, CpfCliente,idVaga, DataHora_Entrada, NomeCliente, SobrenomeCliente  from Historico inner join Cliente on Historico.idCliente  = Cliente.idCliente inner join Veiculo on Historico.idVeiculo = Veiculo.idVeiculo where DataHora_Saida is null')
     data = cursor.fetchall()
     conn.commit()
     # Check if user is loggedin
@@ -182,6 +182,28 @@ def main():
     # User is not loggedin redirect to login page
     else:
         return redirect('/login/entrar')
+    
+##################################### ------------- TICKET ---------- ######################################
+
+@app.route('/ticket/<int:pk>/', methods=['POST', 'GET'])
+def ticket(pk):    
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select idHist,Placa,Modelo,Cor, CpfCliente,idVaga, DataHora_Entrada, NomeCliente, SobrenomeCliente  from Historico inner join Cliente on Historico.idCliente  = Cliente.idCliente inner join Veiculo on Historico.idVeiculo = Veiculo.idVeiculo where DataHora_Saida is null and idHist = %s', (pk))
+    data = cursor.fetchall()
+    conn.commit()
+    
+    # Check if user is loggedin
+    if 'loggedin' in session:
+    # User is loggedin show them the home page
+        return render_template('ticket.html', datas=data, pk = pk)
+    # User is not loggedin redirect to login page
+    else:
+        return redirect('/login/entrar')
+
+
+
+
 ########################### ------------- FILTRAR VEICULOS POR PLACA ---------- ############################    
 @app.route('/filtrarplaca',  methods=['POST', 'GET'])
 def filtrarplaca():
@@ -270,7 +292,7 @@ def registrarsaida(pk):
     teste = cursor2.fetchone()
     #print(teste[0])
     data1 = str(teste[0])
-    data2 = str(datetime.today().strftime('%Y-%m-%d %H:%M:%S')) #"2023-04-28 14:50:00" #datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    data2 =  datetime.now().strftime("%Y-%m-%d %H:%M:%S") #"2023-04-30 21:10:00"
     #print(data2)
 
     # Converte as strings de data e hora para o formato datetime
@@ -318,7 +340,7 @@ def registrarsaida(pk):
 
     cursor.execute('UPDATE Historico SET DataHora_Saida = %s, Valor=%s WHERE idHist=%s', (dt2, valor_horas, pk))
     cursor.execute('UPDATE Vaga SET Situacao="Desocupado" WHERE idVaga=%s', (id))
-    cursor.execute('')
+    # cursor.execute('')
     conn.commit()
     
 

@@ -15,27 +15,24 @@
         <div id="header"></div><br />
       </header>
 
-        
-        <div class="container pt-4">
+      <!--<section style="background-color: black;">-->
+        <!--<div class="container pt-4">-->
             {% for item in datas %}   
             <form action="/altiusuario" method="POST">
-
-              
-                            
-                <div class="row">
-                    <div class="col-4 col-sm-4">
-                        <label for="idUsuario">Id</label>
-                        <input type="text" class="form-control" id="idUsuario" value="{{item[0]}}" name="idUsuario" placeholder="Usuario"  readonly>
-                    </div>
-                </div>
-                <div class="row">
+              <div class="pri-1">
                 {% if totall > 1 %}
-                  <div class="col-4 col-sm-4">
-                      <label for="nomeUsuario">Nome Usuario</label>
-                      <input type="text" class="form-control" id="nomeUsuario" value="{{item[1]}}" name="nomeUsuario" placeholder="Usuario">
+                <center><h2>{{item[1]}}</h2></center>
+                <div class="row">
+                  <div class="col-4 col-sm-4" style="display: none;">
+                    <label for="idUsuario">Id</label>
+                    <input type="text" class="form-control" id="idUsuario" value="{{item[0]}}" name="idUsuario" placeholder="Usuario"  readonly>
                   </div>
-              </div>
-                <div class="form-row">                    
+                  <div class="col-4 col-sm-4">
+                    <label for="nomeUsuario">Nome Usuario</label>
+                    <input type="text" class="form-control" id="nomeUsuario" value="{{item[1]}}" name="nomeUsuario" placeholder="Usuario">
+                  </div>
+                </div>
+                <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="senhaUsuario">Senha</label>
                     <input type="text" class="form-control" id="senhaUsuario" value="{{item[2]}}" name="senhaUsuario" placeholder="Password">
@@ -45,79 +42,70 @@
                     <input type="text" class="form-control" id="sobrenomeUsuario" value="{{item[3]}}" name="sobrenomeUsuario" placeholder="Sobrenome">
                   </div>
                 </div>
-                <div class="form-row">                    
-                    <div class="form-group col-md-6">
-                      <label for="emailUsuario">Email</label>
-                      <input type="text" class="form-control" id="emailUsuario" value="{{item[4]}}" name="emailUsuario" placeholder="Nome">
-                    </div>
-                    <div class="form-group col-md-6">
-                      
-                        <!--<p> Valor total é {{totall}}</p>
-                        <p> Valor total é {{idp}}</p>-->
-                        <label for="liberacaoSitu">Liberado para Aletraçoes</label>
-                        <input type="text" class="form-control" id="liberacaoSitu" value="{{item[5]}}" name="liberacaoSitu" placeholder="Liberação" >
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="emailUsuario">Email</label>
+                    <input type="text" class="form-control" id="emailUsuario" value="{{item[4]}}" name="emailUsuario" placeholder="Nome">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <!--<p> Valor total é {{totall}}</p>
+                    <p> Valor total é {{idp}}</p>-->
+                    <label for="liberacaoSitu">Liberado para Aletraçoes</label>
+                    <select class="form-control" name="liberacaoSitu" data-live-search="true" id="liberacaoSitu">
+                      <option selected value="{{item[5]}}">{{item[5]}}</option>
+                      {%if item[5] == 'N'%}
+                      <option value="L">L</option>
+                      {% else %}
+                      <option value="N">N</option>
+                      {% endif %}
+                    </select>
+                    <!--<input type="text" class="form-control" id="liberacaoSitu" value="{{item[5]}}" name="liberacaoSitu" placeholder="Liberação" >-->
+                  </div>
+                  <button type="submit" class="btn btn-primary">Alterar</button>
+                </div>
+              </div>
                 {% else %}
                   {% if totall == 1 %}
+                  <center><h2>{{item[1]}}</h2></center>
+                  <div class="row">
+                    <div class="col-4 col-sm-4"  style="display: none;">
+                      <label for="idUsuario">Id</label>
+                      <input type="text" class="form-control" id="idUsuario" value="{{item[0]}}" name="idUsuario" placeholder="Usuario"  readonly>
+                    </div>
                     <div class="col-4 col-sm-4">
                       <label for="nomeUsuario">Nome Usuario</label>
                       <input type="text" class="form-control" id="nomeUsuario" value="{{item[1]}}" name="nomeUsuario" placeholder="Usuario" readonly>
+                    </div>
                   </div>
-              </div>
-                <div class="form-row">                    
-                  <div class="form-group col-md-6">
-                    <label for="senhaUsuario">Senha</label>
-                    <input type="text" class="form-control" id="senhaUsuario" value="{{item[2]}}" name="senhaUsuario" placeholder="Password">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="senhaUsuario">Senha</label>
+                      <input type="text" class="form-control" id="senhaUsuario" value="{{item[2]}}" name="senhaUsuario" placeholder="Password">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="sobrenomeUsuario">Sobrenome</label>
+                      <input type="text" class="form-control" id="sobrenomeUsuario" value="{{item[3]}}" name="sobrenomeUsuario" placeholder="Sobrenome">
+                    </div>
                   </div>
-                  <div class="form-group col-md-6">
-                    <label for="sobrenomeUsuario">Sobrenome</label>
-                    <input type="text" class="form-control" id="sobrenomeUsuario" value="{{item[3]}}" name="sobrenomeUsuario" placeholder="Sobrenome" readonly>
-                  </div>
-                </div>
-                <div class="form-row">                    
+                  <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="emailUsuario">Email</label>
                       <input type="text" class="form-control" id="emailUsuario" value="{{item[4]}}" name="emailUsuario" placeholder="Nome" >
                     </div>
                     <div class="form-group col-md-6">
-                        <!--<p> Valor total é {{totall}}</p>
-                        <p> Valor total é {{idp}}</p>-->
-                        <label for="liberacaoSitu">Liberado para Alteração</label>
-                        <!--<select class="form-control" name="liberacaoSitu" data-live-search="true" id="liberacaoSitu" value="{{item[5]}}">
-                          <option selected>Selecione</option>
-                          <option value="L">Liberado</option>
-                          <option value="N">Não Liberado</OPTIon> 
-                        </select>-->
-                        <input type="text" class="form-control" id="liberacaoSitu" value="{{item[5]}}" name="liberacaoSitu" placeholder="Liberação" readonly>
-                    {% endif %}
-                {% endif %}
+                      <!--<p> Valor total é {{totall}}</p>
+                      <p> Valor total é {{idp}}</p>-->
+                      <label for="liberacaoSitu">Liberado para Alteração</label>
+                      <input type="text" class="form-control" id="liberacaoSitu" value="{{item[5]}}" name="liberacaoSitu" placeholder="Liberação" readonly>
                     </div>
                     <button type="submit" class="btn btn-primary">Alterar</button>
                   </div>
-                <!--<div class="form-group">
-                  <label for="enderecoAtendente">Endereço</label>
-                  <input type="text" class="form-control" id="enderecoAtendente" value="{{item[5]}}" name="enderecoAtendente" placeholder="Apartment, studio, or floor">
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-4">
-                    <label for="telefoneAtendente">Telefone</label>
-                    <input type="text" class="form-control" value="{{item[7]}}" id="telefoneAtendente" name="telefoneAtendente">
-                  </div>-->
-                  <!-- <div class="form-group col-md-4">
-                    <label for="inputState">State</label>
-                    <select id="inputState" class="form-control">
-                      <option selected>Choose...</option>
-                      <option>...</option>
-                    </select>
-                  </div> -->
-                  <!--<button type="submit" class="btn btn-primary">Alterar</button>-->
-                </div>
-                <br>
-                
-                
-                 
+                  {% endif %}
+                {% endif %}
             </form>
+            </div>
             {% endfor %}
-        </div>
+        <!--</div>-->
 
     </body>
     <footer>

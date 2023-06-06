@@ -60,10 +60,15 @@ def entrar():
             session['id'] = account[0]
             session['username'] = account[1]
             # Redirect to home page
-            return redirect('/')
+            return redirect('/')            
         else:
-            # Account doesnt exist or username/password incorrect
-            msg = 'Incorrect username/password!'
+            cursor.execute(f"select * from Usuarios where Usuario = '{userLogin}' or Senha = '{passwordLogin}'")
+            account2 = cursor.fetchone()
+            if account2 != ():
+                msg = 'Incorrect username/password!'
+            else:
+                # Account doesnt exist or username/password incorrect
+                msg = ''
 
     return render_template('login.html', msg=msg)
 

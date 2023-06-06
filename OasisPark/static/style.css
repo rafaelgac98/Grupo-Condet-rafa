@@ -95,7 +95,7 @@
 }
 .register{
   padding: 5%;
-  background: #0062cc;
+  background: #343a40;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 .register h3{
@@ -116,11 +116,11 @@
 .login-form-1 .btnSubmit{
   font-weight: 600;
   color: #fff;
-  background-color: #0062cc;
+  background-color: #343a40;
 }
 .register .btnSubmit{
   font-weight: 600;
-  color: #0062cc;
+  color: #343a40;
   background-color: #fff;
 }
 .register .ForgetPwd{
@@ -129,7 +129,26 @@
   text-decoration: none;
 }
 .login-form-1 .ForgetPwd{
-  color: #0062cc;
+  color: #343a40;
   font-weight: 600;
   text-decoration: none;
+}
+.entar{
+  color: #343a40;
+}
+
+
+/* ----------------------   Usuario aqui -------------------------*/
+
+.pri-1{
+  border: 5px solid #ebebec;
+  background-color: #ebebec;
+  width: 700px;
+  height: 420px;
+  padding: 50px;
+  margin: 50px;
+  position: relative;
+  top: 0px;
+  left: 350px;
+  border-radius: 15px;
 }

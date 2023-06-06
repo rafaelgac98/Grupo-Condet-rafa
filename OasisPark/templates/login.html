@@ -36,7 +36,7 @@
     <div class="container login-container">
         <div class="row">
             <div class="col-md-6 login-form-1">
-                <h3>Entrar</h3>
+                <h3 class="entar">Entrar</h3>
                 <form action="{{ url_for('entrar') }}" method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" id="userLogin" name="userLogin" placeholder="Seu usuário *" />
@@ -50,9 +50,11 @@
                             <button type="submit" class="btnSubmit" value="Entrar">Entrar</button>
                         </div>
                     </center>
-                    <!--<div class="form-group">
-                        <a href="#" class="ForgetPwd">Forget Password?</a>
-                    </div>-->
+                    {% if msg == 'Incorrect username/password!' %}
+                    <div class="form-group">
+                        <p style="color: red; font-style: italic;">*Usuário ou Senha incorreto!</p>
+                    </div>
+                    {%endif%}
                 </form>
             </div>
             <div class="col-md-6 register">

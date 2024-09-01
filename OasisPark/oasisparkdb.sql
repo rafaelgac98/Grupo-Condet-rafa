@@ -1,4 +1,5 @@
-CRIANDO TABELA ATENDENTE------------------------
+create database oasisparkdb
+use oasisparkdb
 
 CREATE TABLE Atendente (
   	idAtendente int AUTO_INCREMENT Not NULL,
@@ -14,17 +15,6 @@ CREATE TABLE Atendente (
     UNIQUE (CpfAtendente)
 );
 
-CRIANDO TABELA PLANOS------------------------------------
-
-CREATE TABLE Plano (
-  	idPlano int AUTO_INCREMENT NOT NULL,
-    	nomePlano VARCHAR(25) NOT NULL,
-    	PRIMARY KEY (idPlano),
-  	UNIQUE(idPlano)
-);
-
-
-CRIANDO TABELA CLIENTE -------------------------------
 
 CREATE TABLE Cliente (
   	idCliente int AUTO_INCREMENT NOT NULL,
@@ -32,21 +22,16 @@ CREATE TABLE Cliente (
     	NomeCliente varchar(30) NOT NULL,
   	SobrenomeCliente varchar(50) NOT NULL,
     	RgCliente char(9),
-	idPlano int NOT NULL,
   	EnderecoCliente varchar(100),
   	idAtendente int NOT NULL,
-  	TelefoneCliente varchar(11) NOT NULL,
+  	TelefoneCliente varchar(11) NOT NULL,    
+	nomePlano varchar(11) NOT NULL,
     	PRIMARY KEY (idCliente),
   	UNIQUE(idCliente),
     	UNIQUE (CpfCliente),
-  	FOREIGN KEY (idAtendente) REFERENCES Atendente(idAtendente),
-	FOREIGN KEY (idPlano) REFERENCES Plano(idPlano) 
+  	FOREIGN KEY (idAtendente) REFERENCES Atendente(idAtendente)
 );
 
-ALTER TABLE Cliente
-ADD FOREIGN KEY (idPlano) REFERENCES Plano(idPlano);
-
-CRIANDO TABELA MANOBRISTA------------------------------
 
 CREATE TABLE Manobrista (
   	idManobrista int AUTO_INCREMENT NOT NULL,
@@ -62,8 +47,6 @@ CREATE TABLE Manobrista (
     UNIQUE (CnhManobrista)
 );
 
-CRIANDO TABELA DE VAGA----------------------------------
-
 CREATE TABLE Vaga (
   	idVaga int AUTO_INCREMENT NOT NULL,
     NumeroVaga char(2) NOT NULL,    
@@ -72,8 +55,6 @@ CREATE TABLE Vaga (
   	UNIQUE(idVaga),
     UNIQUE (NumeroVaga)
 );
-
-CRIANDO TABELA VEICULO------------------------------------
 
 CREATE TABLE Veiculo (
   	idVeiculo int AUTO_INCREMENT NOT NULL,
@@ -89,8 +70,6 @@ CREATE TABLE Veiculo (
   	FOREIGN KEY (idAtendente) REFERENCES Atendente(idAtendente)
 );
 
-CRIANDO TABELA USUARIOS------------------------------------
-
 CREATE TABLE Usuarios (
   	idUser int AUTO_INCREMENT NOT NULL,
 	Usuario varchar(20) NOT NULL,    
@@ -104,7 +83,9 @@ CREATE TABLE Usuarios (
     UNIQUE (Usuario)
 );
 
-select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, TelefoneCliente, CpfAtendente, nomePlano from Cliente inner join Atendente on Cliente.idAtendente = Atendente.idAtendente inner join Plano on Cliente.idPlano = Plano.idPlano where idCliente = 1;
+INSERT INTO Usuarios (Usuario, Senha, Nome, Email, Telefone, Liberacao) VALUES ('rafa', '123', 'Rafael Cavalcante','rafa@rafa.com',Null,"L")
+
+#select idCliente, CpfCliente, NomeCliente, SobrenomeCliente, RgCliente, EnderecoCliente, TelefoneCliente, CpfAtendente, nomePlano from Cliente inner join Atendente on Cliente.idAtendente = Atendente.idAtendente inner join Plano on Cliente.idPlano = Plano.idPlano where idCliente = 1;
 
 CREATE TABLE Historico (
 	idHist int AUTO_INCREMENT NOT NULL,
@@ -116,9 +97,7 @@ CREATE TABLE Historico (
   	Valor decimal(10,2),
   	idAtendente int NOT NULL,
   	nomePlano varchar(20) NOT NULL,
-    	PRIMARY KEY (idVeiculo),
-  	UNIQUE(idVeiculo),
-    	UNIQUE (Placa),
+    	PRIMARY KEY (idHist),
   	FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
 	FOREIGN KEY (idVeiculo) REFERENCES Veiculo(idVeiculo),
   	FOREIGN KEY (idVaga) REFERENCES Vaga(idVaga),

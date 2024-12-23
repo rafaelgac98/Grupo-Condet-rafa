@@ -32,31 +32,19 @@ class Registra_Entrada_Saida:
         return render_template('index.html', classe=classe, msg=msg, test=test)
     
     def registrarsaida(self, pk):
-        conn = self.mysql.connect()
-        conn2 = self.mysql.connect()
-        
+        conn = self.mysql.connect()        
         cursor = conn.cursor()
-        cursor.execute('select idVaga from Historico where idHist=%s', (pk))
-        id = cursor.fetchall()
+        cursor.execute('select DataHora_Entrada, nomePlano, idVaga from Historico WHERE idHist=%s', (pk))
+        retorno = cursor.fetchone()
+                
+        dataEntrada = datetime.strptime(str(retorno[0]), "%Y-%m-%d %H:%M:%S")
+        dataSaida = datetime.strptime(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S")
         
-        cursor2 = conn2.cursor()
-        cursor2.execute('select DataHora_Entrada, nomePlano from Historico WHERE idHist=%s', (pk))
-        teste = cursor2.fetchone()
+        diferenca = dataSaida - dataEntrada
         
-        data1 = str(teste[0])
-        data2 =  datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
-        
-        dt1 = datetime.strptime(data1, "%Y-%m-%d %H:%M:%S")
-        dt2 = datetime.strptime(data2, "%Y-%m-%d %H:%M:%S")
-
-        # Calcula a diferença entre as datas
-        diferenca = dt2 - dt1
-        print(diferenca.days)
-        # Calcula o valor correspondente às horas trabalhadas
         horas_trabalhadas = diferenca.seconds / 3600
-        print(horas_trabalhadas)
 
-        if teste[1] == "DIARIA":
+        if retorno[1] == "DIARIA":
             if horas_trabalhadas > 0.15:
                 if horas_trabalhadas > 0 and horas_trabalhadas < 1:
                     horas_trabalhadas = 0
@@ -85,8 +73,8 @@ class Registra_Entrada_Saida:
             else:
                 valor_horas = 200
 
-        cursor.execute('UPDATE Historico SET DataHora_Saida = %s, Valor=%s WHERE idHist=%s', (dt2, valor_horas, pk))
-        cursor.execute('UPDATE Vaga SET Situacao="Desocupado" WHERE idVaga=%s', (id))
+        cursor.execute('UPDATE Historico SET DataHora_Saida = %s, Valor=%s WHERE idHist=%s', (dataSaida, valor_horas, pk))
+        cursor.execute('UPDATE Vaga SET Situacao="Desocupado" WHERE idVaga=%s', (retorno[2]))
         conn.commit()
 
         return redirect(url_for('main', pk=pk))

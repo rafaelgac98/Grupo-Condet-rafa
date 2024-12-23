@@ -61,9 +61,7 @@ def logout():
 @app.route('/login/registrar', methods=['GET', 'POST'])
 def register():
     registrar = Login(mysql)
-    return registrar.register()
-
-    
+    return registrar.register()  
 
 
 
